@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Admin - SPA Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--text-main); margin-bottom: 8px; }
+        .form-control { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; transition: all 0.2s; outline: none; color: var(--text-main); }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15); }
+        .form-control:disabled { background: var(--bg-color); color: var(--text-muted); cursor: not-allowed; }
+        .form-actions { margin-top: 32px; display: flex; gap: 12px; padding-top: 24px; border-top: 1px solid var(--border); }
+        .report-header { text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px dashed var(--border); }
+        .report-header h2 { font-size: 24px; margin-bottom: 8px; }
+        .score-badge { display: inline-block; padding: 4px 12px; background: var(--primary-light); color: var(--primary); font-weight: 700; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-layer-group"></i> LMS Admin
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="nav-link active" data-target="view-dashboard"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-target="view-datamaster"><i class="fas fa-users"></i> Data Master</a></li>
+                <li><a href="#" class="nav-link" data-target="view-modul"><i class="fas fa-book"></i> Modul</a></li>
+                <li><a href="#" class="nav-link" data-target="view-laporan"><i class="fas fa-chart-bar"></i> Laporan</a></li>
+                <li style="margin-top: 20px;"><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search here...">
+                </div>
+                <div class="topbar-right">
+                    <div class="bell-icon"><i class="far fa-bell"></i></div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+Connor&background=333&color=fff" alt="Sarah Connor">
+                        <div class="info">
+                            <span class="name">Sarah Connor</span>
+                            <span class="role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-area">
+                
+                <!-- DASHBOARD VIEW -->
+                <section id="view-dashboard" class="view-section active">
+                    <div class="page-header">
+                        <div>
+                            <h1>Dashboard Overview</h1>
+                            <p>Quick access to your academic KPIs and operational metrics</p>
+                        </div>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <span class="title">Total Students</span>
+                            <span class="value" id="stat-students">1,245</span>
+                            <div class="icon icon-blue"><i class="fas fa-user-friends"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="title">Active Courses</span>
+                            <span class="value">48</span>
+                            <div class="icon icon-yellow"><i class="fas fa-book-open"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="title">Completions</span>
+                            <span class="value">1,890</span>
+                            <div class="icon icon-green"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="title">Revenue</span>
+                            <span class="value">$24,450</span>
+                            <div class="icon icon-teal"><i class="fas fa-dollar-sign"></i></div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Enrollment Trends</h3>
+                        <p>Monthly volume of course registrations</p>
+                        <div style="height: 300px;"><canvas id="enrollmentChart"></canvas></div>
+                    </div>
+                </section>
+
+                <!-- DATA MASTER VIEW -->
+                <section id="view-datamaster" class="view-section">
+                    <div class="page-header">
+                        <div>
+                            <h1>Data Master</h1>
+                            <p>Manage and review registered student directory details</p>
+                        </div>
+                        <button class="btn-primary" id="btn-add-student"><i class="fas fa-plus"></i> Add Data</button>
+                    </div>
+                    <div class="table-card">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>NAME</th><th>EMAIL</th><th>COURSE</th><th>STATUS</th><th>ACTIONS</th></tr>
+                            </thead>
+                            <tbody id="student-tbody">
+                                <!-- Rendered by JS -->
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <span id="record-count">Showing records</span>
+                            <div class="page-numbers">
+                                <button>&lt; Prev</button><span class="active">1</span><button>Next &gt;</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FORM VIEW (Hidden by default, overlays Data Master conceptually) -->
+                <section id="view-form" class="view-section">
+                    <div class="page-header">
+                        <div>
+                            <h1>Add New Student</h1>
+                            <p>Fill in the details below to register a new student</p>
+                        </div>
+                    </div>
+                    <div class="table-card" style="padding: 32px; max-width: 800px;">
+                        <form id="addForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Student ID</label>
+                                    <input type="text" id="form-id" class="form-control" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="form-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="form-email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Enrolled Course</label>
+                                    <select id="form-course" class="form-control" required>
+                                        <option value="" disabled selected>Select a course</option>
+                                        <option>Intro to UI/UX Design</option>
+                                        <option>Advanced Data Structures</option>
+                                        <option>Product Management 101</option>
+                                        <option>React Framework Basics</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Data</button>
+                                <button type="button" class="btn-cancel" id="btn-cancel-form">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- MODUL VIEW -->
+                <section id="view-modul" class="view-section">
+                    <div class="page-header">
+                        <div>
+                            <h1>Course Modules</h1>
+                            <p>Manage learning modules and materials</p>
+                        </div>
+                        <button class="btn-primary"><i class="fas fa-plus"></i> Create Module</button>
+                    </div>
+                    <div class="table-card">
+                        <table>
+                            <thead>
+                                <tr><th>MODULE CODE</th><th>TITLE</th><th>INSTRUCTOR</th><th>STATUS</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>MOD-101</td><td>UI/UX Fundamentals</td><td>Sarah Connor</td><td><span class="badge active">Published</span></td></tr>
+                                <tr><td>MOD-102</td><td>Wireframing</td><td>David Kim</td><td><span class="badge active">Published</span></td></tr>
+                                <tr><td>MOD-103</td><td>Prototyping</td><td>Sarah Connor</td><td><span class="badge pending">Draft</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- LAPORAN VIEW -->
+                <section id="view-laporan" class="view-section">
+                    <div class="page-header">
+                        <div>
+                            <h1>Academic Report</h1>
+                            <p>Overview of student academic scores</p>
+                        </div>
+                        <button class="btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Report</button>
+                    </div>
+                    <div class="table-card" style="padding: 32px;">
+                        <div class="report-header">
+                            <h2>Final Examination Report</h2>
+                            <p>Academic Year 2023/2024 - Even Semester</p>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>STUDENT NAME</th><th>COURSE</th><th>FINAL SCORE</th><th>GRADE</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>STU-001</td><td>Sarah Jenkins</td><td>Intro to UI/UX Design</td><td><span class="score-badge">92</span></td><td><span class="badge active">A</span></td></tr>
+                                <tr><td>STU-002</td><td>David Kim</td><td>Advanced Data Structures</td><td><span class="score-badge">85</span></td><td><span class="badge active">A-</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-card">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this student data? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="btn-cancel-delete">Cancel</button>
+                <button class="btn-danger" id="btn-confirm-delete">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/spa-app.js"></script>
+</body>
+</html>
