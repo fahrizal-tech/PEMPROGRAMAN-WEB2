@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Master - LMS Admin Panel</title>
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-graduation-cap"></i> LMS Admin</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="data-master.html"><i class="fas fa-users"></i> Data Siswa</a></li>
+                <li><a href="form.html"><i class="fas fa-user-plus"></i> Form Siswa</a></li>
+                <li><a href="laporan.html"><i class="fas fa-chart-bar"></i> Laporan</a></li>
+                <li style="margin-top: auto;"><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="user-profile">
+                    <span style="font-weight: 500;">Admin User</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=1976D2&color=fff" alt="User Profile">
+                </div>
+            </header>
+
+            <!-- Dynamic Content Area -->
+            <main class="content-area">
+                <h2>Halaman Master Layout</h2>
+                <div class="card" style="margin-top: 20px;">
+                    <p>Ini adalah struktur dasar layout (Sidebar, Header, Content) yang akan digunakan di seluruh halaman internal admin panel.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Siswa - LMS Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 500;
+        }
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-active { background: #e8f5e9; color: #2e7d32; }
+        .badge-inactive { background: #ffebee; color: #c62828; }
+        .action-btns button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn-edit { color: var(--primary-color); }
+        .btn-delete { color: var(--error-color); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-graduation-cap"></i> LMS Admin</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="data-master.html"><i class="fas fa-users"></i> Data Siswa</a></li>
+                <li><a href="form.html"><i class="fas fa-user-plus"></i> Form Siswa</a></li>
+                <li><a href="laporan.html"><i class="fas fa-chart-bar"></i> Laporan</a></li>
+                <li style="margin-top: auto;"><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="main-content">
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+                <div class="user-profile">
+                    <span style="font-weight: 500;">Admin User</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=1976D2&color=fff" alt="User Profile">
+                </div>
+            </header>
+
+            <main class="content-area">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Master Data Siswa</h2>
+                    <a href="form.html" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Siswa</a>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table id="siswaTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Email</th>
+                                    <th>Kelas</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>S001</td>
+                                    <td>Ahmad Budi</td>
+                                    <td>ahmad@email.com</td>
+                                    <td>XII IPA 1</td>
+                                    <td><span class="badge badge-active">Aktif</span></td>
+                                    <td class="action-btns">
+                                        <button class="btn-edit" onclick="editData('S001')"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-delete" onclick="deleteData(this)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>S002</td>
+                                    <td>Siti Aminah</td>
+                                    <td>siti@email.com</td>
+                                    <td>XII IPS 2</td>
+                                    <td><span class="badge badge-active">Aktif</span></td>
+                                    <td class="action-btns">
+                                        <button class="btn-edit" onclick="editData('S002')"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-delete" onclick="deleteData(this)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>S003</td>
+                                    <td>Doni Pratama</td>
+                                    <td>doni@email.com</td>
+                                    <td>XI IPA 3</td>
+                                    <td><span class="badge badge-inactive">Non-Aktif</span></td>
+                                    <td class="action-btns">
+                                        <button class="btn-edit" onclick="editData('S003')"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-delete" onclick="deleteData(this)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Mock Delete Logic
+        function deleteData(btn) {
+            if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                const row = btn.closest('tr');
+                row.remove();
+                alert('Data berhasil dihapus (Mock)');
+            }
+        }
+        function editData(id) {
+            window.location.href = 'form.html?id=' + id;
+        }
+    </script>
+</body>
+</html>

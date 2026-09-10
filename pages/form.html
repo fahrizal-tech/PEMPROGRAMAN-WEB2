@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Siswa - LMS Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-graduation-cap"></i> LMS Admin</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="data-master.html"><i class="fas fa-users"></i> Data Siswa</a></li>
+                <li><a href="form.html"><i class="fas fa-user-plus"></i> Form Siswa</a></li>
+                <li><a href="laporan.html"><i class="fas fa-chart-bar"></i> Laporan</a></li>
+                <li style="margin-top: auto;"><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="top-header">
+                <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+                <div class="user-profile">
+                    <span style="font-weight: 500;">Admin User</span>
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=1976D2&color=fff" alt="User Profile">
+                </div>
+            </header>
+
+            <main class="content-area">
+                <h2 style="margin-bottom: 20px;">Form Input / Edit Siswa</h2>
+
+                <div class="card" style="max-width: 800px;">
+                    <form id="siswaForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>ID Siswa</label>
+                                <input type="text" id="idSiswa" class="form-control" placeholder="Otomatis" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Nama Lengkap *</label>
+                                <input type="text" id="nama" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Kelas *</label>
+                                <select id="kelas" class="form-control" required>
+                                    <option value="">Pilih Kelas</option>
+                                    <option value="X">Kelas X</option>
+                                    <option value="XI">Kelas XI</option>
+                                    <option value="XII">Kelas XII</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Data</button>
+                            <a href="data-master.html" class="btn btn-secondary" style="background: #9e9e9e;"><i class="fas fa-times"></i> Batal</a>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.getElementById('siswaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Basic Client-Side Validation is handled by HTML5 'required' and 'type="email"'
+            const nama = document.getElementById('nama').value;
+            alert('Data ' + nama + ' berhasil disimpan! (Mockup)');
+            window.location.href = 'data-master.html';
+        });
+    </script>
+</body>
+</html>
