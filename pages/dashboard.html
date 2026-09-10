@@ -3,30 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - EduLearn</title>
-    <!-- Icons -->
+    <title>Dashboard - LMS Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
     <div class="app-container">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar">
             <div class="sidebar-header">
-                <i class="fas fa-graduation-cap"></i>
-                <span>EduLearn</span>
+                <i class="fas fa-layer-group"></i> LMS Admin
             </div>
             <ul class="sidebar-nav">
-                <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
-                <li><a href="data-master.html"><i class="fas fa-users"></i> Students</a></li>
-                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a></li>
-                <li><a href="laporan.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="dashboard.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="data-master.html"><i class="fas fa-users"></i> Data Master</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> Modul</a></li>
+                <li><a href="laporan.html"><i class="fas fa-chart-bar"></i> Laporan</a></li>
             </ul>
         </aside>
 
@@ -34,197 +27,99 @@
         <div class="main-content">
             <!-- Topbar -->
             <header class="topbar">
-                <div class="topbar-left">
-                    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-                    <div class="search-bar">
-                        <i class="fas fa-search" style="color: #9ca3af;"></i>
-                        <input type="text" placeholder="Search users, courses, reports...">
-                    </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search here...">
                 </div>
                 <div class="topbar-right">
-                    <div class="notification-bell">
-                        <i class="far fa-bell"></i>
-                    </div>
-                    <div class="user-profile-top">
-                        <img src="https://ui-avatars.com/api/?name=Sarah+K&background=f3f4f6&color=111827" alt="Sarah K.">
-                        <div class="user-info-text">
-                            <span class="name">Sarah K.</span>
-                            <span class="role">Admin</span>
+                    <div class="bell-icon"><i class="far fa-bell"></i></div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+Connor&background=333&color=fff" alt="Sarah Connor">
+                        <div class="info">
+                            <span class="name">Sarah Connor</span>
+                            <span class="role">Administrator</span>
                         </div>
-                        <i class="fas fa-chevron-down" style="font-size: 12px; color: #6b7280;"></i>
                     </div>
                 </div>
             </header>
 
             <main class="content-area">
-                <!-- Banner -->
-                <div class="welcome-banner">
-                    <h1>Welcome back, Sarah!</h1>
-                    <p>Manage your education platform efficiently.</p>
+                <div class="page-header">
+                    <div>
+                        <h1>Dashboard Overview</h1>
+                        <p>Quick access to your academic KPIs and operational metrics</p>
+                    </div>
                 </div>
 
                 <!-- Stats Grid -->
                 <div class="stat-grid">
-                    <div class="card">
-                        <div class="stat-card-inner">
-                            <span class="stat-title">Students</span>
-                            <div class="stat-value-row">
-                                <span class="stat-value">4,320</span>
-                                <span class="badge positive"><i class="fas fa-arrow-up"></i> 5.2%</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="title">Total Students</span>
+                        <span class="value">12,845</span>
+                        <div class="icon icon-blue"><i class="fas fa-user-friends"></i></div>
                     </div>
-                    <div class="card">
-                        <div class="stat-card-inner">
-                            <span class="stat-title">Courses</span>
-                            <div class="stat-value-row">
-                                <span class="stat-value">185</span>
-                                <span class="badge positive"><i class="fas fa-plus"></i> 3</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="title">Active Courses</span>
+                        <span class="value">48</span>
+                        <div class="icon icon-yellow"><i class="fas fa-book-open"></i></div>
                     </div>
-                    <div class="card">
-                        <div class="stat-card-inner">
-                            <span class="stat-title">Active Enrollments</span>
-                            <div class="stat-value-row">
-                                <span class="stat-value">3,912</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="title">Completions</span>
+                        <span class="value">1,890</span>
+                        <div class="icon icon-green"><i class="fas fa-check-circle"></i></div>
                     </div>
-                    <div class="card">
-                        <div class="stat-card-inner">
-                            <span class="stat-title">Completion Rate</span>
-                            <div class="stat-value-row">
-                                <span class="stat-value">78%</span>
-                                <span class="badge positive"><i class="fas fa-arrow-up"></i> 1.5%</span>
-                            </div>
-                        </div>
+                    <div class="stat-card">
+                        <span class="title">Revenue</span>
+                        <span class="value">$24,450</span>
+                        <div class="icon icon-teal"><i class="fas fa-dollar-sign"></i></div>
                     </div>
                 </div>
 
                 <!-- Chart Area -->
-                <div class="card" style="margin-bottom: 24px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div>
-                            <h3 style="font-size: 16px; font-weight: 600;">Learning Activity (Past 14 Days)</h3>
-                            <p style="font-size: 13px; color: var(--text-muted);">Daily active hours/logins</p>
-                        </div>
-                        <button style="background: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer;">
-                            May active hours
-                        </button>
-                    </div>
-                    <div style="height: 250px;">
-                        <canvas id="activityChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Recent Enrollments Table -->
-                <div class="card table-card">
-                    <h3 class="table-header">Recent Enrollments</h3>
-                    <div style="overflow-x: auto;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Student Name</th>
-                                    <th>Course</th>
-                                    <th>Date Enrolled</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="student-col">
-                                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=e0f2fe" alt="John">
-                                            John Doe
-                                        </div>
-                                    </td>
-                                    <td>Python 101</td>
-                                    <td>Aug 17, 2022</td>
-                                    <td><span class="badge positive">Active</span></td>
-                                    <td class="action-btns">
-                                        <button><i class="fas fa-pen"></i></button>
-                                        <button><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="student-col">
-                                            <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=fef3c7" alt="Jane">
-                                            Jane Smith
-                                        </div>
-                                    </td>
-                                    <td>Web Dev</td>
-                                    <td>May 2, 2022</td>
-                                    <td><span class="badge warning">Completed</span></td>
-                                    <td class="action-btns">
-                                        <button><i class="fas fa-pen"></i></button>
-                                        <button><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="student-col">
-                                            <img src="https://ui-avatars.com/api/?name=Alex+Kim&background=dcfce7" alt="Alex">
-                                            Alex Kim
-                                        </div>
-                                    </td>
-                                    <td>Data Science</td>
-                                    <td>May 11, 2022</td>
-                                    <td><span class="badge positive">Active</span></td>
-                                    <td class="action-btns">
-                                        <button><i class="fas fa-pen"></i></button>
-                                        <button><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="chart-card">
+                    <h3>Enrollment Trends</h3>
+                    <p>Monthly volume of course registrations (Jan - Jul)</p>
+                    <div style="height: 300px;">
+                        <canvas id="enrollmentChart"></canvas>
                     </div>
                 </div>
             </main>
         </div>
     </div>
 
-    <script src="../assets/js/main.js"></script>
     <script>
-        // Smooth line chart mimicking the Figma design
-        const ctx = document.getElementById('activityChart').getContext('2d');
-        
-        // Create gradient fill
-        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(245, 158, 11, 0.2)'); // Amber
-        gradient.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        const ctx = document.getElementById('enrollmentChart').getContext('2d');
+        let gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(29, 78, 216, 0.2)');
+        gradient.addColorStop(1, 'rgba(29, 78, 216, 0)');
 
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
                 datasets: [{
-                    label: 'Active Hours',
-                    data: [0, 6, 3, 8, 5, 16, 14, 5, 22, 14, 6, 20], // matching peaks roughly
-                    borderColor: '#f59e0b', // Amber line
+                    label: 'Enrollments',
+                    data: [100, 240, 170, 380, 320, 500, 420],
+                    borderColor: '#1d4ed8',
                     backgroundColor: gradient,
-                    borderWidth: 3,
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#f59e0b',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#1d4ed8',
+                    pointBorderColor: '#fff',
                     pointBorderWidth: 2,
                     pointRadius: 4,
                     fill: true,
-                    tension: 0.4 // Makes line smooth/curved like Figma
+                    tension: 0
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 25,
-                        grid: { borderDash: [5, 5], color: '#e5e7eb' },
+                        max: 600,
+                        grid: { color: '#f1f5f9' },
                         border: { display: false }
                     },
                     x: {
