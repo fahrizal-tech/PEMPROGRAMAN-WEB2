@@ -110,11 +110,11 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system (48 warna, 13 ukuran font, 10 spasi, 17 font family); radius memakai standar Tailwind agar seragam
 - [x] Hasil build CSS di-commit (`assets/css/app.css`, 61 KB minified) → hosting tetap statis tanpa build server
 - [ ] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`)
-- [ ] Komponen sidebar + header tunggal (`assets/js/components/`) → dipakai semua halaman
+- [x] Komponen sidebar + topbar + footer tunggal (`assets/js/components/layout.js`): menu dari satu sumber data, breadcrumb, profil admin, skip link
 - [ ] Navigasi antarhalaman berfungsi, penanda menu aktif otomatis
 - [ ] Sidebar sesuai hirarki final di `perancangan.md` (hapus Modul & Materi, Hak Akses & Peran, Keuangan & Transaksi), branding seragam
 - [ ] Tab peran Dosen/Mahasiswa di login → pemberitahuan "di luar lingkup"
-- [ ] Sidebar responsif: drawer + overlay + tombol burger di < 1024px
+- [x] Sidebar responsif: drawer + overlay + tombol burger di < 1024px (tutup via overlay/Esc, scroll terkunci, `aria-expanded`)
 - [ ] Hapus Tailwind CDN & konfigurasi inline di setiap halaman
 - [ ] Ganti 20 avatar dari `lh3.googleusercontent.com` (link sementara Stitch) dengan avatar inisial / aset lokal
 - [ ] Rilis tag `v0.2.0`
