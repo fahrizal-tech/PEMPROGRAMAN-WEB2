@@ -5,7 +5,18 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
-### Tahap 0 — Fondasi & Kerapian Repo (2026-09-24)
+## [0.1.0] — 2026-09-24 · Milestone 1
+
+### Tahap 1 — Dokumentasi Perancangan
+
+#### Ditambahkan
+- `docs/perancangan.md` ditulis ulang: deskripsi & ruang lingkup sistem, hirarki menu (diagram + peta halaman), user flow, ER-D 14 entitas, kamus data, design system (Material Design, warna, tipografi, komponen), galeri rancangan Stitch, evolusi desain Figma → Stitch.
+
+#### Diubah
+- Nama screenshot Figma diperjelas: `wireframe-dashboard`, `wireframe-data-master`, `komponen-dasar`, `mid-fidelity-dashboard-data-master`.
+- Hirarki menu final: *Modul & Materi* digabung ke Form Kursus, *Hak Akses & Peran* ke Pengaturan, *Keuangan & Transaksi* dihapus.
+
+### Tahap 0 — Fondasi & Kerapian Repo
 
 #### Ditambahkan
 - Halaman hasil desain Stitch: Login, Mahasiswa, Instruktur, Kelas Virtual, Form Kursus, Tugas & Kuis, Sertifikasi, Pengaturan.

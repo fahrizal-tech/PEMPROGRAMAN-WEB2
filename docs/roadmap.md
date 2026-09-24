@@ -97,14 +97,14 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `.gitignore`, `.gitattributes` (line ending LF), `.editorconfig`
 - [x] Roadmap, README, CHANGELOG
 
-### Tahap 1 — Milestone 1: Dokumentasi Perancangan (target: pekan 3)
-- [ ] Hirarki menu final, sama persis dengan sidebar aplikasi
-- [ ] ER-D Mermaid lengkap: `ADMIN`, `MAHASISWA`, `INSTRUKTUR`, `KURSUS`, `KRS`, `KELAS_VIRTUAL`, `TUGAS_KUIS`, `PENGUMPULAN`, `SERTIFIKAT`, `LOG_AKTIVITAS`
-- [ ] Kamus data (atribut, tipe, contoh nilai) untuk tiap entitas
-- [ ] User Flow (Mermaid flowchart): login → dashboard → CRUD → laporan
-- [ ] Ringkasan Design System: palet warna, tipografi, komponen (Button, Input, Card, Badge, Table)
-- [ ] Galeri screenshot Stitch yang ditanam di dokumen
-- [ ] Rilis tag `v0.1.0`
+### Tahap 1 — Milestone 1: Dokumentasi Perancangan (target: pekan 3) ✅
+- [x] Hirarki menu final (diagram + peta halaman) dan keputusan atas 3 menu Stitch tanpa halaman
+- [x] ER-D Mermaid lengkap, 14 entitas: `PROGRAM_STUDI`, `MAHASISWA`, `INSTRUKTUR`, `KURSUS`, `MODUL`, `KRS`, `KELAS_VIRTUAL`, `PRESENSI`, `TUGAS_KUIS`, `PENGUMPULAN`, `SERTIFIKAT`, `ADMIN`, `LOG_AKTIVITAS`, `PENGATURAN`
+- [x] Kamus data (atribut, tipe, aturan validasi, contoh nilai) untuk tiap entitas
+- [x] User Flow (Mermaid flowchart): login → dashboard → CRUD → laporan, plus aturan UX
+- [x] Design System: penerapan Material Design, palet warna, tipografi, komponen reusable
+- [x] Galeri rancangan Stitch + evolusi desain (wireframe → mid → high fidelity)
+- [x] Rilis tag `v0.1.0`
 
 ### Tahap 2 — Milestone 2: Slicing & Layouting (target: pekan 5)
 - [ ] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system
@@ -112,6 +112,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [ ] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`)
 - [ ] Komponen sidebar + header tunggal (`assets/js/components/`) → dipakai semua halaman
 - [ ] Navigasi antarhalaman berfungsi, penanda menu aktif otomatis
+- [ ] Sidebar sesuai hirarki final di `perancangan.md` (hapus Modul & Materi, Hak Akses & Peran, Keuangan & Transaksi), branding seragam
+- [ ] Tab peran Dosen/Mahasiswa di login → pemberitahuan "di luar lingkup"
 - [ ] Sidebar responsif: drawer + overlay + tombol burger di < 1024px
 - [ ] Hapus Tailwind CDN & konfigurasi inline di setiap halaman
 - [ ] Ganti 20 avatar dari `lh3.googleusercontent.com` (link sementara Stitch) dengan avatar inisial / aset lokal
