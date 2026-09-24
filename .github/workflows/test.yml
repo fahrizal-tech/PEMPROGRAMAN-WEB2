@@ -1,0 +1,31 @@
+# Menjalankan uji unit & uji E2E browser di setiap push dan pull request.
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit & E2E
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Cek CSS hasil build sudah diperbarui
+        run: |
+          npm run build:css
+          git diff --exit-code -- assets/css/app.css || (echo "::error::assets/css/app.css belum di-build ulang. Jalankan: npm run build:css" && exit 1)
+      - name: Uji unit
+        run: npm test
+      - name: Uji E2E (Chrome)
+        run: npm run test:e2e
+        env:
+          BROWSER_PATH: /usr/bin/google-chrome

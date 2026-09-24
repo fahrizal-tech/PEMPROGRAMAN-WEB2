@@ -42,8 +42,9 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 │   ├── img/                    # Logo & gambar
 │   └── data/                   # Seed data (mock database)
 ├── pages/                      # Halaman admin panel
+├── tests/                      # Uji unit (Node) & E2E (browser)
 ├── index.html                  # Halaman Login
-├── .github/workflows/          # Otomasi (pemindai rahasia)
+├── .github/workflows/          # Otomasi: pemindai rahasia & pengujian
 ├── CHANGELOG.md
 ├── SECURITY.md
 └── README.md
