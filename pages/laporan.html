@@ -1,233 +1,25 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="web_dashboard" name="shell-type">
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<style>
-    @layer base {
-      html, body { margin: 0; padding: 0; }
-      body { overscroll-behavior: none; }
-      main > :first-child { margin-top: 0 !important; }
-      main > :last-child { margin-bottom: 0 !important; }
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-    ::-webkit-scrollbar-track { background: #f8fafc; }
-  </style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "error": "#ba1a1a",
-            "primary-container": "#2563eb",
-            "on-primary": "#ffffff",
-            "secondary-container": "#d5e3fc",
-            "on-tertiary-fixed": "#131b2e",
-            "surface-container-low": "#eff4ff",
-            "on-surface": "#0b1c30",
-            "primary-fixed": "#dbe1ff",
-            "surface-dim": "#cbdbf5",
-            "on-background": "#0b1c30",
-            "on-secondary-fixed-variant": "#3a485b",
-            "inverse-surface": "#213145",
-            "surface-tint": "#0053db",
-            "surface-container-highest": "#d3e4fe",
-            "surface-container-high": "#dce9ff",
-            "on-primary-container": "#eeefff",
-            "background": "#f8f9ff",
-            "primary-fixed-dim": "#b4c5ff",
-            "inverse-on-surface": "#eaf1ff",
-            "tertiary-container": "#656d84",
-            "on-surface-variant": "#434655",
-            "secondary": "#515f74",
-            "on-secondary": "#ffffff",
-            "tertiary-fixed-dim": "#bec6e0",
-            "secondary-fixed-dim": "#b9c7df",
-            "outline-variant": "#c3c6d7",
-            "surface-container-lowest": "#ffffff",
-            "secondary-fixed": "#d5e3fc",
-            "on-primary-fixed": "#00174b",
-            "surface-container": "#e5eeff",
-            "on-tertiary": "#ffffff",
-            "on-secondary-container": "#57657a",
-            "on-error-container": "#93000a",
-            "surface": "#f8f9ff",
-            "on-tertiary-fixed-variant": "#3f465c",
-            "inverse-primary": "#b4c5ff",
-            "tertiary-fixed": "#dae2fd",
-            "outline": "#737686",
-            "surface-variant": "#d3e4fe",
-            "on-error": "#ffffff",
-            "tertiary": "#4d556b",
-            "on-primary-fixed-variant": "#003ea8",
-            "on-secondary-fixed": "#0d1c2e",
-            "surface-bright": "#f8f9ff",
-            "primary": "#004ac6",
-            "error-container": "#ffdad6",
-            "on-tertiary-container": "#eef0ff"
-          },
-          borderRadius: {
-            "DEFAULT": "0.125rem",
-            "lg": "0.25rem",
-            "xl": "0.375rem",
-            "full": "0.5rem"
-          },
-          fontFamily: {
-            "sans": ["Inter", "sans-serif"],
-            "body-md": ["Inter", "sans-serif"],
-            "headline-md": ["Inter", "sans-serif"],
-            "headline-xl": ["Inter", "sans-serif"],
-            "code-tabular": ["JetBrains Mono", "monospace"]
-          }
-        }
-      }
-    }
-  </script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laporan & Analitik · Nexus LMS</title>
+  <meta name="description" content="Rekap kinerja mata kuliah dan log aktivitas sistem.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <script src="../assets/js/components/layout.js" defer></script>
 </head>
-<body class="bg-[#f8fafc] font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
-<!-- Left Sidebar -->
-<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between">
-<div class="flex flex-col flex-1 overflow-y-auto">
-<!-- Brand -->
-<div class="h-16 px-5 flex items-center justify-between border-b border-slate-200 bg-white">
-<div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white font-bold text-base shadow-sm">
-            N
-          </div>
-<span class="font-bold text-base tracking-tight text-slate-900">NEXUS LMS</span>
-</div>
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200 uppercase tracking-wider">v2.4 Enterprise</span>
-</div>
-<!-- Navigation Links -->
-<nav class="flex-1 px-3 py-4 space-y-5 text-[13px]">
-<div>
-<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MAIN</span>
-<div class="mt-1.5 flex flex-col gap-0.5">
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="dashboard" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">dashboard</span>
-<span class="">Dashboard</span>
-</a>
-<a aria-current="page" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md bg-blue-50 text-blue-700 font-semibold border border-blue-100 transition-colors" data-path="analytics-and-reports" href="#">
-<span class="material-symbols-outlined text-lg text-blue-700">monitoring</span>
-<span class="">Analytics &amp; Reports</span>
-</a>
-</div>
-</div>
-<div>
-<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">AKADEMIK &amp; KURSUS</span>
-<div class="mt-1.5 flex flex-col gap-0.5">
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="master-kursus" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">auto_stories</span>
-<span class="">Data Master Kursus</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="modul-dan-materi" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">folder_open</span>
-<span class="">Modul &amp; Materi</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="tugas-dan-kuis" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">quiz</span>
-<span class="">Tugas &amp; Kuis</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="kelas-virtual" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">video_camera_front</span>
-<span class="">Kelas Virtual</span>
-</a>
-</div>
-</div>
-<div>
-<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">PENGGUNA</span>
-<div class="mt-1.5 flex flex-col gap-0.5">
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="mahasiswa-dan-siswa" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">school</span>
-<span class="">Mahasiswa &amp; Siswa</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="instruktur-dan-dosen" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">badge</span>
-<span class="">Instruktur / Dosen</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="hak-akses-dan-peran" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">shield_person</span>
-<span class="">Hak Akses &amp; Peran</span>
-</a>
-</div>
-</div>
-<div>
-<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MANAJEMEN</span>
-<div class="mt-1.5 flex flex-col gap-0.5">
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="sertifikasi-digital" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">workspace_premium</span>
-<span class="">Sertifikasi Digital</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="keuangan-dan-transaksi" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">receipt_long</span>
-<span class="">Keuangan &amp; Transaksi</span>
-</a>
-<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="pengaturan-sistem" href="#">
-<span class="material-symbols-outlined text-lg text-slate-500">settings</span>
-<span class="">Pengaturan Sistem</span>
-</a>
-</div>
-</div>
-</nav>
-</div>
-<!-- Status Box -->
-<div class="p-3 border-t border-slate-200 bg-slate-50/70">
-<div class="flex items-center gap-2.5 px-3 py-2 rounded-md bg-white border border-slate-200">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<div class="flex flex-col">
-<span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider leading-none">Status Server</span>
-<span class="text-[12px] font-semibold text-slate-800 leading-tight">Operasional 99.98%</span>
-</div>
-</div>
-</div>
-</aside>
-<!-- Content Wrap -->
-<div class="pl-64">
-<!-- Top Nav Header -->
-<header class="fixed top-0 left-64 right-0 h-16 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-6">
-<div class="flex items-center gap-2 text-sm text-slate-500">
-<span class="hover:text-slate-800 cursor-pointer transition-colors font-medium">LMS Portal</span>
-<span class="material-symbols-outlined text-base text-slate-400">chevron_right</span>
-<span class="text-slate-900 font-semibold">Console</span>
-</div>
-<div class="flex-1 max-w-lg mx-6">
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg pointer-events-none">search</span>
-<input class="w-full h-9 pl-9 pr-20 rounded-md bg-slate-50 border border-slate-200 text-slate-800 placeholder:text-slate-400 text-xs focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Cari modul, materi, mahasiswa, atau transaksi..." type="text">
-<kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 text-[10px] font-mono shadow-xs">Ctrl + K</kbd>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<div class="flex items-center bg-slate-100 p-0.5 rounded border border-slate-200">
-<button class="px-2 py-0.5 rounded text-xs font-semibold text-slate-900 bg-white shadow-xs">ID</button>
-<button class="px-2 py-0.5 rounded text-xs font-medium text-slate-500 hover:text-slate-800">EN</button>
-</div>
-<button class="relative p-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors border border-transparent hover:border-slate-200">
-<span class="material-symbols-outlined text-xl">notifications</span>
-<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600"></span>
-</button>
-<button class="h-9 px-3 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors">
-<span class="material-symbols-outlined text-base">add</span>
-<span class="">Buat Baru</span>
-</button>
-<div class="h-6 w-px bg-slate-200 mx-1"></div>
-<div class="flex items-center gap-2.5 pl-1">
-<img alt="Profile" class="w-8 h-8 rounded-full border border-slate-200 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtuhg6DYRYiHjxijXSMzfqXYTHbKmaZ0reADnvbT7cketOXhtRyIcOYahq2yL2ubhvQ9SDwEpi4ysrdMsAonDnxq5HFymPh9yjJxpz9H1ZWflZ0dH8ouUEk6vg0csXOSmAUfk2OfJJCmEnXjozf6RadPQzdNBMNSS0-CnWgOhSnikcRkKbOD_5tMNGPj2Xq5hoUFKpXNztvraXvihcJduNz87jCjPT2UGJfe8h66kjcHX3O7HjoUs">
-<div class="hidden xl:flex flex-col text-left">
-<span class="text-xs font-semibold text-slate-800 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="text-[11px] text-slate-500 leading-tight">Super Administrator</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content Canvas -->
-<main class="w-full pt-16 bg-[#f8fafc] min-h-screen">
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Laporan &amp; Analitik"></header>
+
+    <main class="flex-1 min-w-0">
 <div class="p-6 max-w-[1720px] mx-auto flex flex-col gap-6">
 <!-- 1. Header Toolbar & Formal Academic Filters (Looker/Tableau Style) -->
 <section class="bg-white rounded-md border border-slate-200 shadow-xs p-5">
@@ -264,18 +56,18 @@
 </div>
 <!-- Filter Controls Strip -->
 <div class="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
-<div class="flex flex-wrap items-center gap-2.5">
+<div class="flex w-full min-w-0 flex-wrap items-center gap-2.5 sm:w-auto">
 <!-- Date Range Selector -->
-<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-slate-700">
+<div class="flex min-w-0 max-w-full items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-slate-700">
 <span class="material-symbols-outlined text-slate-400 text-sm">date_range</span>
 <span class="font-semibold text-slate-500 uppercase text-[10px] tracking-wider">Periode:</span>
-<span class="font-medium text-slate-800">1 Jan 2024 - 31 Des 2024 (TA 2024/2025)</span>
+<span class="min-w-0 truncate font-medium text-slate-800">1 Jan 2024 - 31 Des 2024 (TA 2024/2025)</span>
 <span class="material-symbols-outlined text-slate-400 text-sm">arrow_drop_down</span>
 </div>
 <!-- Fakultas / Jurusan Dropdown -->
-<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
 <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Fakultas:</span>
-<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
 <option value="all">Semua Fakultas &amp; Sekolah Pascasarjana</option>
 <option value="fasilkom">Ilmu Komputer &amp; Informatika</option>
 <option value="ft">Teknik &amp; Rekayasa Terapan</option>
@@ -283,9 +75,9 @@
 </select>
 </div>
 <!-- Status Kelulusan Dropdown -->
-<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
 <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Kelulusan:</span>
-<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
 <option value="all">Semua Status Hasil</option>
 <option value="pass">Lulus Capaian (IPK &gt;= 3.00)</option>
 <option value="remedial">Memerlukan Remediasi</option>
@@ -293,9 +85,9 @@
 </select>
 </div>
 <!-- Metode Pembelajaran Dropdown -->
-<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
 <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Metode:</span>
-<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
 <option value="all">Semua Modalitas (Hybrid &amp; Daring)</option>
 <option value="hybrid">Blended / Hybrid Synchronous</option>
 <option value="online">100% Fully Online Asynchronous</option>
@@ -889,7 +681,8 @@
 </footer>
 </div>
 </main>
-</div>
 
-
-</body></html>
+    <footer data-component="footer"></footer>
+  </div>
+</body>
+</html>

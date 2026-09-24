@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** dalam pengembangan. Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
+> **Status:** Milestone 2 selesai (layout & navigasi). Fitur interaktif sedang dikembangkan. Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
 
 ## Fitur Utama
 
@@ -51,21 +51,26 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 
 ## Menjalankan Secara Lokal
 
-Aplikasi memakai JavaScript modules, jadi harus dibuka lewat web server lokal (tidak bisa dibuka langsung sebagai `file://`).
+Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu masuk dengan email dan kata sandi apa saja.
+Semua halaman memakai CSS yang sudah di-build (`assets/css/app.css`) dan JavaScript biasa, sehingga bisa berjalan tanpa server.
 
-**Opsi 1: VS Code**, pasang ekstensi *Live Server*, klik kanan `index.html`, lalu pilih **Open with Live Server**.
-
-**Opsi 2: Terminal**
+Jika ingin memakai server lokal (misalnya untuk demo):
 ```bash
-npx serve .
+npm run serve        # lalu buka http://localhost:3000
 ```
-Setelah itu buka `http://localhost:3000`.
+
+### Build ulang CSS (hanya jika mengubah class Tailwind)
+```bash
+npm install
+npm run build:css    # sekali build
+npm run watch:css    # build otomatis saat file berubah
+```
 
 ## Teknologi
 
 - HTML5 semantik
-- Tailwind CSS
-- JavaScript (ES Modules), tanpa framework
+- Tailwind CSS 3 (build via CLI, token dari design system Stitch)
+- JavaScript (vanilla, tanpa framework)
 - Chart.js
 - Material Symbols & font Inter
 

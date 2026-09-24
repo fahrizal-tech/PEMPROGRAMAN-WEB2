@@ -1,176 +1,25 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="web_dashboard" name="shell-type">
-<title>Nexus LMS - Direktori Mahasiswa</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mahasiswa · Nexus LMS</title>
+  <meta name="description" content="Direktori mahasiswa dan validasi KRS.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <script src="../assets/js/components/layout.js" defer></script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen">
-<!-- Sidebar Navigation -->
-<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between select-none">
-<div class="flex flex-col flex-1 min-h-0">
-<!-- App Brand -->
-<div class="h-16 flex items-center px-5 gap-3 border-b border-slate-200 flex-shrink-0">
-<div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-sm">
-<span class="material-symbols-outlined text-[20px]">school</span>
-</div>
-<span class="text-base font-bold text-slate-900 tracking-tight">Nexus LMS</span>
-<span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wider ml-auto">v2.4 EE</span>
-</div>
-<!-- Nav Items -->
-<div class="flex-1 overflow-y-auto px-3 py-4 space-y-5">
-<!-- Main -->
-<div class="space-y-1">
-<div class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MAIN</div>
-<nav class="space-y-0.5">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">dashboard</span>
-<span class="">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">monitoring</span>
-<span class="">Analytics &amp; Reports</span>
-</a>
-</nav>
-</div>
-<!-- Akademik & Kursus -->
-<div class="space-y-1">
-<div class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">AKADEMIK &amp; KURSUS</div>
-<nav class="space-y-0.5">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">menu_book</span>
-<span class="">Data Master Kursus</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">layers</span>
-<span class="">Modul &amp; Materi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">fact_check</span>
-<span class="">Tugas &amp; Kuis</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">video_camera_front</span>
-<span class="">Kelas Virtual</span>
-</a>
-</nav>
-</div>
-<!-- Pengguna -->
-<div class="space-y-1">
-<div class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">PENGGUNA</div>
-<nav class="space-y-0.5">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium bg-blue-50 text-blue-700 font-semibold shadow-xs" href="#">
-<span class="material-symbols-outlined text-[19px] text-blue-600">school</span>
-<span class="">Mahasiswa &amp; Siswa</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">badge</span>
-<span class="">Instruktur / Dosen</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">shield</span>
-<span class="">Hak Akses &amp; Peran</span>
-</a>
-</nav>
-</div>
-<!-- Manajemen -->
-<div class="space-y-1">
-<div class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MANAJEMEN</div>
-<nav class="space-y-0.5">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">workspace_premium</span>
-<span class="">Sertifikasi Digital</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">credit_card</span>
-<span class="">Keuangan &amp; Transaksi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px]">tune</span>
-<span class="">Pengaturan Sistem</span>
-</a>
-</nav>
-</div>
-</div>
-</div>
-<!-- System Status Footer -->
-<div class="p-4 border-t border-slate-200 bg-slate-50/50 flex-shrink-0">
-<div class="flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-slate-200 shadow-2xs">
-<div class="flex items-center gap-2">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-</span>
-<span class="text-xs text-slate-600 font-medium">System Status</span>
-</div>
-<span class="font-mono text-xs text-emerald-600 font-medium">Operational</span>
-</div>
-</div>
-</aside>
-<!-- Main Viewport Area -->
-<div class="pl-64">
-<!-- Top Header -->
-<header class="fixed top-0 left-64 right-0 h-16 bg-white border-b border-slate-200 z-40 px-6 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<nav class="flex items-center text-xs font-medium text-slate-500 gap-1.5">
-<span class="hover:text-slate-800 cursor-pointer">LMS Portal</span>
-<span class="material-symbols-outlined text-[14px] text-slate-400">chevron_right</span>
-<span class="hover:text-slate-800 cursor-pointer">Console</span>
-<span class="material-symbols-outlined text-[14px] text-slate-400">chevron_right</span>
-<span class="text-slate-900 font-semibold">Direktori Pengguna</span>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<!-- Search Input Header -->
-<div class="relative flex items-center w-72">
-<span class="material-symbols-outlined absolute left-2.5 text-[18px] text-slate-400 pointer-events-none">search</span>
-<input class="w-full pl-8 pr-16 py-1.5 bg-slate-50 text-xs text-slate-800 border border-slate-200 rounded-lg focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder:text-slate-400" placeholder="Cari mahasiswa, NIM..." type="text">
-<span class="absolute right-2 font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Ctrl K</span>
-</div>
-<!-- Language Switcher -->
-<div class="flex items-center border border-slate-200 rounded-lg p-0.5 bg-slate-50 text-xs font-medium">
-<button class="px-2 py-1 rounded bg-white text-slate-900 shadow-2xs font-semibold" type="button">ID</button>
-<button class="px-2 py-1 rounded text-slate-500 hover:text-slate-900" type="button">EN</button>
-</div>
-<!-- Notifications -->
-<button class="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors" type="button">
-<span class="material-symbols-outlined text-[20px]">notifications</span>
-<span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500 border border-white"></span>
-</button>
-<!-- Primary Action -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors shadow-sm" type="button">
-<span class="material-symbols-outlined text-[16px]">person_add</span>
-<span class="">Tambah Pengguna</span>
-</button>
-<div class="h-6 w-px bg-slate-200"></div>
-<!-- User Profile Menu -->
-<div class="flex items-center gap-3 pl-1">
-<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold">
-            AW
-          </div>
-<div class="flex flex-col text-left">
-<span class="text-xs font-semibold text-slate-800 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="text-[11px] text-slate-400 leading-tight">Super Administrator</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Container -->
-<main class="w-full pt-16 min-h-[calc(100vh-4rem)] p-6 md:p-8 space-y-6">
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Mahasiswa"></header>
+
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-8">
 <!-- Page Title & Header Actions -->
 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-2"><div class="space-y-1.5"><div class="flex items-center gap-1.5 text-[11px] text-slate-500 tracking-wider font-semibold uppercase"><span class="">Direktori Pengguna</span><span class="material-symbols-outlined text-[12px]">chevron_right</span><span class="">Mahasiswa &amp; Siswa</span><span class="material-symbols-outlined text-[12px]">chevron_right</span><span class="text-blue-600 font-bold">Data Induk</span></div><h1 class="text-2xl font-bold text-slate-900 tracking-tight">Direktori &amp; Manajemen Mahasiswa Aktif</h1><p class="text-sm text-slate-500 max-w-3xl">Pemantauan status akademik mahasiswa, riwayat Indeks Prestasi Kumulatif (IPK), progres pemenuhan SKS, serta monitoring kehadiran dan keaktifan semester berjalan.</p></div><div class="flex flex-wrap items-center gap-2.5 flex-shrink-0"><button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-all shadow-xs" type="button"><span class="material-symbols-outlined text-[18px] text-slate-500">upload_file</span><span class="">Impor Mahasiswa (CSV/XLSX)</span></button><button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-all shadow-xs" type="button"><span class="material-symbols-outlined text-[18px] text-slate-500">cloud_download</span><span class="">Ekspor Data PDDIKTI</span></button><button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-all shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">person_add</span><span class="">+ Registrasi Mahasiswa Baru</span></button></div></div>
 <!-- KPI Cards (4-Column Grid) -->
@@ -989,7 +838,10 @@
 </div>
 </div>
 </main>
-</div>
+
+    <footer data-component="footer"></footer>
+  </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
       const checkAll = document.getElementById('check-all');
@@ -1014,6 +866,5 @@
       }
     });
   </script>
-
-
-</body></html>
+</body>
+</html>

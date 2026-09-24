@@ -1,191 +1,25 @@
 <!DOCTYPE html>
-
-<html lang="id"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="web_dashboard" name="shell-type"/>
-<title>Data Master Kursus - Nexus LMS</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-<style>
-    @layer base {
-      body {
-        font-family: 'Inter', sans-serif;
-        color: #0f172a;
-        background-color: #f8fafc;
-      }
-    }
-  </style>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Master Kursus · Nexus LMS</title>
+  <meta name="description" content="Kelola data kursus: tambah, edit, dan hapus.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <script src="../assets/js/components/layout.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
-<!-- Main App Layout: Sidebar + Canvas -->
-<div class="flex min-h-screen">
-<!-- Sidebar Navigation (Clean Enterprise White / Slate) -->
-<aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 z-30">
-<div class="flex flex-col flex-1 overflow-y-auto">
-<!-- Logo / Tenant header -->
-<div class="h-16 px-5 flex items-center justify-between border-b border-slate-200">
-<div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-<span class="material-symbols-outlined text-lg">school</span>
-</div>
-<div>
-<span class="font-bold text-sm text-slate-900 tracking-tight">NEXUS LMS</span>
-<span class="block text-[10px] uppercase font-semibold text-slate-400 -mt-0.5 tracking-wider">Enterprise Edition</span>
-</div>
-</div>
-<span class="text-[11px] font-medium text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">v2.4</span>
-</div>
-<!-- Navigation Sections -->
-<nav class="flex-1 px-3 py-4 space-y-6">
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Main</span>
-<div class="space-y-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
-<span>Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">monitoring</span>
-<span>Analytics &amp; Reports</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Akademik &amp; Kursus</span>
-<div class="space-y-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-md bg-blue-50 text-blue-700 text-sm font-semibold border-l-4 border-blue-600 pl-2" href="#">
-<span class="material-symbols-outlined text-[19px] text-blue-600">auto_stories</span>
-<span>Data Master Kursus</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">folder_open</span>
-<span>Modul &amp; Materi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">quiz</span>
-<span>Tugas &amp; Kuis</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">video_camera_front</span>
-<span>Kelas Virtual</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Pengguna</span>
-<div class="space-y-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">school</span>
-<span>Mahasiswa &amp; Siswa</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">badge</span>
-<span>Instruktur / Dosen</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">shield_person</span>
-<span>Hak Akses &amp; Peran</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Manajemen</span>
-<div class="space-y-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">workspace_premium</span>
-<span>Sertifikasi Digital</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">receipt_long</span>
-<span>Keuangan &amp; Transaksi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" href="#">
-<span class="material-symbols-outlined text-[19px] text-slate-400">settings</span>
-<span>Pengaturan Sistem</span>
-</a>
-</div>
-</div>
-</nav>
-</div>
-<!-- Sidebar Footer: Service Status -->
-<div class="p-3 border-t border-slate-200 bg-slate-50">
-<div class="flex items-center justify-between px-2 py-1.5 rounded-md bg-white border border-slate-200">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<div class="flex flex-col">
-<span class="text-[11px] font-medium text-slate-500 leading-none">System Status</span>
-<span class="text-xs font-semibold text-slate-800">Operational</span>
-</div>
-</div>
-<span class="text-[10px] text-slate-400">99.9%</span>
-</div>
-</div>
-</aside>
-<!-- Main Content Container -->
-<div class="flex-1 flex flex-col min-w-0">
-<!-- Top Header Navigation -->
-<header class="h-16 bg-white border-b border-slate-200 sticky top-0 z-20 flex items-center justify-between px-6">
-<!-- Breadcrumb / Location -->
-<div class="flex items-center gap-2 text-xs font-medium text-slate-500">
-<span class="hover:text-slate-800 cursor-pointer">LMS Portal</span>
-<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
-<span class="text-slate-800 font-semibold">Console</span>
-</div>
-<!-- Global Search Bar (Enterprise Standard) -->
-<div class="flex-1 max-w-lg mx-6">
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg pointer-events-none">search</span>
-<input class="w-full h-9 pl-9 pr-20 rounded-md border border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-blue-600 focus:bg-white transition-all" placeholder="Cari modul, materi, mahasiswa, atau transaksi..." type="text"/>
-<div class="absolute right-2 flex items-center gap-1 text-[11px] text-slate-400 pointer-events-none">
-<kbd class="px-1.5 py-0.5 rounded border border-slate-200 bg-white font-mono shadow-2xs">Ctrl + K</kbd>
-</div>
-</div>
-</div>
-<!-- User profile & Quick Actions -->
-<div class="flex items-center gap-3">
-<!-- Lang Selector -->
-<div class="flex items-center rounded-md border border-slate-200 bg-slate-50 p-0.5">
-<button class="px-2 py-0.5 rounded text-xs font-semibold text-slate-800 bg-white shadow-xs">ID</button>
-<button class="px-2 py-0.5 rounded text-xs font-medium text-slate-500 hover:text-slate-800">EN</button>
-</div>
-<!-- Notification -->
-<button class="relative p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined text-xl">notifications</span>
-<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600 ring-2 ring-white"></span>
-</button>
-<!-- Primary "Buat Baru" button -->
-<button class="h-8 px-3 rounded-md bg-blue-600 text-white text-xs font-medium flex items-center gap-1.5 hover:bg-blue-700 transition-colors shadow-xs">
-<span class="material-symbols-outlined text-base">add</span>
-<span>Buat Baru</span>
-</button>
-<div class="h-6 w-px bg-slate-200 mx-1"></div>
-<!-- User Badge -->
-<div class="flex items-center gap-2.5">
-<img alt="Profile" class="w-8 h-8 rounded-full border border-slate-200 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtuhg6DYRYiHjxijXSMzfqXYTHbKmaZ0reADnvbT7cketOXhtRyIcOYahq2yL2ubhvQ9SDwEpi4ysrdMsAonDnxq5HFymPh9yjJxpz9H1ZWflZ0dH8ouUEk6vg0csXOSmAUfk2OfJJCmEnXjozf6RadPQzdNBMNSS0-CnWgOhSnikcRkKbOD_5tMNGPj2Xq5hoUFKpXNztvraXvihcJduNz87jCjPT2UGJfe8h66kjcHX3O7HjoUs"/>
-<div class="hidden xl:flex flex-col text-left">
-<span class="text-xs font-semibold text-slate-900 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="text-[11px] text-slate-500 leading-tight">Super Administrator</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Page Canvas / Main Body -->
-<main class="flex-1 p-6 space-y-6">
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Data Master Kursus"></header>
+
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
 <!-- Breadcrumb and Context Header -->
 <div class="flex flex-wrap items-center justify-between gap-2">
 <div class="flex items-center gap-2 text-xs text-slate-500">
@@ -303,7 +137,7 @@
 <!-- Search Field -->
 <div class="relative flex-1 max-w-xl">
 <span class="material-symbols-outlined absolute left-3 top-2 text-slate-400 text-lg pointer-events-none">search</span>
-<input class="w-full h-9 pl-9 pr-14 rounded-md border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 transition-colors" id="courseSearchInput" placeholder="Cari nama kursus, kode MK (e.g. CS-301), atau instruktur..." type="text"/>
+<input class="w-full h-9 pl-9 pr-14 rounded-md border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-xs focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600 transition-colors" id="courseSearchInput" placeholder="Cari nama kursus, kode MK (e.g. CS-301), atau instruktur..." type="text">
 <div class="absolute right-2.5 top-2 flex items-center text-[10px] text-slate-400 font-mono pointer-events-none">
 <kbd class="px-1 py-0.5 border border-slate-200 rounded bg-slate-50">ESC</kbd>
 </div>
@@ -380,7 +214,7 @@
 <thead>
 <tr class="bg-slate-50 border-b border-slate-200 h-10 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
 <th class="w-12 px-4 text-center">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" id="selectAllMaster" type="checkbox"/>
+<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" id="selectAllMaster" type="checkbox">
 </th>
 <th class="px-4 py-2 min-w-[280px]">Mata Kuliah &amp; Kode MK</th>
 <th class="px-4 py-2 min-w-[160px]">Kategori &amp; Level</th>
@@ -395,7 +229,7 @@
 <!-- Row 1 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -473,7 +307,7 @@
 <!-- Row 2 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -551,7 +385,7 @@
 <!-- Row 3 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -629,7 +463,7 @@
 <!-- Row 4 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -707,7 +541,7 @@
 <!-- Row 5 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -785,7 +619,7 @@
 <!-- Row 6 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -863,7 +697,7 @@
 <!-- Row 7 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -941,7 +775,7 @@
 <!-- Row 8 -->
 <tr class="hover:bg-slate-50 transition-colors group">
 <td class="px-4 py-3 text-center">
-<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox"/>
+<input class="course-row-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" type="checkbox">
 </td>
 <td class="px-4 py-3">
 <div class="flex flex-col">
@@ -1109,9 +943,10 @@
 </div>
 </div>
 </main>
-</div>
-</div>
-<!-- Table Interaction Scripts -->
+
+    <footer data-component="footer"></footer>
+  </div>
+
 <script>
     (function() {
       const selectAllMaster = document.getElementById('selectAllMaster');
@@ -1223,4 +1058,5 @@
       }
     })();
   </script>
-</body></html>
+</body>
+</html>

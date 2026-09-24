@@ -5,6 +5,31 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-09-24 · Milestone 2
+
+### Tahap 2 — Slicing & Layouting
+
+#### Ditambahkan
+- Build Tailwind CSS via CLI (`tailwind.config.js`, `npm run build:css`) dengan token design system; hasil build `assets/css/app.css` di-commit.
+- Komponen layout bersama `assets/js/components/layout.js`: sidebar (menu dari satu sumber data), topbar (breadcrumb, judul, profil), footer, skip link.
+- Sidebar responsif: drawer + overlay + tombol burger di bawah 1024px, tutup via overlay/Esc, scroll terkunci.
+- `pages/layout.html`: template master + contoh komponen design system.
+- Favicon dan varian logo untuk latar gelap.
+
+#### Diubah
+- Kesebelas halaman memakai head & layout standar; Tailwind CDN dan konfigurasi inline dihapus (sekitar 1.700 baris lebih ringkas).
+- Menu sidebar mengikuti hirarki final `perancangan.md`; branding seragam.
+- Tombol aksi yang sebelumnya berada di header Stitch berada di konten tiap halaman.
+- Form: bar aksi menjadi sticky di dalam konten. Laporan: filter tidak meluber di HP. Dashboard: KPI 5 kolom hanya di layar >= 1536px.
+- Login: tombol Masuk (dengan validasi `required`) menuju Dashboard tanpa mengirim data ke URL.
+
+#### Keamanan
+- 20 gambar yang dimuat dari `lh3.googleusercontent.com` diganti aset lokal / avatar inisial / placeholder, sehingga tidak ada lagi permintaan ke server gambar pihak ketiga.
+
+#### Pengujian
+- Uji E2E otomatis (Edge + puppeteer): login, 9 menu, penanda menu aktif, drawer mobile, tanpa scroll horizontal, keluar, tanpa error JS: 16/16 lulus.
+- Screenshot desktop 1280px & mobile 390px untuk seluruh halaman.
+
 ## [0.1.0] — 2026-09-24 · Milestone 1
 
 ### Tahap 1 — Dokumentasi Perancangan

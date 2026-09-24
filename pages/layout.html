@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template Layout · Nexus LMS</title>
+  <meta name="description" content="Template master Admin Panel Nexus LMS: sidebar, header, konten, dan footer.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <script src="../assets/js/components/layout.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!--
+    TEMPLATE MASTER (Milestone 2)
+    Struktur: <aside> sidebar · <header> topbar · <main> konten · <footer>.
+    Sidebar, topbar, dan footer dirender oleh assets/js/components/layout.js.
+  -->
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Template Layout"></header>
+
+    <main class="flex-1 space-y-6 p-4 lg:p-6">
+      <noscript>
+        <p class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+          JavaScript dinonaktifkan. Aktifkan JavaScript untuk menampilkan menu navigasi.
+        </p>
+      </noscript>
+
+      <!-- Judul halaman + aksi utama -->
+      <section class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight text-slate-900">Template Master</h2>
+          <p class="mt-1 text-sm text-slate-500">Kerangka dasar yang dipakai seluruh halaman admin, beserta komponen dari design system.</p>
+        </div>
+        <button type="button" class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
+          Aksi Utama
+        </button>
+      </section>
+
+      <!-- Kartu statistik: 1 kolom (HP) → 2 (tablet) → 4 (desktop) -->
+      <section aria-labelledby="judul-statistik">
+        <h2 id="judul-statistik" class="sr-only">Ringkasan statistik</h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-500">Mahasiswa Aktif</p>
+              <span class="material-symbols-outlined rounded-lg bg-blue-50 p-2 text-[20px] text-blue-600" aria-hidden="true">school</span>
+            </div>
+            <p class="mt-3 text-2xl font-bold text-slate-900">2.140</p>
+            <p class="mt-1 text-xs font-medium text-emerald-600">+4,2% dari semester lalu</p>
+          </article>
+          <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-500">Kursus Berjalan</p>
+              <span class="material-symbols-outlined rounded-lg bg-indigo-50 p-2 text-[20px] text-indigo-600" aria-hidden="true">menu_book</span>
+            </div>
+            <p class="mt-3 text-2xl font-bold text-slate-900">86</p>
+            <p class="mt-1 text-xs font-medium text-slate-500">12 kursus dalam draft</p>
+          </article>
+          <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-500">KRS Menunggu</p>
+              <span class="material-symbols-outlined rounded-lg bg-amber-50 p-2 text-[20px] text-amber-600" aria-hidden="true">pending_actions</span>
+            </div>
+            <p class="mt-3 text-2xl font-bold text-slate-900">37</p>
+            <p class="mt-1 text-xs font-medium text-amber-600">Perlu divalidasi</p>
+          </article>
+          <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-slate-500">Tingkat Kelulusan</p>
+              <span class="material-symbols-outlined rounded-lg bg-emerald-50 p-2 text-[20px] text-emerald-600" aria-hidden="true">workspace_premium</span>
+            </div>
+            <p class="mt-3 text-2xl font-bold text-slate-900">91,8%</p>
+            <p class="mt-1 text-xs font-medium text-emerald-600">+1,1 poin</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+        <!-- Komponen form -->
+        <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="judul-form">
+          <h2 id="judul-form" class="text-base font-semibold text-slate-900">Form Input</h2>
+          <form class="mt-4 space-y-4" novalidate>
+            <div>
+              <label for="contoh-kode" class="mb-1 block text-sm font-medium text-slate-700">Kode Mata Kuliah</label>
+              <input id="contoh-kode" type="text" placeholder="TIF-302" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label for="contoh-nama" class="mb-1 block text-sm font-medium text-slate-700">Nama Kursus</label>
+              <input id="contoh-nama" type="text" value="PW" aria-invalid="true" aria-describedby="contoh-nama-error" class="block w-full rounded-lg border-red-400 text-sm focus:border-red-500 focus:ring-red-500">
+              <p id="contoh-nama-error" class="mt-1 flex items-center gap-1 text-xs text-red-600">
+                <span class="material-symbols-outlined text-[14px]" aria-hidden="true">error</span>Minimal 5 karakter.
+              </p>
+            </div>
+            <div>
+              <label for="contoh-tingkat" class="mb-1 block text-sm font-medium text-slate-700">Tingkat</label>
+              <select id="contoh-tingkat" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+                <option>Dasar</option>
+                <option selected>Menengah</option>
+                <option>Lanjut</option>
+              </select>
+            </div>
+          </form>
+        </section>
+
+        <!-- Tombol, badge, dan tabel -->
+        <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2" aria-labelledby="judul-tombol">
+          <h2 id="judul-tombol" class="text-base font-semibold text-slate-900">Tombol, Status &amp; Tabel</h2>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Primary</button>
+            <button type="button" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Secondary</button>
+            <button type="button" class="rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Ghost</button>
+            <button type="button" class="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">Hapus</button>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Aktif</span>
+            <span class="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700">Menunggu</span>
+            <span class="rounded-full border border-red-200 bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700">Ditolak</span>
+            <span class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">Draft</span>
+          </div>
+
+          <!-- Tabel data: bisa digeser horizontal di layar kecil -->
+          <div class="mt-6 overflow-x-auto rounded-lg border border-slate-200">
+            <table class="min-w-full divide-y divide-slate-200 text-sm">
+              <caption class="sr-only">Contoh tabel data kursus</caption>
+              <thead class="bg-slate-50">
+                <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                  <th scope="col" class="px-4 py-3">Kode MK</th>
+                  <th scope="col" class="px-4 py-3">Nama Kursus</th>
+                  <th scope="col" class="px-4 py-3">Dosen</th>
+                  <th scope="col" class="px-4 py-3">Status</th>
+                  <th scope="col" class="px-4 py-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 bg-white">
+                <tr class="hover:bg-slate-50">
+                  <td class="whitespace-nowrap px-4 py-3 font-mono text-xs text-slate-600">TIF-302</td>
+                  <td class="px-4 py-3 font-medium text-slate-900">Pemrograman Web Lanjut</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-slate-600">Dr. Rina Kusuma</td>
+                  <td class="px-4 py-3"><span class="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">Publikasi</span></td>
+                  <td class="whitespace-nowrap px-4 py-3 text-right">
+                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Edit TIF-302"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">edit</span></button>
+                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600" aria-label="Hapus TIF-302"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="whitespace-nowrap px-4 py-3 font-mono text-xs text-slate-600">SIF-210</td>
+                  <td class="px-4 py-3 font-medium text-slate-900">Basis Data</td>
+                  <td class="whitespace-nowrap px-4 py-3 text-slate-600">Budi Santoso, M.T.</td>
+                  <td class="px-4 py-3"><span class="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">Draft</span></td>
+                  <td class="whitespace-nowrap px-4 py-3 text-right">
+                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Edit SIF-210"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">edit</span></button>
+                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600" aria-label="Hapus SIF-210"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer data-component="footer"></footer>
+  </div>
+</body>
+</html>
