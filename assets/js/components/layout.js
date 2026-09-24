@@ -47,8 +47,12 @@
     },
   ];
 
-  // Akun demo sementara; pada Tahap 3 diambil dari sesi login.
-  var USER = { name: "Dr. Adrian Wicaksono, M.Kom.", role: "Super Administrator" };
+  // Pengguna dari sesi login (Nexus.auth); cadangan bila auth belum dimuat.
+  var auth = window.Nexus && window.Nexus.auth;
+  var sessionUser = auth ? auth.currentUser() : null;
+  var USER = sessionUser
+    ? { name: sessionUser.nama, role: auth.roleLabel(sessionUser.peran) }
+    : { name: "Administrator", role: "Admin" };
 
   var LG_BREAKPOINT = 1024;
 
@@ -237,6 +241,10 @@
     if (footer) renderFooter(footer);
     setupDrawer();
     addSkipLink();
+    var logout = document.querySelector('[data-action="logout"]');
+    if (logout && auth) {
+      logout.addEventListener("click", function () { auth.logout(); });
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

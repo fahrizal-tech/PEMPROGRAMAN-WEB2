@@ -30,16 +30,17 @@ class FakeStorage {
 }
 
 /** Muat script browser dari folder proyek ke globalThis (fresh, tanpa cache require). */
-function loadScripts(files, { storage = new FakeStorage() } = {}) {
+function loadScripts(files, { storage = new FakeStorage(), session = new FakeStorage() } = {}) {
   delete globalThis.Nexus;
   delete globalThis.NexusSeed;
   globalThis.localStorage = storage;
+  globalThis.sessionStorage = session;
   for (const f of files) {
     const full = path.join(ROOT, f);
     delete require.cache[require.resolve(full)];
     require(full);
   }
-  return { Nexus: globalThis.Nexus, NexusSeed: globalThis.NexusSeed, storage };
+  return { Nexus: globalThis.Nexus, NexusSeed: globalThis.NexusSeed, storage, session };
 }
 
 const CORE = ["assets/data/seed.js", "assets/js/core/storage.js"];

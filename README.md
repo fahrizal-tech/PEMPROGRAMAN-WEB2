@@ -51,12 +51,24 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 
 ## Menjalankan Secara Lokal
 
-Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu masuk dengan email dan kata sandi apa saja.
+Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu masuk dengan akun demo:
+
+| Email | Kata sandi | Peran |
+| --- | --- | --- |
+| `admin@nexus.ac.id` | `nexus2026` | Super Administrator |
+| `baak@nexus.ac.id` | `nexus2026` | Admin Akademik (BAAK) |
+
+> Login pada versi ini adalah **simulasi** (aplikasi berjalan sepenuhnya di browser), lihat [SECURITY.md](SECURITY.md). Data tersimpan di localStorage browser dan dapat dikembalikan ke kondisi awal dari halaman Pengaturan.
 Semua halaman memakai CSS yang sudah di-build (`assets/css/app.css`) dan JavaScript biasa, sehingga bisa berjalan tanpa server.
 
 Jika ingin memakai server lokal (misalnya untuk demo):
 ```bash
 npm run serve        # lalu buka http://localhost:3000
+```
+
+### Menjalankan pengujian
+```bash
+npm test             # uji unit: data, storage, service, auth, utilitas
 ```
 
 ### Build ulang CSS (hanya jika mengubah class Tailwind)

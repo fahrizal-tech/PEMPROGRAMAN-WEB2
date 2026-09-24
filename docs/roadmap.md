@@ -124,7 +124,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Uji unit `npm test` (Node test runner, tanpa dependensi): storage & integritas seed
 - [x] Data awal `assets/data/seed.js` (14 entitas, 266 baris data fiktif; format JS agar jalan tanpa server; deterministik; divalidasi: 0 error relasi & duplikat)
 - [x] Service per entitas + relasi (`services.js`): kursus ber-KRS aktif tidak bisa dihapus, kuota KRS, total bobot tugas ≤ 100%, syarat kelulusan sertifikat, hapus berantai (modul/tugas/kelas), dll.
-- [ ] `auth.js`: login admin demo, session, *route guard*, logout
+- [x] `auth.js`: login admin demo (dikunci 30 detik setelah 5x gagal), sesi (ingat 30 hari / tutup browser, idle timeout dari pengaturan), *route guard* tanpa kilasan konten, anti open-redirect, logout; halaman login dengan validasi per kolom & tab peran
 - [x] Pencatatan otomatis ke `LOG_AKTIVITAS` untuk setiap create/update/delete (+ aksi khusus: setujui/tolak KRS, beri nilai, terbit/cabut sertifikat)
 - [x] Utilitas (`utils.js`): format tanggal/angka Indonesia, debounce, `escapeHTML`, ekspor CSV aman (anti formula injection)
 - [x] Validasi & sanitasi data di service layer (`validators.js`, skema yang sama dipakai form) — uji unit total 41 lulus
