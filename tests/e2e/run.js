@@ -86,6 +86,55 @@ function findBrowser() {
     await page.goto(ROOT + "pages/form.html", NAV);
     check((await page.$eval('#sidebar a[aria-current="page"]', (a) => a.getAttribute("href"))) === "data-master.html", "form.html menandai Data Master");
 
+    /* ---------- Komponen UI (etalase di layout.html) ---------- */
+    await page.goto(ROOT + "pages/layout.html", NAV);
+    await page.waitForFunction(() => document.querySelectorAll("#demo-tbody tr").length === 5);
+    check(/1–5 dari 12/.test(await page.$eval("#demo-counter", (e) => e.textContent)), "tabel: 5 baris per halaman dari 12 kursus");
+    await page.type("#demo-cari", "cloud");
+    await page.waitForFunction(() => document.querySelectorAll("#demo-tbody tr").length === 1);
+    check(true, "tabel: pencarian 'cloud' → 1 baris");
+    await page.$eval("#demo-cari", (e) => { e.value = ""; e.dispatchEvent(new Event("input")); });
+    await page.select("#demo-status", "draft");
+    await page.waitForFunction(() => document.querySelectorAll("#demo-tbody tr").length === 2);
+    check(true, "tabel: filter status draft → 2 baris");
+    await page.select("#demo-status", "");
+
+    // XSS: nama berisi tag HTML harus tampil sebagai teks, bukan dieksekusi.
+    await page.evaluate(() => Nexus.storage.insert("kursus", { kode_mk: "XS-001", nama: '<img src=x onerror="window.__xss=1">', status: "draft", kuota: 1 }));
+    await page.type("#demo-cari", "XS-001");
+    await page.waitForFunction(() => document.querySelectorAll("#demo-tbody tr").length === 1);
+    const xss = await page.evaluate(() => ({ img: !!document.querySelector("#demo-tbody img"), ran: !!window.__xss, text: document.querySelector("#demo-tbody").textContent.includes("<img") }));
+    check(!xss.img && !xss.ran && xss.text, "anti-XSS: tag HTML di data tampil sebagai teks");
+    await page.evaluate(() => Nexus.storage.reset());
+
+    await page.click('[data-demo="toast"]');
+    await page.waitForSelector("#toast-region > div");
+    check(true, "toast tampil");
+
+    await page.click('[data-demo="modal"]');
+    await page.waitForSelector('[role="dialog"]');
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'));
+    const focusBack = await page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-demo"));
+    check(focusBack === "modal", "modal: tutup dengan Esc, fokus kembali ke tombol");
+
+    await page.click('[data-demo="delete"]');
+    await page.waitForSelector('[role="dialog"]');
+    const blocked = await page.$eval('[role="dialog"]', (d) => d.textContent);
+    check(/Tidak dapat dihapus/.test(blocked) && /KRS aktif/.test(blocked), "hapus kursus ber-KRS aktif → ditolak dengan alasan");
+    await page.keyboard.press("Escape");
+
+    await page.click('#demo-form button[type="submit"]');
+    await page.waitForSelector("#demo-kode-error");
+    const nErr = await page.$$eval("#demo-form [aria-invalid=true]", (els) => els.length);
+    check(nErr === 3, `form kosong → ${nErr} kolom ditandai error`);
+    await page.type("#demo-kode", "ab-123");
+    await page.type("#demo-nama", "Pemrograman Web");
+    await page.select("#demo-tingkat", "menengah");
+    await page.click('#demo-form button[type="submit"]');
+    await page.waitForFunction(() => /Valid: AB-123/.test(document.getElementById("toast-region").textContent));
+    check((await page.$$eval("#demo-form [aria-invalid=true]", (els) => els.length)) === 0, "form valid → error hilang, kode dinormalisasi (AB-123)");
+
     /* ---------- Mobile: drawer ---------- */
     await page.setViewport({ width: 390, height: 844 });
     await sleep(400);

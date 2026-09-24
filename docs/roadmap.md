@@ -132,7 +132,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Validasi & sanitasi data di service layer (`validators.js`, skema yang sama dipakai form) — uji unit total 41 lulus
 
 ### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7)
-**Komponen bersama:** modal, dialog konfirmasi, toast, validator form, helper tabel (search, filter, sort, pagination).
+- [x] **Komponen bersama** (`assets/js/components/ui.js`): template HTML anti-XSS, badge status, toast, modal aksesibel (fokus terkunci, Esc), konfirmasi, hapus dengan penjelasan dampak/penghalang, form tervalidasi per kolom, tabel (cari, filter, urut, halaman, kosong/memuat). Etalase interaktif di `layout.html`.
 
 **Halaman wajib:**
 - [ ] `index.html` — Login: validasi, tampil/sembunyikan password, redirect ke dashboard; tab default Admin/BAAK, tab Dosen/Mahasiswa → pemberitahuan "di luar lingkup"
