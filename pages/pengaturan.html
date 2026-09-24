@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary":"#515f74","primary":"#004ac6","on-primary-fixed-variant":"#003ea8","surface-bright":"#f8f9ff","on-surface-variant":"#434655","secondary-container":"#d5e3fc","on-tertiary-fixed":"#131b2e","on-error-container":"#93000a","on-error":"#ffffff","secondary-fixed":"#d5e3fc","tertiary-fixed":"#dae2fd","background":"#f8f9ff","surface-tint":"#0053db","on-secondary-container":"#57657a","on-surface":"#0b1c30","outline":"#737686","surface":"#f8f9ff","error-container":"#ffdad6","on-secondary-fixed-variant":"#3a485b","surface-variant":"#d3e4fe","surface-container-high":"#dce9ff","surface-container-low":"#eff4ff","on-tertiary-fixed-variant":"#3f465c","secondary-fixed-dim":"#b9c7df","inverse-primary":"#b4c5ff","error":"#ba1a1a","outline-variant":"#c3c6d7","on-primary-container":"#eeefff","on-secondary":"#ffffff","on-tertiary-container":"#eef0ff","surface-dim":"#cbdbf5","tertiary":"#4d556b","tertiary-container":"#656d84","inverse-surface":"#213145","surface-container-lowest":"#ffffff","surface-container-highest":"#d3e4fe","primary-fixed":"#dbe1ff","on-tertiary":"#ffffff","on-primary":"#ffffff","primary-container":"#2563eb","tertiary-fixed-dim":"#bec6e0","primary-fixed-dim":"#b4c5ff","surface-container":"#e5eeff","on-background":"#0b1c30","inverse-on-surface":"#eaf1ff","on-secondary-fixed":"#0d1c2e","on-primary-fixed":"#00174b"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"gutter":"1rem","space-xs":"0.25rem","space-2xl":"2rem","space-sm":"0.5rem","margin-desktop":"2rem","space-lg":"1rem","space-xl":"1.5rem","margin":"1rem","space-md":"0.75rem","gutter-desktop":"1.5rem"},fontFamily:{"headline-md":["Inter"],"headline-lg":["Inter"],"label-sm":["Inter"],"body-md":["Inter"],"code-sm":["JetBrains Mono"],"display-lg-mobile":["Inter"],"body-sm":["Inter"],"label-xs":["Inter"],"headline-sm":["Inter"],"body-xs":["Inter"],"body-lg":["Inter"],"display-lg":["Inter"],"label-md":["Inter"]},fontSize:{"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"label-sm":["12px",{lineHeight:"16px",letterSpacing:"0.01em",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"code-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"display-lg-mobile":["26px",{lineHeight:"34px",letterSpacing:"-0.015em",fontWeight:"700"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"label-xs":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",letterSpacing:"-0.005em",fontWeight:"600"}],"body-xs":["12px",{lineHeight:"16px",fontWeight:"400"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-md":["14px",{lineHeight:"20px",fontWeight:"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between"><div class="flex items-center gap-space-lg w-64 shrink-0"><img alt="Clean, realistic enterprise corporate logo for Nexus LMS on light background. Deep sapphire blue icon with white check and dark slate typography." class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WoLhk2t2oKwrurAZcZHZyruHKYVd-qTPylRJJ-3rfWy3wyfgcaMOEbDmecVwNRA27MqpSp3DNsbKAE-b_d9T1QJJdcG888s2hXQrmA70YC44AqVZjQ2rdwK21HM_CJ021eQvsRUEq-maDX8poP2U8NAL6kYGGwlgyhgFEyCvtSCWv6RH9Kgym_NrwP_2IltkYgxG8DeU6TodqI3UOX5aS6MJ7g_xV0Z3BST1N9fRVx3Nhh7bfjUVfVmA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-none">Nexus LMS</span><span class="font-label-xs text-label-xs text-secondary leading-tight mt-0.5 uppercase tracking-wider">Enterprise Portal</span></div></div><div class="flex-1 max-w-xl mx-space-xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-secondary text-[20px] pointer-events-none">search</span><input class="w-full h-9 pl-10 pr-4 bg-surface-container-low text-on-surface placeholder:text-secondary rounded-lg font-body-sm text-body-sm focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Cari mata kuliah, modul, data mahasiswa, atau transaksi (Tekan '/' untuk fokus)..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg text-secondary hover:text-on-surface cursor-pointer"><span class="material-symbols-outlined text-[18px]">language</span><span class="font-label-sm text-label-sm uppercase font-semibold">ID</span><span class="material-symbols-outlined text-[16px]">expand_more</span></div><div class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></div><div class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer"><span class="material-symbols-outlined text-[22px]">help_outline</span></div><div class="h-6 w-[1px] bg-outline-variant mx-space-xs"></div><div class="flex items-center gap-space-md pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Dr. Adrian Wicaksono M.Kom</span><span class="font-label-xs text-label-xs text-secondary leading-tight">Super Administrator</span></div><span class="material-symbols-outlined text-secondary text-[18px] hidden xl:block">arrow_drop_down</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col overflow-y-auto"><div class="px-space-lg py-space-md flex items-center justify-between bg-surface-container-low"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="font-label-xs text-label-xs text-secondary font-semibold uppercase tracking-wider">TA 2024/2025 GANJIL</span></div><span class="font-label-xs text-label-xs px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">AKTIF</span></div><nav class="flex-1 px-space-md py-space-md space-y-space-lg" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-sm"><div class="space-y-1"><div class="px-space-md py-1 font-label-xs text-label-xs uppercase text-secondary tracking-wider font-semibold">Utama</div><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="analytics-and-reports" href="#"><span class="material-symbols-outlined text-[20px]">insights</span><span>Analytics &amp; Reports</span></a></div><div class="space-y-1"><div class="px-space-md py-1 font-label-xs text-label-xs uppercase text-secondary tracking-wider font-semibold">Akademik &amp; Kursus</div><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="data-master-kursus" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span>Data Master Kursus</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="modul-and-materi" href="#"><span class="material-symbols-outlined text-[20px]">folder_copy</span><span>Modul &amp; Materi</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="tugas-and-kuis" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span><span>Tugas &amp; Kuis</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="kelas-virtual" href="#"><span class="material-symbols-outlined text-[20px]">video_camera_front</span><span>Kelas Virtual</span></a></div><div class="space-y-1"><div class="px-space-md py-1 font-label-xs text-label-xs uppercase text-secondary tracking-wider font-semibold">Pengguna</div><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="mahasiswa-and-siswa" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span>Mahasiswa &amp; Siswa</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="instruktur-and-dosen" href="#"><span class="material-symbols-outlined text-[20px]">co_present</span><span>Instruktur / Dosen</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="hak-akses-and-peran" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Hak Akses &amp; Peran</span></a></div><div class="space-y-1"><div class="px-space-md py-1 font-label-xs text-label-xs uppercase text-secondary tracking-wider font-semibold">Manajemen</div><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="sertifikasi-digital" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span>Sertifikasi Digital</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="keuangan-and-transaksi" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Keuangan &amp; Transaksi</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-2 rounded-lg transition-colors bg-primary-container text-on-primary-container font-semibold shadow-sm" data-path="pengaturan-sistem" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Pengaturan Sistem</span></a></div></nav><div class="p-space-md bg-surface-container-low"><div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[20px]">cloud_done</span><div class="flex flex-col"><span class="font-label-xs text-label-xs text-on-surface font-semibold">Sync Server</span><span class="font-label-xs text-label-xs text-secondary">0.24ms • v2.4.1</span></div></div><a class="text-secondary hover:text-error transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-64"><main class="w-full pt-16 px-gutter-desktop min-h-screen bg-background"><div class="flex flex-col w-full pb-space-2xl">
+<!-- Sub-Header & Breadcrumb Bar -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between py-space-md mb-space-lg gap-space-sm border-b border-surface-container">
+<div class="flex flex-col gap-1">
+<nav class="flex items-center gap-space-xs font-label-xs text-secondary">
+<span>Manajemen</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Pengaturan Sistem</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Tata Kelola Institusi &amp; IT</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Pengaturan &amp; Konfigurasi Sistem LMS</h1>
+<p class="font-body-sm text-body-sm text-secondary max-w-3xl">
+        Pengelolaan parameter umum institusi pendidikan, kalender semester akademik aktif, autentikasi Single Sign-On (SSO), integrasi database SIAKAD, dan audit keamanan sistem.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="h-9 px-space-md bg-surface-container-lowest text-on-surface font-label-md text-label-md rounded-lg shadow-sm hover:bg-surface-container-low transition-colors flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">history_edu</span>
+<span>Riwayat Perubahan (Audit Log)</span>
+</button>
+<button class="h-9 px-space-md bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm hover:bg-primary transition-colors flex items-center gap-space-xs font-semibold" id="saveChangesBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Simpan Perubahan</span>
+</button>
+</div>
+</div>
+<!-- Interactive Tab Navigation -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 mb-space-xl border-b border-surface-container scrollbar-none">
+<button class="px-space-md py-space-sm font-label-md text-label-md rounded-lg font-semibold bg-surface-container text-primary flex items-center gap-space-xs shrink-0 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+<span>Profil Institusi &amp; Identitas</span>
+</button>
+<button class="px-space-md py-space-sm font-label-md text-label-md rounded-lg font-medium text-secondary hover:text-on-surface hover:bg-surface-container-low flex items-center gap-space-xs shrink-0 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>Kalender &amp; Semester Akademik</span>
+</button>
+<button class="px-space-md py-space-sm font-label-md text-label-md rounded-lg font-medium text-secondary hover:text-on-surface hover:bg-surface-container-low flex items-center gap-space-xs shrink-0 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">security</span>
+<span>Autentikasi &amp; Integrasi SSO</span>
+</button>
+<button class="px-space-md py-space-sm font-label-md text-label-md rounded-lg font-medium text-secondary hover:text-on-surface hover:bg-surface-container-low flex items-center gap-space-xs shrink-0 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">dataset_linked</span>
+<span>Konektivitas SIAKAD &amp; Database</span>
+</button>
+<button class="px-space-md py-space-sm font-label-md text-label-md rounded-lg font-medium text-secondary hover:text-on-surface hover:bg-surface-container-low flex items-center gap-space-xs shrink-0 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">notifications_active</span>
+<span>Kebijakan Akses &amp; Notifikasi</span>
+</button>
+</div>
+<!-- Notification Banner (Dismissible) -->
+<div class="hidden mb-space-lg bg-secondary-container text-on-secondary-fixed p-space-md rounded-xl flex items-center justify-between shadow-sm" id="statusToast">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+<span class="font-body-sm text-body-sm font-medium">Perubahan konfigurasi tata kelola institusi berhasil disimpan ke basis data server.</span>
+</div>
+<button class="text-secondary hover:text-on-surface" onclick="document.getElementById('statusToast').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Main 2-Column Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-xl">
+<!-- Left Column: Primary Settings Forms (8 Cols) -->
+<div class="xl:col-span-8 flex flex-col gap-space-xl">
+<!-- Section 1: Identitas Perguruan Tinggi & Branding -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">school</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Identitas Perguruan Tinggi &amp; Branding</h2>
+<p class="font-body-xs text-body-xs text-secondary">Pengaturan identitas legal, kode DIKTI, dan atribut penerbitan dokumen resmi institusi.</p>
+</div>
+</div>
+<span class="font-label-xs text-label-xs px-2.5 py-1 rounded-full bg-secondary-container text-primary font-semibold">LEGALITAS DIKTI</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Kode Registrasi Institusi / NPSN
+              </label>
+<div class="relative">
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary shadow-inner font-code-sm text-code-sm" type="text" value="001024 - Institut Teknologi &amp; Komputasi Nexus"/>
+<span class="material-symbols-outlined absolute right-2.5 top-2 text-[18px] text-secondary">verified_user</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Sesuai data pangkalan PDDIKTI Kemenristekdikti.</p>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Peringkat Akreditasi Institusi
+              </label>
+<div class="relative">
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="text" value="Unggul / Terakreditasi A (BAN-PT No. 442/SK/BAN-PT/2022)"/>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Masa berlaku akreditasi hingga 14 November 2027.</p>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+              Nama Resmi Universitas / Institut (Bahasa Indonesia &amp; International)
+            </label>
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="text" value="Institut Teknologi dan Komputasi Nexus (Nexus Institute of Technology &amp; Computing)"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Alamat Kampus Utama
+              </label>
+<textarea class="w-full px-space-md py-space-xs bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" rows="2">Jl. Prof. Dr. Satrio No. 45, Kawasan Riset &amp; Pendidikan Terpadu, Jakarta Selatan 12940</textarea>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Kontak Resmi Helpdesk Akademik &amp; LMS
+              </label>
+<div class="space-y-2">
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="text" value="helpdesk-lms@nexus.ac.id"/>
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="text" value="+62 (021) 552-8890 ext. 401"/>
+</div>
+</div>
+</div>
+<!-- Logo & Letterhead Setting -->
+<div class="pt-space-md border-t border-surface-container">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-space-sm">
+              Berkas Visual Identitas (Logo Utama &amp; Cap Kop Surat Digital)
+            </label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center shadow-sm">
+<img alt="Logo Perguruan Tinggi" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WoLhk2t2oKwrurAZcZHZyruHKYVd-qTPylRJJ-3rfWy3wyfgcaMOEbDmecVwNRA27MqpSp3DNsbKAE-b_d9T1QJJdcG888s2hXQrmA70YC44AqVZjQ2rdwK21HM_CJ021eQvsRUEq-maDX8poP2U8NAL6kYGGwlgyhgFEyCvtSCWv6RH9Kgym_NrwP_2IltkYgxG8DeU6TodqI3UOX5aS6MJ7g_xV0Z3BST1N9fRVx3Nhh7bfjUVfVmA"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Logo_Institusi_Vector.svg</div>
+<div class="font-body-xs text-body-xs text-secondary">SVG • 240 KB • Transparan</div>
+</div>
+</div>
+<button class="px-space-sm py-1 font-label-xs text-label-xs font-semibold rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors shadow-sm" type="button">Ganti</button>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center shadow-sm text-primary">
+<span class="material-symbols-outlined text-[24px]">history_edu</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Kop_Surat_Resmi_2024.png</div>
+<div class="font-body-xs text-body-xs text-secondary">PNG High-Res • 1.4 MB • 300 DPI</div>
+</div>
+</div>
+<button class="px-space-sm py-1 font-label-xs text-label-xs font-semibold rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors shadow-sm" type="button">Ganti</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Konfigurasi Periode Semester Berjalan -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">date_range</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Konfigurasi Periode Semester Berjalan</h2>
+<p class="font-body-xs text-body-xs text-secondary">Kalender akademik, rentang perkuliahan, dan kebijakan penguncian otomatis nilai.</p>
+</div>
+</div>
+<span class="font-label-xs text-label-xs px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">SEMESTER AKTIF</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Semester Akademik Terpilih
+              </label>
+<select class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary">
+<option selected="">Semester Ganjil 2024/2025 (Aktif)</option>
+<option>Semester Genap 2024/2025 (Masa Persiapan KRS)</option>
+<option>Semester Pendek Antara 2023/2024 (Arsip)</option>
+</select>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Mengontrol seluruh kuota presensi, modul kelas, dan kalkulasi IPK.</p>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Batas Akhir Input &amp; Koreksi Nilai Dosen
+              </label>
+<div class="relative">
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="text" value="25 Januari 2025, 23:59 WIB"/>
+<span class="material-symbols-outlined absolute right-2.5 top-2 text-[18px] text-error">event_busy</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Sistem otomatis mengunci berkas nilai setelah tenggat ini terlewati.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Tanggal Mulai Perkuliahan
+              </label>
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="date" value="2024-09-02"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Tanggal Berakhir Masa Ujian (UAS)
+              </label>
+<input class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary" type="date" value="2025-01-18"/>
+</div>
+</div>
+<!-- Policy Toggles -->
+<div class="pt-space-md border-t border-surface-container flex flex-col gap-space-md">
+<!-- Toggle 1 -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-low rounded-xl">
+<div class="pr-space-md">
+<div class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-space-xs">
+<span>Toleransi Kehadiran Minimal Mahasiswa (Syarat Mengikuti UAS)</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-code-sm text-code-sm font-semibold">75.0%</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-0.5">
+                  Mahasiswa dengan presensi &lt; 75.0% otomatis diberi status BL (Belum Lengkap) dan dicekal dari ruang ujian virtual / cetak kartu ujian.
+                </p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-low rounded-xl">
+<div class="pr-space-md">
+<div class="font-label-md text-label-md text-on-surface font-semibold">
+                  Kunci Otomatis Input Nilai Pasca Tenggat Waktu
+                </div>
+<p class="font-body-xs text-body-xs text-secondary mt-0.5">
+                  Mencegah dosen pengampu melakukan perubahan huruf mutu tanpa persetujuan tertulis Ketua Program Studi dan Wakil Rektor Akademik.
+                </p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Autentikasi & Keamanan Pengguna -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">admin_panel_settings</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Autentikasi &amp; Kebijakan Keamanan Pengguna</h2>
+<p class="font-body-xs text-body-xs text-secondary">Konfigurasi federasi identitas kampus, multi-factor authentication, dan session lifecycle.</p>
+</div>
+</div>
+<span class="font-label-xs text-label-xs px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-fixed-variant font-semibold">SSO AKTIF</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-space-sm">
+              Metode Autentikasi Utama Kampus (SSO Protocol)
+            </label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between cursor-pointer ring-2 ring-primary">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">fingerprint</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">SAML 2.0 / Shibboleth</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<span class="font-body-xs text-body-xs text-secondary">IdP Kampus (Active Directory Federation Services)</span>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Google Edu</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">radio_button_unchecked</span>
+</div>
+<span class="font-body-xs text-body-xs text-secondary">Google Workspace for Higher Ed (OAuth 2.0)</span>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">corporate_fare</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Microsoft 365</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">radio_button_unchecked</span>
+</div>
+<span class="font-body-xs text-body-xs text-secondary">Azure AD / Entra ID Identity Enterprise</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Two-Factor Authentication (2FA / MFA)
+              </label>
+<select class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary">
+<option selected="">Diwajibkan (Dosen, Administrator, &amp; Staf Akademik)</option>
+<option>Opsional untuk Mahasiswa, Wajib untuk Staf</option>
+<option>Wajib untuk Seluruh Civitas Akademika</option>
+<option>Non-Aktifkan Sementara (Hanya Mode Pengujian)</option>
+</select>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Menggunakan aplikasi authenticator berbasis TOTP (Google/Microsoft Auth).</p>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Waktu Kedaluwarsa Sesi (Inactivity Session Timeout)
+              </label>
+<div class="relative">
+<select class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary">
+<option>30 Menit tidak aktif</option>
+<option selected="">60 Menit tidak aktif (Standar Audit ISO 27001)</option>
+<option>120 Menit tidak aktif</option>
+<option>8 Jam (Hanya Staf Jaringan Lokal Kampus)</option>
+</select>
+</div>
+<p class="font-body-xs text-body-xs text-secondary mt-1">Sesi pengguna otomatis diputus jika tidak ada aktivitas mouse/keyboard.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Operational Status & System Localizations (4 Cols) -->
+<div class="xl:col-span-4 flex flex-col gap-space-xl">
+<!-- Operational Status Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">lan</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Konektivitas Layanan</h3>
+</div>
+<span class="flex items-center gap-1 font-label-xs text-label-xs text-primary font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            ALL LIVE
+          </span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<!-- Item 1: SIAKAD Core -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">SIAKAD Core REST API</span>
+<span class="font-code-sm text-code-sm text-secondary">Endpoint: api-siakad.nexus.ac.id</span>
+<span class="font-body-xs text-body-xs text-secondary mt-0.5">Ping: 24ms • Sinkronisasi tiap 15 mnt</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-xs text-label-xs font-semibold">
+              Terhubung
+            </span>
+</div>
+<!-- Item 2: PDDIKTI Neo Feeder -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">PDDIKTI Neo Feeder</span>
+<span class="font-code-sm text-code-sm text-secondary">v2.4.0 • TLS 1.3 • WebService</span>
+<span class="font-body-xs text-body-xs text-secondary mt-0.5">Validasi sinkron: 100% Cocok</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-xs text-label-xs font-semibold">
+              Terhubung
+            </span>
+</div>
+<!-- Item 3: Email SMTP Gateway -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Email SMTP Mail Gateway</span>
+<span class="font-code-sm text-code-sm text-secondary">smtp.campus-relay.nexus.ac.id:587</span>
+<span class="font-body-xs text-body-xs text-secondary mt-0.5">Throughput: 1.200 email/jam</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-xs text-label-xs font-semibold">
+              Operasional
+            </span>
+</div>
+<!-- Item 4: Cloud Storage Capacity -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Storage Dokumen Cloud (S3)</span>
+<span class="font-code-sm text-code-sm text-primary font-semibold">4.2 TB / 10 TB</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%;"></div>
+</div>
+<div class="flex items-center justify-between font-body-xs text-body-xs text-secondary">
+<span>Materi Ajar, Rekaman Video, E-Book</span>
+<span class="font-semibold text-on-surface">42% Terpakai</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Localization Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">public</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Zona Waktu &amp; Lokalisasi</h3>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+              Zona Waktu Basis Data &amp; Server
+            </label>
+<div class="flex items-center gap-2 p-space-sm bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-secondary text-[18px]">schedule</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Asia/Jakarta (WIB • GMT+07:00)</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+              Format Standar Tanggal &amp; Waktu
+            </label>
+<select class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary">
+<option selected="">DD/MM/YYYY (Contoh: 25/01/2025)</option>
+<option>YYYY-MM-DD (ISO 8601)</option>
+<option>DD MMMM YYYY (Contoh: 25 Januari 2025)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+              Bahasa Utama Antarmuka LMS
+            </label>
+<select class="w-full h-9 px-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary">
+<option selected="">Bahasa Indonesia (Standar Akademik)</option>
+<option>English (International Student Mode)</option>
+<option>Bilingual Otomatis (Mengikuti Preferensi Pengguna)</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Scheduled Maintenance Card -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">build_circle</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Jendela Pemeliharaan</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-xs text-label-xs font-semibold">SCHEDULED</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="p-space-md bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-space-xs text-on-surface font-label-md text-label-md font-semibold mb-1">
+<span class="material-symbols-outlined text-[18px] text-primary">cloud_sync</span>
+<span>Cadangan Basis Data Mingguan</span>
+</div>
+<p class="font-body-xs text-body-xs text-secondary">
+              Otomatisasi Snapshot RDS Aurora &amp; Object Storage S3 setiap <strong class="text-on-surface">Minggu 02:00 - 04:00 WIB</strong> tanpa downtime operasional.
+            </p>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Status Mode Pemeliharaan</span>
+<span class="font-body-xs text-body-xs text-secondary">Blokir akses mahasiswa saat migrasi</span>
+</div>
+<span class="font-label-xs text-label-xs px-2.5 py-1 rounded-full bg-surface-container-highest text-secondary font-semibold">
+              NON-AKTIF (LIVE)
+            </span>
+</div>
+<button class="w-full mt-1 py-2 px-space-md bg-surface-container text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors font-medium flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span>Uji Integritas Server &amp; DB Connection</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+</div>
+<script>
+  document.getElementById('saveChangesBtn')?.addEventListener('click', function() {
+    const toast = document.getElementById('statusToast');
+    if (toast) {
+      toast.classList.remove('hidden');
+      toast.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 5000);
+    }
+  });
+</script></main></div></body></html>

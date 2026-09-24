@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Monitoring Progres - Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .progress-bar-fill { transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+<div class="max-w-6xl mx-auto p-6 mt-8">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-blue-700">Project Tracker: Nexus LMS</h1>
+            <p class="text-sm text-gray-500 mt-1">Monitoring Mikro-Fitur, Penambahan, Pengeditan, dan Penghapusan</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm font-semibold text-gray-600">Total Progres Keseluruhan</p>
+            <div class="flex items-center gap-3 mt-1">
+                <div class="w-48 bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-600 h-3 rounded-full progress-bar-fill" style="width: 45%;"></div>
+                </div>
+                <span class="font-bold text-blue-700">45%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav Tabs -->
+    <div class="flex gap-4 border-b border-gray-200 mb-6 pb-2">
+        <a href="checklist.html" class="px-4 py-2 bg-blue-50 text-blue-700 font-semibold rounded-t-lg border-b-2 border-blue-600">Checklist Fitur</a>
+        <a href="laporan.html" class="px-4 py-2 text-gray-500 hover:text-blue-600 font-semibold">Log Aktivitas (Laporan)</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Fase 1: Perencanaan -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-800">1. Perencanaan & Arsitektur</h2>
+                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">100% Selesai</span>
+            </div>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Pembuatan file `docs/perancangan.md`</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Struktur direktori (`assets`, `pages`, `docs`)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] ER-D Mockup dengan sintaks Mermaid</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[EDIT] Mengubah format file monitoring menjadi HTML interaktif</span></li>
+            </ul>
+        </div>
+
+        <!-- Fase 2: HTML Slicing -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-800">2. Layouting & Distribusi File HTML</h2>
+                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">100% Selesai</span>
+            </div>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[DEL] Mem-backup SPA lama ke `_backup_spa_sebelumnya`</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Distribusi HTML `index.html` (Portal Login)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Distribusi HTML Dashboard & Analitik</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Distribusi HTML Mahasiswa & Form Edit Data Validasi KRS</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Distribusi HTML Instruktur & Kelas Virtual</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" checked disabled class="mt-1"> <span>[ADD] Distribusi HTML Kurikulum, Tugas, Sertifikasi, & Pengaturan</span></li>
+            </ul>
+        </div>
+
+        <!-- Fase 3: Refactoring CSS -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-800">3. Refactoring & Pembersihan CSS</h2>
+                <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-1 rounded">Sedang Dikerjakan (0%)</span>
+            </div>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[EDIT] Standarisasi Tailwind config dan Global Fonts</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[DEL] Menghapus inline style kotor bawaan generator Stitch</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[ADD] Memisahkan spesifik class ke `assets/css/style.css`</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[EDIT] Responsivitas grid dan flexbox (Mobile vs Desktop view)</span></li>
+            </ul>
+        </div>
+
+        <!-- Fase 4: Implementasi Interaksi JS -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-800">4. Interaktivitas UI & Mock Data JS</h2>
+                <span class="bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded">Belum Mulai (0%)</span>
+            </div>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[ADD] Global Navigation JS (Sidebar toggle, Active states)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[ADD] Modal Controller (Buka/tutup form tambah/edit)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[EDIT] State Management KRS dan rubrik penilaian (DOM update)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[ADD] Validasi form real-time (Login, Tambah Siswa/Instruktur)</span></li>
+                <li class="flex items-start gap-2"><input type="checkbox" disabled class="mt-1"> <span>[ADD] Inisialisasi Chart.js untuk Dashboard Analytics</span></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
