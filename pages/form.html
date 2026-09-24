@@ -20,6 +20,7 @@
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/form.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <aside data-component="sidebar"></aside>
@@ -28,503 +29,146 @@
     <header data-component="topbar" data-title="Form Kursus"></header>
 
     <main class="flex-1 min-w-0">
-<div class="max-w-7xl mx-auto px-8 py-6 flex flex-col gap-6">
-<!-- Top Breadcrumbs & Page Header -->
-<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-<div class="flex flex-col gap-1.5">
-<div class="flex items-center gap-1.5 text-xs font-medium text-slate-500 uppercase tracking-wider">
-<span>Kurikulum Enterprise</span>
-<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
-<span>Katalog Akademik</span>
-<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
-<span class="text-blue-600 font-semibold">Penyusunan Baru</span>
-</div>
-<h1 class="text-2xl font-bold text-slate-900 tracking-tight">
-              Penyusunan Kurikulum &amp; Pembentukan Kursus Baru
-            </h1>
-<p class="text-xs sm:text-sm text-slate-600 max-w-3xl">
-              Konfigurasikan spesifikasi silabus, capaian pembelajaran, pembagian modul terstruktur, serta kriteria evaluasi standar akreditasi institusional.
-            </p>
-</div>
-<!-- Top Action Buttons -->
-<div class="flex items-center gap-2.5 self-start lg:self-center shrink-0">
-<button class="h-9 px-3.5 rounded-lg bg-white border border-slate-300 text-slate-700 text-xs font-medium flex items-center gap-1.5 hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-xs">
-<span class="material-symbols-outlined text-base text-slate-500">save</span>
-<span>Simpan sebagai Draf</span>
-</button>
-<button class="h-9 px-3.5 rounded-lg bg-white border border-slate-300 text-slate-700 text-xs font-medium flex items-center gap-1.5 hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-xs">
-<span class="material-symbols-outlined text-base text-blue-600">visibility</span>
-<span>Pratinjau Silabus</span>
-</button>
-<button class="h-9 px-3.5 rounded-lg bg-blue-600 text-white text-xs font-semibold flex items-center gap-1.5 hover:bg-blue-700 transition-colors shadow-xs">
-<span class="material-symbols-outlined text-base">publish</span>
-<span>Publikasikan Kursus</span>
-</button>
-</div>
-</div>
-<!-- Clean Step Wizard Indicator -->
-<div class="bg-white rounded-xl border border-slate-200 px-6 py-4 shadow-xs">
-<ol class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
-<!-- Step 1 (Active) -->
-<li class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-blue-600 text-white font-semibold text-xs flex items-center justify-center shrink-0 shadow-xs ring-4 ring-blue-50">
-                1
-              </div>
-<div class="flex flex-col min-w-0">
-<span class="text-[11px] font-semibold text-blue-600 uppercase tracking-wider">Langkah 1 (Aktif)</span>
-<span class="text-xs font-semibold text-slate-900 truncate">Informasi Dasar &amp; Identitas</span>
-</div>
-</li>
-<!-- Step 2 -->
-<li class="flex items-center gap-3 opacity-75">
-<div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-300 text-slate-600 font-semibold text-xs flex items-center justify-center shrink-0">
-                2
-              </div>
-<div class="flex flex-col min-w-0">
-<span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Langkah 2</span>
-<span class="text-xs font-medium text-slate-700 truncate">Struktur Modul &amp; Bahan Ajar</span>
-</div>
-</li>
-<!-- Step 3 -->
-<li class="flex items-center gap-3 opacity-75">
-<div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-300 text-slate-600 font-semibold text-xs flex items-center justify-center shrink-0">
-                3
-              </div>
-<div class="flex flex-col min-w-0">
-<span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Langkah 3</span>
-<span class="text-xs font-medium text-slate-700 truncate">Evaluasi, Kuis &amp; Tugas</span>
-</div>
-</li>
-<!-- Step 4 -->
-<li class="flex items-center gap-3 opacity-75">
-<div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-300 text-slate-600 font-semibold text-xs flex items-center justify-center shrink-0">
-                4
-              </div>
-<div class="flex flex-col min-w-0">
-<span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider">Langkah 4</span>
-<span class="text-xs font-medium text-slate-700 truncate">Pengaturan Akses &amp; Publikasi</span>
-</div>
-</li>
-</ol>
-</div>
-<!-- 2-Column Content Grid (8 cols + 4 cols) -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- Left Column (8 Cols) -->
-<div class="lg:col-span-8 flex flex-col gap-6">
-<!-- Card 1: Informasi Akademik & Meta Data -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-xs p-6 flex flex-col gap-5">
-<div class="flex items-center justify-between border-b border-slate-100 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-[22px]">school</span>
-</div>
-<div>
-<h2 class="text-base font-semibold text-slate-900 tracking-tight">Informasi Akademik &amp; Meta Data</h2>
-<p class="text-xs text-slate-500">Identifikasi formal kurikulum sesuai standarisasi DIKTI &amp; KKNI Level 6</p>
-</div>
-</div>
-<span class="px-2.5 py-1 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Tahap Inisialisasi
-                </span>
-</div>
-<!-- Form Fields Group 1 -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<!-- Kode Kursus -->
-<div class="flex flex-col gap-1.5">
-<div class="flex items-center justify-between">
-<label class="text-xs font-medium text-slate-800">Kode Kursus Terdaftar</label>
-<span class="text-[11px] font-medium text-emerald-600 flex items-center gap-0.5">
-<span class="material-symbols-outlined text-[13px]">check_circle</span>
-                      Otomatis
-                    </span>
-</div>
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-base pointer-events-none">tag</span>
-<input class="w-full h-9 pl-9 pr-3 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs font-semibold cursor-not-allowed" readonly="" type="text" value="IF-3210-2024">
-</div>
-<span class="text-[11px] text-slate-500">Prefiks departemen otomatis berdasar tahun kurikulum aktif.</span>
-</div>
-<!-- Departemen / Program Studi -->
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-medium text-slate-800">Departemen / Program Studi <span class="text-rose-500">*</span></label>
-<div class="relative flex items-center">
-<select class="w-full h-9 px-3 rounded-lg bg-white border border-slate-300 text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none cursor-pointer">
-<option selected="">S1 Teknik Informatika</option>
-<option>S1 Sistem Informasi</option>
-<option>S1 Sains Data Terapan</option>
-<option>D4 Rekayasa Perangkat Lunak</option>
-</select>
-<span class="material-symbols-outlined absolute right-2.5 text-slate-400 text-base pointer-events-none">expand_more</span>
-</div>
-<span class="text-[11px] text-slate-500">Departemen pengelola beban kerja dosen.</span>
-</div>
-<!-- Tingkat Kemahiran -->
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-medium text-slate-800">Tingkat Kemahiran <span class="text-rose-500">*</span></label>
-<div class="relative flex items-center">
-<select class="w-full h-9 px-3 rounded-lg bg-white border border-slate-300 text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none cursor-pointer">
-<option>Tingkat Dasar (Introductory)</option>
-<option>Tingkat Menengah (Intermediate)</option>
-<option selected="">Tingkat Lanjut (Advanced Specialization)</option>
-<option>Magister / Pascasarjana</option>
-</select>
-<span class="material-symbols-outlined absolute right-2.5 text-slate-400 text-base pointer-events-none">tune</span>
-</div>
-<span class="text-[11px] text-slate-500">Target kematangan kognitif mahasiswa.</span>
-</div>
-</div>
-<!-- Judul Lengkap Kursus -->
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-medium text-slate-800">Judul Lengkap Kursus <span class="text-rose-500">*</span></label>
-<input class="w-full h-9 px-3 rounded-lg bg-white border border-slate-300 text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 placeholder:text-slate-400 transition-colors" type="text" value="Pengembangan Aplikasi Web Sisi Klien Lanjut">
-<div class="flex items-center justify-between text-slate-500 text-[11px]">
-<span>Sertakan terminologi baku industri tanpa singkatan informal.</span>
-<span class="font-mono text-slate-400">44 / 120 Karakter</span>
-</div>
-</div>
-<!-- SKS & Jam Belajar Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-blue-600">workspace_premium</span>
-<div class="flex flex-col">
-<span class="text-xs font-semibold text-slate-900">Bobot Kredit Akademik</span>
-<span class="text-[11px] text-slate-500">Beban Tatap Muka &amp; Praktikum</span>
-</div>
-</div>
-<div class="flex items-center gap-1.5">
-<button class="w-7 h-7 rounded bg-white border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined text-sm">remove</span>
-</button>
-<span class="font-mono text-base text-slate-900 font-bold px-2">3 SKS</span>
-<button class="w-7 h-7 rounded bg-white border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined text-sm">add</span>
-</button>
-</div>
-</div>
-<div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-emerald-600">schedule</span>
-<div class="flex flex-col">
-<span class="text-xs font-semibold text-slate-900">Total Estimasi Jam Mandiri</span>
-<span class="text-[11px] text-slate-500">Kalkulasi 16 Pertemuan Silabus</span>
-</div>
-</div>
-<div class="flex items-center">
-<span class="font-mono text-base text-emerald-700 font-bold">48 Jam Belajar</span>
-</div>
-</div>
-</div>
-<!-- Deskripsi Silabus & Capaian (Editor) -->
-<div class="flex flex-col gap-1.5">
-<div class="flex items-center justify-between">
-<label class="text-xs font-medium text-slate-800">Deskripsi Silabus &amp; Capaian Pembelajaran Lulusan (CPL) <span class="text-rose-500">*</span></label>
-<span class="text-[11px] text-blue-600 font-medium">Standar Format Markdown Didukung</span>
-</div>
-<div class="rounded-lg border border-slate-300 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500/20 focus-within:border-blue-500 transition-all">
-<!-- Editor Toolbar -->
-<div class="px-3 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-1">
-<div class="flex items-center gap-1">
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Tebal"><span class="material-symbols-outlined text-[17px]">format_bold</span></button>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Miring"><span class="material-symbols-outlined text-[17px]">format_italic</span></button>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Garis Bawah"><span class="material-symbols-outlined text-[17px]">format_underlined</span></button>
-<div class="w-px h-4 bg-slate-300 mx-1"></div>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Daftar Berpoin"><span class="material-symbols-outlined text-[17px]">format_list_bulleted</span></button>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Daftar Bernomor"><span class="material-symbols-outlined text-[17px]">format_list_numbered</span></button>
-<div class="w-px h-4 bg-slate-300 mx-1"></div>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Sisipkan Tautan"><span class="material-symbols-outlined text-[17px]">link</span></button>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Blok Kode"><span class="material-symbols-outlined text-[17px]">code</span></button>
-<button class="p-1 rounded text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors" title="Kutipan"><span class="material-symbols-outlined text-[17px]">format_quote</span></button>
-</div>
-<div class="flex items-center gap-1.5 text-[11px] text-slate-500">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span>Autosave Aktif</span>
-</div>
-</div>
-<!-- Textarea -->
-<textarea class="w-full p-3.5 bg-white text-slate-800 text-xs leading-relaxed focus:outline-none resize-y border-none" rows="5">Mata kuliah ini membekali peserta dengan kompetensi rekayasa perangkat lunak modern berbasis arsitektur SPA (Single Page Applications). Peserta akan mempelajari manajemen konkurensi data, optimasi rendering DOM virtual, implementasi state tree terdistribusi, serta audit performa Core Web Vitals pada skala aplikasi enterprise.
+      <div class="mx-auto w-full max-w-5xl space-y-6 p-4 lg:p-6">
+        <!-- Judul -->
+        <section>
+          <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+            <a href="data-master.html" class="hover:text-blue-600 hover:underline">Data Master Kursus</a>
+            <span class="material-symbols-outlined text-[14px] text-slate-400" aria-hidden="true">chevron_right</span>
+            <span id="crumb-mode" class="text-slate-800">Tambah</span>
+          </nav>
+          <h2 id="judul-form" class="mt-2 text-2xl font-bold tracking-tight text-slate-900">Tambah Kursus Baru</h2>
+          <p id="sub-form" class="mt-1 text-sm text-slate-500">Lengkapi informasi kursus dan susun modul per pertemuan. Kolom bertanda <span class="text-red-500">*</span> wajib diisi.</p>
+        </section>
 
-Capaian Pembelajaran:
-1. Mampu mengimplementasikan arsitektur state management skala besar secara modular.
-2. Mampu menganalisis efisiensi siklus rendering komponen antarmuka web reaktif.</textarea>
-</div>
-</div>
-<!-- Visual Banner Upload (Realistic File Zone) -->
-<div class="flex flex-col gap-1.5">
-<label class="text-xs font-medium text-slate-800">Visual Banner Kursus (Katalog Publik)</label>
-<div class="border-2 border-dashed border-slate-300 rounded-xl p-6 bg-slate-50/60 hover:bg-slate-50 transition-colors cursor-pointer flex flex-col items-center justify-center text-center gap-2">
-<div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-2xl">cloud_upload</span>
-</div>
-<div class="flex flex-col">
-<span class="text-xs font-semibold text-slate-800">Tarik dan letakkan berkas visual banner ke area ini</span>
-<span class="text-[11px] text-slate-500">Format PNG, JPG beresolusi tinggi, ukuran maksimum 5MB (Rasio baku 16:9 disarankan)</span>
-</div>
-<button class="mt-1 h-8 px-3.5 rounded-lg bg-white border border-slate-300 text-slate-700 text-xs font-medium hover:bg-slate-100 transition-colors shadow-xs" type="button">
-                    Pilih Berkas Komputer
-                  </button>
-</div>
-</div>
-</div>
-<!-- Card 2: Struktur Modul & Silabus Mingguan -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-xs p-6 flex flex-col gap-5">
-<div class="flex items-center justify-between border-b border-slate-100 pb-4">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-[22px]">account_tree</span>
-</div>
-<div>
-<h2 class="text-base font-semibold text-slate-900 tracking-tight">Struktur Modul &amp; Silabus Mingguan</h2>
-<p class="text-xs text-slate-500">Alur pembelajaran terstruktur berjenjang per unit kompetensi</p>
-</div>
-</div>
-<span class="font-mono text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded border border-slate-200">Total 2 Unit Disusun</span>
-</div>
-<!-- Modul 1 Item Card -->
-<div class="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-3 shadow-xs hover:border-slate-300 transition-all">
-<div class="flex items-start justify-between gap-3">
-<div class="flex items-start gap-3">
-<div class="w-7 h-7 rounded bg-blue-50 border border-blue-100 text-blue-700 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      01
-                    </div>
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="text-[11px] text-blue-700 font-semibold uppercase">Minggu 01 - 04</span>
-<span class="w-1 h-1 rounded-full bg-slate-300"></span>
-<span class="text-[11px] text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Bahan Tayang Siap</span>
-</div>
-<h3 class="text-sm font-semibold text-slate-900 pt-0.5">
-                        Pengantar Client-Side Architecture &amp; DOM Manipulation
-                      </h3>
-</div>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Pindah Atas"><span class="material-symbols-outlined text-[18px]">arrow_upward</span></button>
-<button class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Pindah Bawah"><span class="material-symbols-outlined text-[18px]">arrow_downward</span></button>
-<button class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors" title="Hapus Modul"><span class="material-symbols-outlined text-[18px]">delete</span></button>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-10">
-<div class="p-2 px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-<div class="flex items-center gap-2 text-slate-700 font-medium">
-<span class="material-symbols-outlined text-base text-slate-400">menu_book</span>
-<span>4 Topik Perkuliahan</span>
-</div>
-<span class="font-mono text-slate-500">120 Menit Video</span>
-</div>
-<div class="p-2 px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-<div class="flex items-center gap-2 text-slate-700 font-medium">
-<span class="material-symbols-outlined text-base text-blue-500">assignment</span>
-<span>1 Tugas Mandiri Analitik</span>
-</div>
-<span class="font-mono text-emerald-700 font-semibold">Bobot 10%</span>
-</div>
-</div>
-</div>
-<!-- Modul 2 Item Card -->
-<div class="bg-white rounded-xl border border-slate-200 p-4 flex flex-col gap-3 shadow-xs hover:border-slate-300 transition-all">
-<div class="flex items-start justify-between gap-3">
-<div class="flex items-start gap-3">
-<div class="w-7 h-7 rounded bg-indigo-50 border border-indigo-100 text-indigo-700 font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      02
-                    </div>
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="text-[11px] text-indigo-700 font-semibold uppercase">Minggu 05 - 08</span>
-<span class="w-1 h-1 rounded-full bg-slate-300"></span>
-<span class="text-[11px] text-slate-600 font-medium bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Draf Konseptual</span>
-</div>
-<h3 class="text-sm font-semibold text-slate-900 pt-0.5">
-                        State Management &amp; Component-Based Design
-                      </h3>
-</div>
-</div>
-<div class="flex items-center gap-1">
-<button class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Pindah Atas"><span class="material-symbols-outlined text-[18px]">arrow_upward</span></button>
-<button class="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Pindah Bawah"><span class="material-symbols-outlined text-[18px]">arrow_downward</span></button>
-<button class="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors" title="Hapus Modul"><span class="material-symbols-outlined text-[18px]">delete</span></button>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-10">
-<div class="p-2 px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-<div class="flex items-center gap-2 text-slate-700 font-medium">
-<span class="material-symbols-outlined text-base text-slate-400">menu_book</span>
-<span>6 Topik Perkuliahan</span>
-</div>
-<span class="font-mono text-slate-500">180 Menit Video</span>
-</div>
-<div class="p-2 px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-<div class="flex items-center gap-2 text-slate-700 font-medium">
-<span class="material-symbols-outlined text-base text-purple-500">quiz</span>
-<span>1 Kuis Praktik Koding</span>
-</div>
-<span class="font-mono text-emerald-700 font-semibold">Bobot 15%</span>
-</div>
-</div>
-</div>
-<!-- Add Module Button -->
-<button class="w-full h-10 rounded-xl border border-dashed border-slate-300 hover:border-blue-400 hover:bg-blue-50/50 text-blue-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors">
-<span class="material-symbols-outlined text-base">add_circle</span>
-<span>Tambah Sesi / Modul Pembelajaran</span>
-</button>
-</div>
-</div>
-<!-- Right Sidebar Widgets (4 Cols) -->
-<div class="lg:col-span-4 flex flex-col gap-6">
-<!-- Widget 1: Tinjauan Thumbnail Kursus -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-xs p-5 flex flex-col gap-3">
-<span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Tinjauan Thumbnail Kursus</span>
-<div class="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
-<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400" role="img" aria-label="High-tech enterprise developer workstation showing modern frontend code on multiple monitors with dark indigo and luminous cyan ambient glow, sleek workspace aesthetic"><span class="material-symbols-outlined text-[28px]" aria-hidden="true">image</span></div>
-<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 text-white font-mono text-[11px] font-semibold">
-                  IF-3210
+        <!-- Kursus tidak ditemukan (mode edit dengan id salah) -->
+        <section id="not-found" class="hidden rounded-xl border border-amber-200 bg-amber-50 p-6 text-center">
+          <span class="material-symbols-outlined text-[36px] text-amber-500" aria-hidden="true">search_off</span>
+          <p class="mt-2 font-semibold text-slate-900">Kursus tidak ditemukan</p>
+          <p class="mt-1 text-sm text-slate-600">Data mungkin sudah dihapus atau tautannya salah.</p>
+          <a href="data-master.html" class="mt-4 inline-flex rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Kembali ke Data Master</a>
+        </section>
+
+        <form id="form-kursus" class="space-y-6" novalidate>
+          <!-- Informasi dasar -->
+          <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:p-6" aria-labelledby="judul-info">
+            <div class="flex items-start gap-3 border-b border-slate-100 pb-4">
+              <span class="material-symbols-outlined rounded-lg bg-blue-50 p-2 text-[20px] text-blue-600" aria-hidden="true">school</span>
+              <div>
+                <h3 id="judul-info" class="text-base font-semibold text-slate-900">Informasi Dasar</h3>
+                <p class="text-xs text-slate-500">Identitas kursus, dosen pengampu, dan kapasitas kelas.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
+              <div>
+                <label for="kode_mk" class="mb-1 block text-sm font-medium text-slate-700">Kode MK <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="kode_mk" name="kode_mk" type="text" maxlength="8" placeholder="CS-301" autocomplete="off" class="block w-full rounded-lg border-slate-300 font-mono text-sm uppercase focus:border-blue-500 focus:ring-blue-500">
+                <p class="mt-1 text-xs text-slate-500">2–4 huruf, tanda -, 3 digit.</p>
+              </div>
+              <div>
+                <label for="prodi_id" class="mb-1 block text-sm font-medium text-slate-700">Program Studi <span class="text-red-500" aria-hidden="true">*</span></label>
+                <select id="prodi_id" name="prodi_id" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Pilih program studi…</option></select>
+              </div>
+              <div>
+                <label for="tingkat" class="mb-1 block text-sm font-medium text-slate-700">Tingkat <span class="text-red-500" aria-hidden="true">*</span></label>
+                <select id="tingkat" name="tingkat" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+                  <option value="">Pilih tingkat…</option><option value="dasar">Dasar</option><option value="menengah">Menengah</option><option value="lanjut">Lanjut</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-3">
+                <label for="nama" class="mb-1 block text-sm font-medium text-slate-700">Nama Kursus <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="nama" name="nama" type="text" maxlength="120" placeholder="Contoh: Pemrograman Web Lanjut" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+
+              <div class="md:col-span-3">
+                <div class="mb-1 flex items-end justify-between gap-2">
+                  <label for="deskripsi" class="block text-sm font-medium text-slate-700">Deskripsi &amp; Capaian Pembelajaran <span class="text-red-500" aria-hidden="true">*</span></label>
+                  <span id="deskripsi-counter" class="font-mono text-xs text-slate-400">0 / 2000</span>
                 </div>
-</div>
-<div class="flex items-center justify-between pt-1">
-<span class="text-xs text-slate-500">Rasio Tampilan 16:9</span>
-<button class="text-xs text-blue-600 font-semibold hover:underline">Ganti Gambar</button>
-</div>
-</div>
-<!-- Widget 2: Dewan Pengampu -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-xs p-5 flex flex-col gap-4">
-<div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-<div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-lg">group</span>
-</div>
-<div>
-<h2 class="text-sm font-semibold text-slate-900">Dewan Pengampu</h2>
-<p class="text-[11px] text-slate-500">Dosen penanggung jawab &amp; asisten</p>
-</div>
-</div>
-<div class="flex flex-col gap-2">
-<label class="text-xs font-medium text-slate-800">Instruktur Utama &amp; Kolaborator</label>
-<!-- Multi-tag input box -->
-<div class="p-2 rounded-lg border border-slate-300 bg-white flex flex-wrap gap-1.5 items-center">
-<div class="flex items-center gap-1 pl-2 pr-1 py-1 rounded bg-slate-100 border border-slate-200 text-slate-800 text-xs">
-<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-<span class="font-medium">Dr. Adrian Wicaksono</span>
-<button class="text-slate-400 hover:text-rose-600 ml-0.5"><span class="material-symbols-outlined text-[15px] block">close</span></button>
-</div>
-<div class="flex items-center gap-1 pl-2 pr-1 py-1 rounded bg-slate-100 border border-slate-200 text-slate-800 text-xs">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-<span class="font-medium">Ir. Fahmi Ramadhan, M.T.</span>
-<button class="text-slate-400 hover:text-rose-600 ml-0.5"><span class="material-symbols-outlined text-[15px] block">close</span></button>
-</div>
-<input class="h-6 px-1.5 bg-transparent text-slate-800 placeholder:text-slate-400 text-xs focus:outline-none flex-1 min-w-[120px]" placeholder="+ Tambah dosen / NIDN..." type="text">
-</div>
-<span class="text-[11px] text-slate-500">Hak akses revisi kurikulum diberikan otomatis kepada pengampu terpilih.</span>
-</div>
-<!-- Main Instructor Card -->
-<div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-3">
-<span class="w-10 h-10 ring-1 ring-slate-200 inline-flex flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700" aria-hidden="true">AW</span>
-<div class="flex flex-col min-w-0">
-<span class="text-xs font-semibold text-slate-900 truncate">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="text-[11px] text-slate-500 truncate">Ketua Kelompok Keahlian Software Eng.</span>
-</div>
-</div>
-</div>
-<!-- Widget 3: Kriteria Kelulusan -->
-<div class="bg-white rounded-xl border border-slate-200 shadow-xs p-5 flex flex-col gap-4">
-<div class="flex items-center justify-between border-b border-slate-100 pb-3">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-lg">balance</span>
-</div>
-<div>
-<h2 class="text-sm font-semibold text-slate-900">Kriteria Kelulusan</h2>
-<p class="text-[11px] text-slate-500">Skema pembobotan standar</p>
-</div>
-</div>
-<span class="font-mono text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold border border-emerald-200">100% Valid</span>
-</div>
-<!-- Passing Grade Box -->
-<div class="flex flex-col gap-2 p-3 rounded-lg bg-slate-50 border border-slate-200">
-<div class="flex items-center justify-between">
-<label class="text-xs font-medium text-slate-800">Batas Ambang Kelulusan (Passing Grade)</label>
-<span class="font-mono text-sm text-blue-600 font-bold">75.0</span>
-</div>
-<div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-<div class="bg-blue-600 h-full rounded-full" style="width: 75%;"></div>
-</div>
-<span class="text-[11px] text-slate-500">Skala 0.0 - 100.0 (Kategori Predikat Sangat Memuaskan / B+)</span>
-</div>
-<!-- Weights Distribution -->
-<div class="flex flex-col gap-3">
-<span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Distribusi Komponen Evaluasi</span>
-<!-- Tugas -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="text-slate-700 font-medium">Tugas &amp; Studi Kasus Mandiri</span>
-<span class="font-mono text-slate-900 font-semibold">30%</span>
-</div>
-<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden border border-slate-200">
-<div class="bg-blue-600 h-full rounded-full" style="width: 30%;"></div>
-</div>
-</div>
-<!-- Kuis -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="text-slate-700 font-medium">Kuis Formatif &amp; Praktik</span>
-<span class="font-mono text-slate-900 font-semibold">20%</span>
-</div>
-<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden border border-slate-200">
-<div class="bg-indigo-500 h-full rounded-full" style="width: 20%;"></div>
-</div>
-</div>
-<!-- Ujian Akhir -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="text-slate-700 font-medium">Ujian Akhir Semester &amp; Capstone Project</span>
-<span class="font-mono text-slate-900 font-semibold">50%</span>
-</div>
-<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden border border-slate-200">
-<div class="bg-emerald-600 h-full rounded-full" style="width: 50%;"></div>
-</div>
-</div>
-</div>
-<!-- Total Verification Box -->
-<div class="p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-200 flex items-center justify-between">
-<div class="flex items-center gap-1.5 text-xs text-emerald-800 font-medium">
-<span class="material-symbols-outlined text-base text-emerald-600">check_circle</span>
-<span>Total Alokasi Bobot Nilai</span>
-</div>
-<span class="font-mono text-xs text-emerald-700 font-bold">100% Terpenuhi</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-  <!-- Bar aksi form: menempel di bawah layar selama form di-scroll -->
-<div class="sticky bottom-0 z-20 bg-white/95 backdrop-blur border-t border-slate-200 px-4 lg:px-8 py-3.5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-<!-- Validation Status -->
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
-<span class="material-symbols-outlined text-[20px]">verified</span>
-</div>
-<div class="flex flex-col">
-<span class="text-xs font-semibold text-slate-900">
-            Semua kolom wajib telah terisi dengan benar (9/9)
-          </span>
-<span class="text-[11px] text-emerald-700">
-            Validasi integritas kurikulum lolos pengujian standar institusional
-          </span>
-</div>
-</div>
-<!-- Action Buttons -->
-<div class="flex items-center gap-2.5 shrink-0">
-<button class="h-9 px-4 rounded-lg bg-white border border-slate-300 text-slate-700 text-xs font-medium hover:bg-slate-50 transition-colors shadow-xs">
-          Batal / Kembali ke Katalog
-        </button>
-<button class="h-9 px-5 rounded-lg bg-blue-600 text-white text-xs font-semibold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-xs">
-<span>Simpan &amp; Lanjutkan ke Modul 2</span>
-<span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-</div>
-</main>
+                <textarea id="deskripsi" name="deskripsi" rows="4" maxlength="2000" placeholder="Jelaskan materi dan kemampuan yang diperoleh mahasiswa (minimal 30 karakter)." class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+              </div>
+
+              <div class="md:col-span-2">
+                <label for="instruktur_id" class="mb-1 block text-sm font-medium text-slate-700">Dosen Pengampu <span class="text-red-500" aria-hidden="true">*</span></label>
+                <select id="instruktur_id" name="instruktur_id" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Pilih dosen…</option></select>
+              </div>
+              <div>
+                <label for="periode" class="mb-1 block text-sm font-medium text-slate-700">Periode <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="periode" name="periode" type="text" placeholder="2026/2027-Ganjil" class="block w-full rounded-lg border-slate-300 font-mono text-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+
+              <div>
+                <label for="sks" class="mb-1 block text-sm font-medium text-slate-700">SKS <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="sks" name="sks" type="number" min="1" max="6" step="1" inputmode="numeric" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+              <div>
+                <label for="kuota" class="mb-1 block text-sm font-medium text-slate-700">Kuota Mahasiswa <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="kuota" name="kuota" type="number" min="1" max="500" step="1" inputmode="numeric" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+              <div>
+                <label for="passing_grade" class="mb-1 block text-sm font-medium text-slate-700">Passing Grade <span class="text-red-500" aria-hidden="true">*</span></label>
+                <input id="passing_grade" name="passing_grade" type="number" min="0" max="100" step="1" inputmode="numeric" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+
+              <div class="md:col-span-3">
+                <span class="mb-2 block text-sm font-medium text-slate-700">Status Publikasi <span class="text-red-500" aria-hidden="true">*</span></span>
+                <div class="grid grid-cols-1 gap-2 sm:grid-cols-3" data-field>
+                  <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                    <input type="radio" name="status" value="draft" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <span><span class="block text-sm font-semibold text-slate-800">Draft</span><span class="text-xs text-slate-500">Belum dibuka untuk KRS</span></span>
+                  </label>
+                  <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                    <input type="radio" name="status" value="publikasi" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <span><span class="block text-sm font-semibold text-slate-800">Publikasi</span><span class="text-xs text-slate-500">Terbuka untuk KRS (butuh ≥ 1 modul)</span></span>
+                  </label>
+                  <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                    <input type="radio" name="status" value="arsip" class="mt-0.5 text-blue-600 focus:ring-blue-500">
+                    <span><span class="block text-sm font-semibold text-slate-800">Arsip</span><span class="text-xs text-slate-500">Kurikulum lama, tidak aktif</span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Struktur modul -->
+          <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:p-6" aria-labelledby="judul-modul">
+            <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-start sm:justify-between">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined rounded-lg bg-indigo-50 p-2 text-[20px] text-indigo-600" aria-hidden="true">view_list</span>
+                <div>
+                  <h3 id="judul-modul" class="text-base font-semibold text-slate-900">Struktur Modul &amp; Materi</h3>
+                  <p class="text-xs text-slate-500">Urutan modul menentukan nomor pertemuan (maksimal 16).</p>
+                </div>
+              </div>
+              <span id="modul-count" class="self-start rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">0 modul</span>
+            </div>
+            <div id="modul-error" class="mt-4 hidden rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
+            <ol id="modul-list" class="mt-4 space-y-3"></ol>
+            <p id="modul-empty" class="mt-4 rounded-lg border border-dashed border-slate-300 px-4 py-6 text-center text-sm text-slate-500">Belum ada modul. Tambahkan minimal satu modul sebelum kursus dipublikasikan.</p>
+            <button type="button" id="btn-tambah-modul" class="mt-4 inline-flex items-center gap-2 rounded-lg border border-dashed border-blue-300 bg-blue-50/50 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>Tambah Modul
+            </button>
+          </section>
+
+          <!-- Bar aksi: menempel di bawah layar -->
+          <div class="sticky bottom-0 z-20 -mx-4 flex flex-col gap-3 border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:flex-row sm:items-center sm:justify-between lg:-mx-6 lg:px-6">
+            <p id="save-state" class="flex items-center gap-1.5 text-xs text-slate-500">
+              <span class="material-symbols-outlined text-[16px]" aria-hidden="true">info</span><span>Belum ada perubahan.</span>
+            </p>
+            <div class="flex gap-2">
+              <a href="data-master.html" class="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50 sm:flex-none">Batal</a>
+              <button type="submit" id="btn-simpan" class="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:flex-none">
+                <span class="material-symbols-outlined text-[18px]" aria-hidden="true">save</span>Simpan Kursus
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
 
     <footer data-component="footer"></footer>
   </div>
-
 </body>
 </html>

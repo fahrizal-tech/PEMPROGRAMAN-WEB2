@@ -301,7 +301,24 @@
 
   function setFieldError(form, name, message) {
     var el = form.elements.namedItem(name);
-    if (!el || !el.id) return;
+    if (!el) return;
+    // Grup radio: pesan diletakkan setelah pembungkus [data-field].
+    if (!el.tagName && el.length) {
+      var group = el[0].closest("[data-field]");
+      var gId = form.id + "-" + name + "-error";
+      var gErr = document.getElementById(gId);
+      if (!message) { if (gErr) gErr.remove(); if (group) group.removeAttribute("aria-invalid"); return; }
+      if (!gErr && group) {
+        gErr = document.createElement("p");
+        gErr.id = gId;
+        gErr.className = "mt-1 flex items-center gap-1 text-xs font-medium text-red-600";
+        group.insertAdjacentElement("afterend", gErr);
+      }
+      if (gErr) gErr.textContent = message;
+      if (group) { group.setAttribute("aria-invalid", "true"); group.setAttribute("aria-describedby", gId); }
+      return;
+    }
+    if (!el.id) return;
     var errId = el.id + "-error";
     var err = document.getElementById(errId);
     if (!message) {
@@ -332,6 +349,7 @@
       setFieldError(form, k, errors[k]);
       if (!first) first = form.elements.namedItem(k);
     });
+    if (first && !first.tagName && first.length) first = first[0]; // grup radio
     if (first && first.focus) first.focus();
   }
 
@@ -522,7 +540,27 @@
     });
   }
 
+  /* =====================================================================
+   * Pesan kilat: ditampilkan sebagai toast di halaman berikutnya (setelah redirect)
+   * ===================================================================== */
+  var FLASH_KEY = "nexus-lms:flash";
+  function flash(message, tone) {
+    try { global.sessionStorage.setItem(FLASH_KEY, JSON.stringify({ message: message, tone: tone || "success" })); } catch (e) { /* abaikan */ }
+  }
+  function showFlash() {
+    try {
+      var raw = global.sessionStorage.getItem(FLASH_KEY);
+      if (!raw) return;
+      global.sessionStorage.removeItem(FLASH_KEY);
+      var f = JSON.parse(raw);
+      toast(f.message, f.tone);
+    } catch (e) { /* abaikan */ }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showFlash);
+  else showFlash();
+
   Nexus.ui = {
+    flash: flash,
     html: html,
     raw: raw,
     badge: badge,

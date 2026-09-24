@@ -137,8 +137,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 **Halaman wajib:**
 - [ ] `index.html` — Login: validasi, tampil/sembunyikan password, redirect ke dashboard; tab default Admin/BAAK, tab Dosen/Mahasiswa → pemberitahuan "di luar lingkup"
 - [ ] `dashboard.html` — kartu statistik + Chart.js (tren pendaftaran, distribusi nilai, aktivitas) dari data lokal
-- [ ] `data-master.html` — tabel kursus: cari, filter, urut, paginasi, tombol Tambah/Edit/Hapus + modal konfirmasi (kode MK tidak terpotong baris)
-- [ ] `form.html` — form kursus mode tambah/edit (`?id=`), validasi real-time, cek duplikat kode
+- [x] `data-master.html` — KPI dari data, tabel kursus (kuota vs terisi, modul, tugas), cari/filter/urut/halaman, Edit/Hapus dengan konfirmasi berpenjelasan, ekspor CSV sesuai filter
+- [x] `form.html` — form kursus mode tambah/edit (`?id=`), validasi per kolom, cek duplikat kode, struktur modul (tambah/urutkan/hapus), publikasi butuh modul, peringatan perubahan belum disimpan
 - [ ] `laporan.html` — rekap & log aktivitas, filter periode, cetak (`@media print`), ekspor CSV
 
 **Halaman pendukung:**
