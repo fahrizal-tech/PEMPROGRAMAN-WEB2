@@ -10,16 +10,22 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 #### Ditambahkan
 - Halaman hasil desain Stitch: Login, Mahasiswa, Instruktur, Kelas Virtual, Form Kursus, Tugas & Kuis, Sertifikasi, Pengaturan.
 - Halaman Stitch yang sebelumnya belum diimpor: `dashboard.html`, `data-master.html`, `laporan.html`.
-- Screenshot rancangan Stitch di `docs/img/stitch/` dan desain awal Figma di `docs/img/design-awal/`.
+- Screenshot rancangan Stitch (WebP, 7,4 MB → 1,8 MB) di `docs/img/stitch/` dan desain awal Figma di `docs/img/design-awal/`.
 - Spesifikasi design system: `docs/design-system-stitch.md`.
 - Logo `assets/img/logo-nexus-lms.svg`.
 - Dokumen `docs/roadmap.md` (strategi, aturan kerja, checklist per tahap).
 - Konfigurasi repo: `.gitattributes`, `.editorconfig`.
 
+#### Keamanan
+- Audit seluruh riwayat git: tidak ditemukan API key, token, maupun password.
+- Email pribadi pada metadata commit diganti email *noreply* GitHub (riwayat ditulis ulang).
+- `.gitignore` memblokir file rahasia (`.env`, `*.key`, `credentials*.json`, dll.).
+- `SECURITY.md` dan workflow `Secret Scan` (Gitleaks) di setiap push & pull request.
+
 #### Diubah
 - `pages/kurikulum.html` diganti nama menjadi `pages/form.html` sesuai format pengumpulan.
 - `README.md` ditulis ulang sesuai struktur dan fitur terbaru.
-- `.gitignore` diperbarui (folder referensi Stitch, tools lokal, arsip).
+- `.gitignore` diperbarui (rahasia, folder referensi Stitch, tools lokal, arsip).
 
 #### Dihapus
 - Versi multi-page lama berbasis `style.css`: `dashboard`, `data-master`, `form`, `laporan`, `layout`.

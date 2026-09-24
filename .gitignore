@@ -1,20 +1,39 @@
-# Dependencies & build
-node_modules/
+# ── Rahasia & kredensial (JANGAN pernah di-commit) ──────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+credentials*.json
+service-account*.json
+secrets/
 
-# Sistem operasi & editor
+# ── Dependencies & build ───────────────────────────────────────
+node_modules/
+npm-debug.log*
+
+# ── Sistem operasi & editor ─────────────────────────────────────
 .DS_Store
 Thumbs.db
+desktop.ini
 .vscode/
 .idea/
 
-# Tools AI / agent lokal
+# ── Tools AI / agent lokal ──────────────────────────────────────
 .kilo/
+.claude/
 
-# Bahan referensi mentah hasil ekspor Stitch (screenshot sudah disalin ke docs/img/stitch)
+# ── Bahan referensi mentah hasil ekspor Stitch ──────────────────
+# (screenshot sudah dikompres & disalin ke docs/img/stitch)
 stitch_lms_front_end_admin_panel/
 
-# Catatan pribadi (tidak untuk dikumpulkan)
+# ── Catatan pribadi (tidak untuk dikumpulkan) ──────────────────
 EVALUASI_DAN_PANDUAN.md
 
-# Arsip
+# ── Arsip & cadangan ────────────────────────────────────────────
 *.zip
+*.bundle
+*.bak

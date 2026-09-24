@@ -68,6 +68,19 @@ main  ──●────────●────────●───�
 - [ ] Bisa dipakai dengan keyboard (fokus terlihat, label terhubung ke input)
 - [ ] Tercatat di `CHANGELOG.md`
 
+### 2.3 Keamanan (repo publik)
+
+Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca siapa pun.** Aturan yang berlaku:
+
+| Aturan | Cara penerapan |
+| --- | --- |
+| Tidak ada rahasia (API key, token, password) di repo | `.gitignore` memblokir `.env`, `*.key`, `credentials*.json`; workflow **Secret Scan (Gitleaks)** memeriksa setiap push |
+| Email pribadi tidak terekspos di commit | Commit memakai email *noreply* GitHub (`…@users.noreply.github.com`) |
+| Hanya data fiktif | Seed data memakai nama & domain fiktif (`@nexus.ac.id`), bukan data mahasiswa sungguhan |
+| Aman dari XSS | Input pengguna dirender via `textContent`/escape, bukan `innerHTML` mentah |
+| Minim pihak ketiga | Aset (avatar, CSS) di-host sendiri; CDN yang tersisa memakai versi terkunci |
+| Login demo bukan pengaman | Dinyatakan jelas di [`SECURITY.md`](../SECURITY.md); autentikasi sungguhan di Tahap 7 |
+
 ---
 
 ## 3. Tahapan & Checklist
@@ -78,7 +91,9 @@ main  ──●────────●────────●───�
 - [x] Hapus worktree `.kilo` yang tidak terpakai
 - [x] Impor halaman Stitch yang belum ada: Dashboard, Data Master Kursus, Laporan/Analitik
 - [x] Standarisasi nama file sesuai format dosen (`kurikulum.html` → `form.html`)
-- [x] Screenshot Stitch → `docs/img/stitch/`, design system → `docs/design-system-stitch.md`, logo → `assets/img/`
+- [x] Screenshot Stitch dikompres ke WebP (7,4 MB → 1,8 MB) → `docs/img/stitch/`, design system → `docs/design-system-stitch.md`, logo SVG → `assets/img/`
+- [x] Audit keamanan riwayat git: tidak ada kredensial; email pribadi di metadata commit diganti email *noreply*
+- [x] `SECURITY.md`, pola rahasia di `.gitignore`, workflow Secret Scan (Gitleaks)
 - [x] `.gitignore`, `.gitattributes` (line ending LF), `.editorconfig`
 - [x] Roadmap, README, CHANGELOG
 
@@ -99,6 +114,7 @@ main  ──●────────●────────●───�
 - [ ] Navigasi antarhalaman berfungsi, penanda menu aktif otomatis
 - [ ] Sidebar responsif: drawer + overlay + tombol burger di < 1024px
 - [ ] Hapus Tailwind CDN & konfigurasi inline di setiap halaman
+- [ ] Ganti 20 avatar dari `lh3.googleusercontent.com` (link sementara Stitch) dengan avatar inisial / aset lokal
 - [ ] Rilis tag `v0.2.0`
 
 ### Tahap 3 — Data Layer Lokal
@@ -107,7 +123,8 @@ main  ──●────────●────────●───�
 - [ ] Service per entitas + relasi (misal: kursus tidak boleh dihapus jika masih punya KRS aktif)
 - [ ] `auth.js`: login admin demo, session, *route guard*, logout
 - [ ] Pencatatan otomatis ke `LOG_AKTIVITAS` untuk setiap create/update/delete
-- [ ] Utilitas: format tanggal/angka Indonesia, generator ID, debounce
+- [ ] Utilitas: format tanggal/angka Indonesia, generator ID, debounce, `escapeHTML`
+- [ ] Validasi & sanitasi data di service layer (bukan hanya di form)
 
 ### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7)
 **Komponen bersama:** modal, dialog konfirmasi, toast, validator form, helper tabel (search, filter, sort, pagination).
@@ -133,6 +150,8 @@ main  ──●────────●────────●───�
 - [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
 - [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
 - [ ] Hapus kode mati & data dummy yang tidak terpakai
+- [ ] *Content-Security-Policy* via `<meta>`, `integrity` (SRI) pada CDN, `rel="noopener"` pada link eksternal
+- [ ] Aktifkan Dependabot untuk dependency npm
 
 ### Tahap 6 — Deploy & Presentasi
 - [ ] GitHub Pages aktif dari branch `main`
@@ -143,7 +162,7 @@ main  ──●────────●────────●───�
 
 ### Tahap 7 — Pasca-Tugas: Menuju Produksi
 - [ ] Skema SQL dari ER-D di Supabase (PostgreSQL) + Row Level Security
-- [ ] `SupabaseAdapter` → ganti adapter lewat satu konfigurasi
+- [ ] `SupabaseAdapter` → ganti adapter lewat satu konfigurasi (hanya *anon key* di front-end; *service role key* tidak pernah di repo)
 - [ ] Autentikasi sungguhan (Supabase Auth) menggantikan login demo
 - [ ] Migrasi data seed ke database
 - [ ] Custom domain (DNS CNAME) + HTTPS
