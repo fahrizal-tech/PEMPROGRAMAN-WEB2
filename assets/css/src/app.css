@@ -8,9 +8,19 @@
     @apply font-sans antialiased;
     font-feature-settings: "tnum" 1, "cv05" 1;
   }
+  /* Ikon dikunci selebar 1em: sebelum font ikon termuat, nama ligatur
+     (mis. "arrow_forward") tidak melebarkan layout di jaringan lambat. */
   .material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    display: inline-block;
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    flex-shrink: 0;
+    white-space: nowrap;
+    vertical-align: -0.125em;
     line-height: 1;
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   }
 }
 

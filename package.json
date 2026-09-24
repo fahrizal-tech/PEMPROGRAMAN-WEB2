@@ -1,6 +1,6 @@
 {
   "name": "nexus-lms-admin-panel",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Admin Panel LMS — Tugas Pemrograman Web 2 (Client-Side Programming)",
   "scripts": {
