@@ -107,8 +107,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Rilis tag `v0.1.0`
 
 ### Tahap 2 — Milestone 2: Slicing & Layouting (target: pekan 5)
-- [ ] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system
-- [ ] Hasil build CSS di-commit (`assets/css/app.css`) → hosting tetap statis tanpa build server
+- [x] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system (48 warna, 13 ukuran font, 10 spasi, 17 font family); radius memakai standar Tailwind agar seragam
+- [x] Hasil build CSS di-commit (`assets/css/app.css`, 61 KB minified) → hosting tetap statis tanpa build server
 - [ ] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`)
 - [ ] Komponen sidebar + header tunggal (`assets/js/components/`) → dipakai semua halaman
 - [ ] Navigasi antarhalaman berfungsi, penanda menu aktif otomatis

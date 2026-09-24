@@ -1,0 +1,15 @@
+/* Sumber stylesheet. Jangan edit assets/css/app.css secara langsung (hasil build). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: "tnum" 1, "cv05" 1;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    line-height: 1;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "nexus-lms-admin-panel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Admin Panel LMS — Tugas Pemrograman Web 2 (Client-Side Programming)",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i assets/css/src/app.css -o assets/css/app.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.js -i assets/css/src/app.css -o assets/css/app.css --watch",
+    "serve": "npx --yes serve . -l 3000"
+  },
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "tailwindcss": "^3.4.19"
+  }
+}
