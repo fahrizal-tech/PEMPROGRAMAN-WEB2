@@ -109,7 +109,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 ### Tahap 2 — Milestone 2: Slicing & Layouting (target: pekan 5)
 - [x] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system (48 warna, 13 ukuran font, 10 spasi, 17 font family); radius memakai standar Tailwind agar seragam
 - [x] Hasil build CSS di-commit (`assets/css/app.css`, 61 KB minified) → hosting tetap statis tanpa build server
-- [ ] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`)
+- [x] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`) + contoh komponen design system; diuji di 1280px, 390px, dan drawer terbuka
 - [x] Komponen sidebar + topbar + footer tunggal (`assets/js/components/layout.js`): menu dari satu sumber data, breadcrumb, profil admin, skip link
 - [ ] Navigasi antarhalaman berfungsi, penanda menu aktif otomatis
 - [ ] Sidebar sesuai hirarki final di `perancangan.md` (hapus Modul & Materi, Hak Akses & Peran, Keuangan & Transaksi), branding seragam
