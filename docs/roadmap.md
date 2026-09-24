@@ -141,7 +141,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 **Halaman pendukung:**
 - [ ] `mahasiswa.html` — CRUD + modal edit + validasi KRS (setujui/tolak)
 - [ ] `instruktur.html` — CRUD dosen + beban mengajar
-- [ ] `kelas-virtual.html` — jadwal sesi, status live/selesai
+- [ ] `kelas-virtual.html` — jadwal sesi, status live/selesai (kartu "Live Sekarang" tidak terpotong di HP)
 - [ ] `tugas-kuis.html` — CRUD tugas + penilaian rubrik
 - [ ] `sertifikasi.html` — terbitkan / cabut sertifikat, verifikasi kode
 - [ ] `pengaturan.html` — profil institusi, preferensi, reset/ekspor/impor data

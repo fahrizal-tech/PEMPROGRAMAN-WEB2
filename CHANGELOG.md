@@ -5,6 +5,13 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-09-24
+
+### Diperbaiki
+- Layout tidak lagi melebar di HP saat font ikon (Material Symbols) belum termuat di jaringan lambat: ikon dikunci selebar 1em.
+- Bar aksi massal di Instruktur dan Sertifikasi dapat turun baris di layar sempit.
+- Diuji ulang dengan font Google diblokir: seluruh 11 halaman pas di lebar 390px.
+
 ## [0.2.0] — 2026-09-24 · Milestone 2
 
 ### Tahap 2 — Slicing & Layouting
