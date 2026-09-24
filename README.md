@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** Milestone 2 selesai (layout & navigasi). Fitur interaktif sedang dikembangkan. Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
+> **Status:** layout, navigasi, data lokal, dan login demo sudah berjalan. Fitur CRUD & grafik sedang dikembangkan (Milestone 3). Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
 
 ## Fitur Utama
 
@@ -42,8 +42,9 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 │   ├── img/                    # Logo & gambar
 │   └── data/                   # Seed data (mock database)
 ├── pages/                      # Halaman admin panel
+├── tests/                      # Uji unit (Node) & E2E (browser)
 ├── index.html                  # Halaman Login
-├── .github/workflows/          # Otomasi (pemindai rahasia)
+├── .github/workflows/          # Otomasi: pemindai rahasia & pengujian
 ├── CHANGELOG.md
 ├── SECURITY.md
 └── README.md
@@ -51,12 +52,26 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 
 ## Menjalankan Secara Lokal
 
-Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu masuk dengan email dan kata sandi apa saja.
+Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu masuk dengan akun demo:
+
+| Email | Kata sandi | Peran |
+| --- | --- | --- |
+| `admin@nexus.ac.id` | `nexus2026` | Super Administrator |
+| `baak@nexus.ac.id` | `nexus2026` | Admin Akademik (BAAK) |
+
+> Login pada versi ini adalah **simulasi** (aplikasi berjalan sepenuhnya di browser), lihat [SECURITY.md](SECURITY.md). Data tersimpan di localStorage browser dan dapat dikembalikan ke kondisi awal dari halaman Pengaturan.
 Semua halaman memakai CSS yang sudah di-build (`assets/css/app.css`) dan JavaScript biasa, sehingga bisa berjalan tanpa server.
 
 Jika ingin memakai server lokal (misalnya untuk demo):
 ```bash
 npm run serve        # lalu buka http://localhost:3000
+```
+
+### Menjalankan pengujian
+```bash
+npm test             # uji unit: data, storage, service, auth, utilitas
+npm run test:e2e     # uji alur di browser (memakai Edge/Chrome yang terpasang)
+npm run test:e2e -- --online   # uji yang sama ke website di GitHub Pages
 ```
 
 ### Build ulang CSS (hanya jika mengubah class Tailwind)

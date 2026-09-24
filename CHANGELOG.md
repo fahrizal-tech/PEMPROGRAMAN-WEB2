@@ -5,6 +5,28 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-09-24
+
+### Tahap 3 — Data Layer Lokal
+
+#### Ditambahkan
+- `assets/data/seed.js`: data awal fiktif 14 entitas sesuai ER-D (deterministik, bisa dimuat tanpa server).
+- `assets/js/core/storage.js`: penyimpanan lokal async (localStorage) dengan versi skema, reset, export/import, fallback memori, dan pemulihan data rusak.
+- `assets/js/core/validators.js` & `services.js`: validasi berbasis skema dan aturan bisnis per entitas (unik, relasi, proteksi hapus, hapus berantai, kuota KRS, bobot tugas, syarat sertifikat), log aktivitas otomatis.
+- `assets/js/core/auth.js` & `assets/js/pages/login.js`: login demo, sesi (ingat 30 hari / idle timeout), proteksi halaman admin, kunci 30 detik setelah 5x gagal, anti open-redirect.
+- `assets/js/core/utils.js`: format Indonesia, `escapeHTML`, ekspor CSV aman.
+- Pengujian: `npm test` (50 uji unit) dan `npm run test:e2e` (21 uji alur di browser, termasuk mode `--online`).
+
+#### Diubah
+- Topbar menampilkan nama & peran dari sesi; tombol Keluar menghapus sesi.
+- Login: tab peran default Admin/BAAK; tab Dosen/Mahasiswa menampilkan pemberitahuan di luar lingkup.
+- Kamus data `perancangan.md` disesuaikan dengan data (format kode MK, prefix ID KRS).
+
+#### Keamanan
+- Pesan login gagal tidak membedakan email terdaftar/tidak; pembatasan percobaan login.
+- Parameter `?next=` hanya menerima halaman internal (mencegah open redirect).
+- Ekspor CSV menetralkan formula (mencegah CSV/formula injection).
+
 ## [0.2.1] — 2026-09-24
 
 ### Diperbaiki
