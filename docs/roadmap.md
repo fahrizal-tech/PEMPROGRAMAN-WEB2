@@ -121,7 +121,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 
 ### Tahap 3 — Data Layer Lokal
 - [ ] `assets/js/core/storage.js`: LocalAdapter (namespace, versi skema, reset)
-- [ ] Seed JSON per entitas di `assets/data/`
+- [x] Data awal `assets/data/seed.js` (14 entitas, 266 baris data fiktif; format JS agar jalan tanpa server; deterministik; divalidasi: 0 error relasi & duplikat)
 - [ ] Service per entitas + relasi (misal: kursus tidak boleh dihapus jika masih punya KRS aktif)
 - [ ] `auth.js`: login admin demo, session, *route guard*, logout
 - [ ] Pencatatan otomatis ke `LOG_AKTIVITAS` untuk setiap create/update/delete

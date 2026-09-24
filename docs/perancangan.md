@@ -337,7 +337,7 @@ erDiagram
 | id | string | PK | `dsn_001` |
 | nidn | string | unik, 10 digit angka | `0012058901` |
 | nama | string | wajib, termasuk gelar | `Dr. Rina Kusuma, M.Kom.` |
-| email | string | unik, format email | `r.kusuma@nexus.ac.id` |
+| email | string | unik, format email | `a.wicaksono@nexus.ac.id` |
 | prodi_id | string | FK → PROGRAM_STUDI | `prd_01` |
 | jabatan_akademik | enum | `Asisten Ahli` / `Lektor` / `Lektor Kepala` / `Guru Besar` | `Lektor` |
 | bidang_keahlian | string | opsional | `Rekayasa Perangkat Lunak` |
@@ -351,7 +351,7 @@ erDiagram
 | Atribut | Tipe | Aturan | Contoh |
 | --- | --- | --- | --- |
 | id | string | PK | `krs_101` |
-| kode_mk | string | unik, format `AAA-000` | `TIF-302` |
+| kode_mk | string | unik, 2–4 huruf kapital + 3 digit | `CS-301` |
 | nama | string | wajib, 5–120 karakter | `Pemrograman Web Lanjut` |
 | deskripsi | text | wajib, min. 30 karakter (silabus & CPL) | `Mahasiswa mampu membangun…` |
 | prodi_id | string | FK → PROGRAM_STUDI | `prd_01` |
@@ -381,7 +381,7 @@ erDiagram
 
 | Atribut | Tipe | Aturan | Contoh |
 | --- | --- | --- | --- |
-| id | string | PK | `krs_trx_0001` |
+| id | string | PK | `krx_0001` |
 | mahasiswa_id | string | FK → MAHASISWA | `mhs_0001` |
 | kursus_id | string | FK → KURSUS; kombinasi mahasiswa+kursus+periode unik | `krs_101` |
 | periode | string | sama dengan periode kursus | `2025/2026-Ganjil` |
