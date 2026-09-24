@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" fill="none">
+  <rect x="2" y="4" width="28" height="28" rx="6" fill="#2563eb"/>
+  <path d="M9 18L14 23L23 13" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="38" y="24" fill="#0f172a" font-family="Inter, -apple-system, sans-serif" font-size="16" font-weight="700" letter-spacing="-0.02em">NEXUS<tspan fill="#2563eb">LMS</tspan></text>
+</svg>

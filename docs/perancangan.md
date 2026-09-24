@@ -13,7 +13,7 @@ Berdasarkan hasil desain UI (Stitch LMS Front-End Admin Panel), sistem ini menca
   - Instruktur / Dosen (`pages/instruktur.html`)
 - **Manajemen Pembelajaran**
   - Kelas Virtual (`pages/kelas-virtual.html`)
-  - Manajemen Kurikulum / Kursus (`pages/kurikulum.html`)
+  - Manajemen Kurikulum / Form Kursus (`pages/form.html`)
     - *Fitur: Form Kursus Terintegrasi*
 - **Evaluasi & Penilaian**
   - Tugas & Kuis (`pages/tugas-kuis.html`)
