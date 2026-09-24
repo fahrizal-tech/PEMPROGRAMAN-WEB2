@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** Milestone 2 selesai (layout & navigasi). Fitur interaktif sedang dikembangkan. Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
+> **Status:** layout, navigasi, data lokal, dan login demo sudah berjalan. Fitur CRUD & grafik sedang dikembangkan (Milestone 3). Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
 
 ## Fitur Utama
 
@@ -69,6 +69,8 @@ npm run serve        # lalu buka http://localhost:3000
 ### Menjalankan pengujian
 ```bash
 npm test             # uji unit: data, storage, service, auth, utilitas
+npm run test:e2e     # uji alur di browser (memakai Edge/Chrome yang terpasang)
+npm run test:e2e -- --online   # uji yang sama ke website di GitHub Pages
 ```
 
 ### Build ulang CSS (hanya jika mengubah class Tailwind)

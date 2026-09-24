@@ -12,7 +12,7 @@
 (function () {
   "use strict";
 
-  var APP = { name: "Nexus LMS", version: "0.2.1" };
+  var APP = { name: "Nexus LMS", version: "0.3.0" };
 
   // Sumber tunggal navigasi. `match` = halaman lain yang ikut menandai menu ini aktif.
   var MENU = [

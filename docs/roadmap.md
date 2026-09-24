@@ -119,9 +119,11 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Uji E2E otomatis 16/16 lulus (login, navigasi, drawer, responsif, tanpa error JS)
 - [x] Rilis tag `v0.2.0`
 
-### Tahap 3 — Data Layer Lokal
+### Tahap 3 — Data Layer Lokal ✅
 - [x] `assets/js/core/storage.js`: LocalAdapter async (list/get/query/insert/update/remove, versi skema, reset, export/import, fallback memori, pemulihan data rusak, sinkron antar-tab)
-- [x] Uji unit `npm test` (Node test runner, tanpa dependensi): storage & integritas seed
+- [x] Uji unit `npm test` (Node test runner): storage, seed, services, auth, utils — 50 uji
+- [x] Uji E2E `npm run test:e2e` (puppeteer-core + browser terpasang, mode `--online`) — 21 uji
+- [x] Rilis tag `v0.3.0`
 - [x] Data awal `assets/data/seed.js` (14 entitas, 266 baris data fiktif; format JS agar jalan tanpa server; deterministik; divalidasi: 0 error relasi & duplikat)
 - [x] Service per entitas + relasi (`services.js`): kursus ber-KRS aktif tidak bisa dihapus, kuota KRS, total bobot tugas ≤ 100%, syarat kelulusan sertifikat, hapus berantai (modul/tugas/kelas), dll.
 - [x] `auth.js`: login admin demo (dikunci 30 detik setelah 5x gagal), sesi (ingat 30 hari / tutup browser, idle timeout dari pengaturan), *route guard* tanpa kilasan konten, anti open-redirect, logout; halaman login dengan validasi per kolom & tab peran
