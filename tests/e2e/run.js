@@ -115,6 +115,9 @@ function findBrowser() {
 
     /* ---------- Keluar ---------- */
     await page.setViewport({ width: 1280, height: 800 });
+    // Tunggu animasi sidebar selesai kembali ke posisi desktop sebelum mengklik.
+    await page.waitForFunction(() => document.getElementById("sidebar").getBoundingClientRect().left === 0);
+    await sleep(300);
     await nav(() => page.click('[data-action="logout"]'));
     check(where() === "index.html", "keluar → halaman login");
     await page.goto(ROOT + "pages/laporan.html", NAV);
