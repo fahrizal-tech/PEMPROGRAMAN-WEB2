@@ -1,128 +1,895 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan - LMS Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        .report-header {
-            text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            border-bottom: 2px dashed var(--border);
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #f8fafc; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error": "#ba1a1a",
+            "primary-container": "#2563eb",
+            "on-primary": "#ffffff",
+            "secondary-container": "#d5e3fc",
+            "on-tertiary-fixed": "#131b2e",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "primary-fixed": "#dbe1ff",
+            "surface-dim": "#cbdbf5",
+            "on-background": "#0b1c30",
+            "on-secondary-fixed-variant": "#3a485b",
+            "inverse-surface": "#213145",
+            "surface-tint": "#0053db",
+            "surface-container-highest": "#d3e4fe",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#eeefff",
+            "background": "#f8f9ff",
+            "primary-fixed-dim": "#b4c5ff",
+            "inverse-on-surface": "#eaf1ff",
+            "tertiary-container": "#656d84",
+            "on-surface-variant": "#434655",
+            "secondary": "#515f74",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#bec6e0",
+            "secondary-fixed-dim": "#b9c7df",
+            "outline-variant": "#c3c6d7",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#d5e3fc",
+            "on-primary-fixed": "#00174b",
+            "surface-container": "#e5eeff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#57657a",
+            "on-error-container": "#93000a",
+            "surface": "#f8f9ff",
+            "on-tertiary-fixed-variant": "#3f465c",
+            "inverse-primary": "#b4c5ff",
+            "tertiary-fixed": "#dae2fd",
+            "outline": "#737686",
+            "surface-variant": "#d3e4fe",
+            "on-error": "#ffffff",
+            "tertiary": "#4d556b",
+            "on-primary-fixed-variant": "#003ea8",
+            "on-secondary-fixed": "#0d1c2e",
+            "surface-bright": "#f8f9ff",
+            "primary": "#004ac6",
+            "error-container": "#ffdad6",
+            "on-tertiary-container": "#eef0ff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.375rem",
+            "full": "0.5rem"
+          },
+          fontFamily: {
+            "sans": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "headline-xl": ["Inter", "sans-serif"],
+            "code-tabular": ["JetBrains Mono", "monospace"]
+          }
         }
-        .report-header h2 { font-size: 24px; margin-bottom: 8px; }
-        .report-header p { color: var(--text-muted); font-size: 14px; }
-        
-        .score-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 700;
-            border-radius: 6px;
-        }
-
-        @media print {
-            .sidebar, .topbar, .page-header .btn-primary { display: none !important; }
-            .main-content { margin: 0; padding: 0; width: 100%; }
-            .content-area { padding: 0; }
-            .table-card { border: none; box-shadow: none; }
-            table { border: 1px solid #000; }
-            th, td { border: 1px solid #000; padding: 8px; }
-        }
-    </style>
+      }
+    }
+  </script>
 </head>
-<body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <i class="fas fa-layer-group"></i> LMS Admin
-            </div>
-            <ul class="sidebar-nav">
-                <li><a href="dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
-                <li><a href="data-master.html"><i class="fas fa-users"></i> Data Master</a></li>
-                <li><a href="#"><i class="fas fa-book"></i> Modul</a></li>
-                <li><a href="laporan.html" class="active"><i class="fas fa-chart-bar"></i> Laporan</a></li>
-            </ul>
-        </aside>
+<body class="bg-[#f8fafc] font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
+<!-- Left Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between">
+<div class="flex flex-col flex-1 overflow-y-auto">
+<!-- Brand -->
+<div class="h-16 px-5 flex items-center justify-between border-b border-slate-200 bg-white">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-blue-700 flex items-center justify-center text-white font-bold text-base shadow-sm">
+            N
+          </div>
+<span class="font-bold text-base tracking-tight text-slate-900">NEXUS LMS</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200 uppercase tracking-wider">v2.4 Enterprise</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-3 py-4 space-y-5 text-[13px]">
+<div>
+<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MAIN</span>
+<div class="mt-1.5 flex flex-col gap-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="dashboard" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">dashboard</span>
+<span class="">Dashboard</span>
+</a>
+<a aria-current="page" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md bg-blue-50 text-blue-700 font-semibold border border-blue-100 transition-colors" data-path="analytics-and-reports" href="#">
+<span class="material-symbols-outlined text-lg text-blue-700">monitoring</span>
+<span class="">Analytics &amp; Reports</span>
+</a>
+</div>
+</div>
+<div>
+<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">AKADEMIK &amp; KURSUS</span>
+<div class="mt-1.5 flex flex-col gap-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="master-kursus" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">auto_stories</span>
+<span class="">Data Master Kursus</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="modul-dan-materi" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">folder_open</span>
+<span class="">Modul &amp; Materi</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="tugas-dan-kuis" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">quiz</span>
+<span class="">Tugas &amp; Kuis</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="kelas-virtual" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">video_camera_front</span>
+<span class="">Kelas Virtual</span>
+</a>
+</div>
+</div>
+<div>
+<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">PENGGUNA</span>
+<div class="mt-1.5 flex flex-col gap-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="mahasiswa-dan-siswa" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">school</span>
+<span class="">Mahasiswa &amp; Siswa</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="instruktur-dan-dosen" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">badge</span>
+<span class="">Instruktur / Dosen</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="hak-akses-dan-peran" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">shield_person</span>
+<span class="">Hak Akses &amp; Peran</span>
+</a>
+</div>
+</div>
+<div>
+<span class="px-2.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MANAJEMEN</span>
+<div class="mt-1.5 flex flex-col gap-0.5">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="sertifikasi-digital" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">workspace_premium</span>
+<span class="">Sertifikasi Digital</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="keuangan-dan-transaksi" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">receipt_long</span>
+<span class="">Keuangan &amp; Transaksi</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors font-medium" data-path="pengaturan-sistem" href="#">
+<span class="material-symbols-outlined text-lg text-slate-500">settings</span>
+<span class="">Pengaturan Sistem</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Status Box -->
+<div class="p-3 border-t border-slate-200 bg-slate-50/70">
+<div class="flex items-center gap-2.5 px-3 py-2 rounded-md bg-white border border-slate-200">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-slate-500 uppercase tracking-wider leading-none">Status Server</span>
+<span class="text-[12px] font-semibold text-slate-800 leading-tight">Operasional 99.98%</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Content Wrap -->
+<div class="pl-64">
+<!-- Top Nav Header -->
+<header class="fixed top-0 left-64 right-0 h-16 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-6">
+<div class="flex items-center gap-2 text-sm text-slate-500">
+<span class="hover:text-slate-800 cursor-pointer transition-colors font-medium">LMS Portal</span>
+<span class="material-symbols-outlined text-base text-slate-400">chevron_right</span>
+<span class="text-slate-900 font-semibold">Console</span>
+</div>
+<div class="flex-1 max-w-lg mx-6">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg pointer-events-none">search</span>
+<input class="w-full h-9 pl-9 pr-20 rounded-md bg-slate-50 border border-slate-200 text-slate-800 placeholder:text-slate-400 text-xs focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Cari modul, materi, mahasiswa, atau transaksi..." type="text">
+<kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 text-[10px] font-mono shadow-xs">Ctrl + K</kbd>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-slate-100 p-0.5 rounded border border-slate-200">
+<button class="px-2 py-0.5 rounded text-xs font-semibold text-slate-900 bg-white shadow-xs">ID</button>
+<button class="px-2 py-0.5 rounded text-xs font-medium text-slate-500 hover:text-slate-800">EN</button>
+</div>
+<button class="relative p-2 rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors border border-transparent hover:border-slate-200">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600"></span>
+</button>
+<button class="h-9 px-3 rounded-md bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-base">add</span>
+<span class="">Buat Baru</span>
+</button>
+<div class="h-6 w-px bg-slate-200 mx-1"></div>
+<div class="flex items-center gap-2.5 pl-1">
+<img alt="Profile" class="w-8 h-8 rounded-full border border-slate-200 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtuhg6DYRYiHjxijXSMzfqXYTHbKmaZ0reADnvbT7cketOXhtRyIcOYahq2yL2ubhvQ9SDwEpi4ysrdMsAonDnxq5HFymPh9yjJxpz9H1ZWflZ0dH8ouUEk6vg0csXOSmAUfk2OfJJCmEnXjozf6RadPQzdNBMNSS0-CnWgOhSnikcRkKbOD_5tMNGPj2Xq5hoUFKpXNztvraXvihcJduNz87jCjPT2UGJfe8h66kjcHX3O7HjoUs">
+<div class="hidden xl:flex flex-col text-left">
+<span class="text-xs font-semibold text-slate-800 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
+<span class="text-[11px] text-slate-500 leading-tight">Super Administrator</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full pt-16 bg-[#f8fafc] min-h-screen">
+<div class="p-6 max-w-[1720px] mx-auto flex flex-col gap-6">
+<!-- 1. Header Toolbar & Formal Academic Filters (Looker/Tableau Style) -->
+<section class="bg-white rounded-md border border-slate-200 shadow-xs p-5">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Modul Akreditasi &amp; QA</span>
+<span class="text-slate-300">•</span>
+<span class="text-[12px] text-slate-500 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-emerald-600">verified</span>
+                  Integritas Data Terverifikasi ISO/IEC 27001
+                </span>
+</div>
+<h1 class="text-xl font-bold text-slate-900 tracking-tight">Laporan Komprehensif &amp; Analitik Pembelajaran</h1>
+<p class="text-xs text-slate-500 max-w-3xl">
+                Metrik agregat penilaian, tingkat retensi mahasiswa, analisis ketercapaian capaian pembelajaran (CPL), serta catatan audit akreditasi kurikulum multidisiplin.
+              </p>
+</div>
+<!-- Export Buttons (Enterprise Flat / Solid) -->
+<div class="flex flex-wrap items-center gap-2">
+<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-sm text-slate-600">print</span>
+<span class="">Cetak Ringkasan Eksekutif</span>
+</button>
+<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-sm text-emerald-700">table_chart</span>
+<span class="">Unduh Dataset Lengkap (XLSX)</span>
+</button>
+<button class="h-8 px-3 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-sm text-white">picture_as_pdf</span>
+<span class="">Ekspor PDF Resmi Institusi</span>
+</button>
+</div>
+</div>
+<!-- Filter Controls Strip -->
+<div class="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Date Range Selector -->
+<div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-slate-700">
+<span class="material-symbols-outlined text-slate-400 text-sm">date_range</span>
+<span class="font-semibold text-slate-500 uppercase text-[10px] tracking-wider">Periode:</span>
+<span class="font-medium text-slate-800">1 Jan 2024 - 31 Des 2024 (TA 2024/2025)</span>
+<span class="material-symbols-outlined text-slate-400 text-sm">arrow_drop_down</span>
+</div>
+<!-- Fakultas / Jurusan Dropdown -->
+<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Fakultas:</span>
+<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<option value="all">Semua Fakultas &amp; Sekolah Pascasarjana</option>
+<option value="fasilkom">Ilmu Komputer &amp; Informatika</option>
+<option value="ft">Teknik &amp; Rekayasa Terapan</option>
+<option value="feb">Ekonomi &amp; Bisnis Digital</option>
+</select>
+</div>
+<!-- Status Kelulusan Dropdown -->
+<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Kelulusan:</span>
+<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<option value="all">Semua Status Hasil</option>
+<option value="pass">Lulus Capaian (IPK &gt;= 3.00)</option>
+<option value="remedial">Memerlukan Remediasi</option>
+<option value="incomplete">Inkomplit / Cuti Terverifikasi</option>
+</select>
+</div>
+<!-- Metode Pembelajaran Dropdown -->
+<div class="flex items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
+<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Metode:</span>
+<select class="bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
+<option value="all">Semua Modalitas (Hybrid &amp; Daring)</option>
+<option value="hybrid">Blended / Hybrid Synchronous</option>
+<option value="online">100% Fully Online Asynchronous</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-slate-500 text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+<span class="">Sinkronisasi Terakhir: 14:02:18 WIB (Otomatis)</span>
+</div>
+</div>
+</section>
+<!-- 2. Academic Metric Cards (Clean Slate Numbers + Clean Sparklines) -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Metric 1: Indeks Kepuasan -->
+<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined text-base">star_rate</span>
+</div>
+<span class="text-xs font-semibold text-slate-600">Kepuasan Pembelajaran</span>
+</div>
+<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+4.2% YoY</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">4.84</span>
+<span class="text-xs text-slate-400">/ 5.00</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+<span class="">Berdasarkan 12,410 ulasan terverifikasi</span>
+<span class="font-semibold text-emerald-700">96.8% Puas</span>
+</div>
+</div>
+<!-- Clean SVG Sparkline -->
+<div class="mt-2 pt-2 border-t border-slate-100">
+<svg class="w-full h-8 text-blue-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
+<path d="M0 18 Q 15 14, 30 16 T 60 8 T 85 10 T 100 3" stroke="#2563eb" stroke-linecap="round" stroke-width="1.75"></path>
+<path d="M0 18 Q 15 14, 30 16 T 60 8 T 85 10 T 100 3 L 100 24 L 0 24 Z" fill="#2563eb" fill-opacity="0.06"></path>
+</svg>
+</div>
+</div>
+<!-- Metric 2: Rata-rata IPK Mahasiswa Aktif -->
+<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined text-base">school</span>
+</div>
+<span class="text-xs font-semibold text-slate-600">Rata-rata IPK Aktif</span>
+</div>
+<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+0.14 Sem.</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">3.62</span>
+<span class="text-xs text-slate-400">Skala 4.00</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+<span class="">Median institusi: 3.58</span>
+<span class="font-semibold text-blue-700">Distribusi Normal</span>
+</div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-100">
+<svg class="w-full h-8 text-blue-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
+<path d="M0 20 Q 20 22, 40 12 T 70 9 T 85 6 T 100 4" stroke="#2563eb" stroke-linecap="round" stroke-width="1.75"></path>
+<path d="M0 20 Q 20 22, 40 12 T 70 9 T 85 6 T 100 4 L 100 24 L 0 24 Z" fill="#2563eb" fill-opacity="0.06"></path>
+</svg>
+</div>
+</div>
+<!-- Metric 3: Tingkat Retensi Kursus -->
+<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined text-base">trending_up</span>
+</div>
+<span class="text-xs font-semibold text-slate-600">Tingkat Retensi Kursus</span>
+</div>
+<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">&gt; Bench 82%</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">94.2%</span>
+<span class="text-xs text-emerald-700 font-semibold">+12.2% vs BM</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+<span class="">Atribusi keaktifan daring harian</span>
+<span class="font-semibold text-emerald-700">Tinggi</span>
+</div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-100">
+<svg class="w-full h-8 text-emerald-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
+<path d="M0 16 Q 25 18, 50 10 T 80 6 T 100 2" stroke="#059669" stroke-linecap="round" stroke-width="1.75"></path>
+<path d="M0 16 Q 25 18, 50 10 T 80 6 T 100 2 L 100 24 L 0 24 Z" fill="#059669" fill-opacity="0.06"></path>
+</svg>
+</div>
+</div>
+<!-- Metric 4: Sertifikat Diterbitkan -->
+<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined text-base">check_circle</span>
+</div>
+<span class="text-xs font-semibold text-slate-600">Kelulusan MK (Passing Rate)</span>
+</div>
+<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+2.4% vs Sem. Lalu</span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">91.8%</span>
+<span class="text-xs text-slate-400">Target: &gt;= 88%</span>
+</div>
+<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+<span class="">Kriteria minimal kelulusan nilai C (&gt;=60)</span>
+<span class="font-semibold text-rose-600">8.2% Remedi</span>
+</div>
+</div>
+<div class="mt-2 pt-2 border-t border-slate-100">
+<svg class="w-full h-8 text-emerald-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
+<path d="M0 20 Q 20 18, 45 14 T 75 9 T 100 4" stroke="#059669" stroke-linecap="round" stroke-width="1.75"></path>
+<path d="M0 20 Q 20 18, 45 14 T 75 9 T 100 4 L 100 24 L 0 24 Z" fill="#059669" fill-opacity="0.06"></path>
+</svg>
+</div>
+</div>
+</section>
+<!-- 3. Analytical Charts Grid (Tableau / PowerBI Style) -->
+<section class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+<!-- Chart A: Distribusi Nilai Akhir & Kurva Kompetensi -->
+<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
+<div class="flex items-start justify-between mb-4">
+<div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Capaian Pembelajaran Lulusan</span>
+<h2 class="text-sm font-bold text-slate-900 mt-0.5">Distribusi Nilai Akhir &amp; Kurva Kompetensi Mahasiswa</h2>
+</div>
+<div class="flex items-center gap-3 text-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-xs bg-blue-600"></span>
+<span class="text-slate-600">Peserta</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-4 h-0.5 border-t border-dashed border-rose-500"></span>
+<span class="text-slate-500">Batas Minimal (C+)</span>
+</div>
+</div>
+</div>
+<!-- Clean Bar Chart with Reference Line -->
+<div class="relative w-full h-64 flex items-end justify-between pt-6 pb-2 border-b border-slate-200">
+<!-- Academic Benchmark Dashed Line -->
+<div class="absolute w-full top-28 border-b border-dashed border-rose-500 z-10 flex justify-end pr-2 pointer-events-none">
+<span class="font-mono text-[10px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded -translate-y-2.5">Ambang Kelulusan CPL: 68%</span>
+</div>
+<!-- Bar 1: Nilai A -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">4,812</span>
+<div class="w-full max-w-[42px] bg-blue-700 hover:bg-blue-800 rounded-t transition-colors" style="height: 78%;"></div>
+<span class="text-xs font-bold text-slate-800 mt-2">A</span>
+<span class="font-mono text-[10px] text-slate-400">(&gt;=85)</span>
+</div>
+<!-- Bar 2: Nilai B+ -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">6,140</span>
+<div class="w-full max-w-[42px] bg-blue-600 hover:bg-blue-700 rounded-t transition-colors" style="height: 94%;"></div>
+<span class="text-xs font-bold text-slate-800 mt-2">B+</span>
+<span class="font-mono text-[10px] text-slate-400">(80-84)</span>
+</div>
+<!-- Bar 3: Nilai B -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">3,890</span>
+<div class="w-full max-w-[42px] bg-blue-500 hover:bg-blue-600 rounded-t transition-colors" style="height: 64%;"></div>
+<span class="text-xs font-bold text-slate-800 mt-2">B</span>
+<span class="font-mono text-[10px] text-slate-400">(75-79)</span>
+</div>
+<!-- Bar 4: Nilai C+ -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">1,410</span>
+<div class="w-full max-w-[42px] bg-slate-400 hover:bg-slate-500 rounded-t transition-colors" style="height: 32%;"></div>
+<span class="text-xs font-bold text-slate-800 mt-2">C+</span>
+<span class="font-mono text-[10px] text-slate-400">(70-74)</span>
+</div>
+<!-- Bar 5: Nilai C -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">720</span>
+<div class="w-full max-w-[42px] bg-slate-300 hover:bg-slate-400 rounded-t transition-colors" style="height: 18%;"></div>
+<span class="text-xs font-bold text-slate-800 mt-2">C</span>
+<span class="font-mono text-[10px] text-slate-400">(65-69)</span>
+</div>
+<!-- Bar 6: Nilai D -->
+<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
+<span class="font-mono text-xs text-rose-700 font-semibold mb-1.5">280</span>
+<div class="w-full max-w-[42px] bg-rose-500 hover:bg-rose-600 rounded-t transition-colors" style="height: 9%;"></div>
+<span class="text-xs font-bold text-rose-700 mt-2">D</span>
+<span class="font-mono text-[10px] text-rose-600">(&lt;65)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 text-xs text-slate-500">
+<span class="">94.8% Mahasiswa memenuhi kualifikasi kompetensi unggul</span>
+<span class="text-slate-700 font-medium font-mono">Deviasi Standar: 1.04</span>
+</div>
+</div>
+<!-- Chart B: Realistic Activity Matrix (GitHub / PowerBI Style) -->
+<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
+<div class="flex items-start justify-between mb-4">
+<div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pola Aktivitas Interaktif</span>
+<h2 class="text-sm font-bold text-slate-900 mt-0.5">Intensitas Beban &amp; Akses Platform Per Jam</h2>
+</div>
+<div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded text-xs">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span>
+<span class="font-mono text-slate-700 font-medium">Peak: 19:00-21:30</span>
+</div>
+</div>
+<!-- Heatmap Grid -->
+<div class="grid grid-cols-7 gap-2.5 my-auto py-2">
+<!-- Monday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Sen</span>
+<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06: Rendah"></div>
+<div class="h-7 rounded-sm bg-blue-200" title="06-12: Sedang"></div>
+<div class="h-7 rounded-sm bg-blue-600" title="12-18: Tinggi"></div>
+<div class="h-7 rounded-sm bg-blue-800" title="18-24: Puncak"></div>
+</div>
+<!-- Tuesday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Sel</span>
+<div class="h-7 rounded-sm bg-blue-100" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-400" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-600" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-800" title="18-24"></div>
+</div>
+<!-- Wednesday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Rab</span>
+<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-300" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-600" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-700" title="18-24"></div>
+</div>
+<!-- Thursday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Kam</span>
+<div class="h-7 rounded-sm bg-blue-100" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-400" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-700" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-800" title="18-24"></div>
+</div>
+<!-- Friday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Jum</span>
+<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-200" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-300" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-600" title="18-24"></div>
+</div>
+<!-- Saturday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Sab</span>
+<div class="h-7 rounded-sm bg-slate-100 border border-slate-200" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-100" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-200" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-300" title="18-24"></div>
+</div>
+<!-- Sunday -->
+<div class="flex flex-col gap-1.5 text-center">
+<span class="text-[11px] font-semibold text-slate-500">Min</span>
+<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
+<div class="h-7 rounded-sm bg-blue-200" title="06-12"></div>
+<div class="h-7 rounded-sm bg-blue-400" title="12-18"></div>
+<div class="h-7 rounded-sm bg-blue-500" title="18-24"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs">
+<div class="flex items-center gap-1.5 text-slate-500">
+<span class="">Rendah</span>
+<span class="w-3 h-3 rounded-xs bg-blue-50 border border-slate-200"></span>
+<span class="w-3 h-3 rounded-xs bg-blue-200"></span>
+<span class="w-3 h-3 rounded-xs bg-blue-400"></span>
+<span class="w-3 h-3 rounded-xs bg-blue-600"></span>
+<span class="w-3 h-3 rounded-xs bg-blue-800"></span>
+<span class="">Puncak Akses</span>
+</div>
+<span class="text-slate-500 font-mono">Total Sesi Server: 142.8k/minggu</span>
+</div>
+</div>
+<!-- Chart C: Efektivitas Modul Pembelajaran Berdasarkan Tingkat Kesulitan -->
+<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
+<div class="flex items-start justify-between mb-4">
+<div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Korelasi Materi vs Kuis</span>
+<h2 class="text-sm font-bold text-slate-900 mt-0.5">Efektivitas Modul &amp; Beban Kesulitan Tugas</h2>
+</div>
+<span class="font-mono text-[11px] font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">Optimal Balanced</span>
+</div>
+<!-- Horizontal Progress Bars -->
+<div class="flex flex-col gap-3.5 my-auto">
+<!-- Row 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-semibold text-slate-800">Modul Arsitektur Cloud Terdistribusi</span>
+<span class="font-mono text-emerald-700 font-semibold">91.4% Ketercapaian • Kesulitan: Tinggi</span>
+</div>
+<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
+<div class="h-full bg-emerald-600 rounded" style="width: 91.4%;"></div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-semibold text-slate-800">Algoritma &amp; Rekayasa Data Lanjut</span>
+<span class="font-mono text-blue-700 font-semibold">86.8% Ketercapaian • Kesulitan: Sangat Tinggi</span>
+</div>
+<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
+<div class="h-full bg-blue-600 rounded" style="width: 86.8%;"></div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-semibold text-slate-800">Kecerdasan Buatan &amp; Pemodelan NLP</span>
+<span class="font-mono text-blue-800 font-semibold">88.2% Ketercapaian • Kesulitan: Tinggi</span>
+</div>
+<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
+<div class="h-full bg-blue-700 rounded" style="width: 88.2%;"></div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-semibold text-slate-800">Etika Rekayasa Perangkat Lunak &amp; Regulasi</span>
+<span class="font-mono text-emerald-700 font-semibold">98.5% Ketercapaian • Kesulitan: Moderat</span>
+</div>
+<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
+<div class="h-full bg-emerald-600 rounded" style="width: 98.5%;"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-500">
+<span class="">Nilai rata-rata submission tugas pertama: 82.4/100</span>
+<a class="text-blue-700 hover:text-blue-800 font-medium flex items-center gap-0.5" href="#">
+<span class="">Audit Rubrik Penilaian</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Chart D: Clean Trend Multi-Line Chart (Light Theme) -->
+<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
+<div class="flex items-start justify-between mb-4">
+<div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analisis Longitudinal</span>
+<h2 class="text-sm font-bold text-slate-900 mt-0.5">Tren Pendaftaran vs Retensi Dropout</h2>
+</div>
+<div class="flex items-center gap-3 text-xs">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-blue-600"></span>
+<span class="text-slate-600">Registrasi Baru</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 border-t border-dashed border-rose-500"></span>
+<span class="text-slate-500">Drop-out</span>
+</div>
+</div>
+</div>
+<!-- SVG Multi-Line Chart -->
+<div class="w-full h-48 py-2 relative flex items-center">
+<svg class="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 400 120">
+<!-- Light Grid Lines -->
+<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="20" y2="20"></line>
+<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="60" y2="60"></line>
+<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="100" y2="100"></line>
+<!-- Registration Line (Solid Blue) -->
+<path d="M10 90 L 80 75 L 160 55 L 240 60 L 320 30 L 390 20" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<circle cx="10" cy="90" fill="#2563eb" r="3"></circle>
+<circle cx="80" cy="75" fill="#2563eb" r="3"></circle>
+<circle cx="160" cy="55" fill="#2563eb" r="3"></circle>
+<circle cx="240" cy="60" fill="#2563eb" r="3"></circle>
+<circle cx="320" cy="30" fill="#2563eb" r="3"></circle>
+<circle cx="390" cy="20" fill="#2563eb" r="3"></circle>
+<!-- Dropout Line (Dashed Rose) -->
+<path d="M10 105 L 80 102 L 160 108 L 240 106 L 320 112 L 390 114" stroke="#e11d48" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="1.75"></path>
+<circle cx="390" cy="114" fill="#e11d48" r="2.5"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-slate-500 font-mono text-[11px] pt-1 border-t border-slate-100">
+<span class="">Ganjil 22</span>
+<span class="">Genap 22</span>
+<span class="">Ganjil 23</span>
+<span class="">Genap 23</span>
+<span class="">Ganjil 24</span>
+<span class="text-blue-700 font-bold">Genap 24 (Aktif)</span>
+</div>
+<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs mt-2">
+<span class="text-emerald-700 font-medium">Rasio Drop-out terendah dalam 5 semester terakhir (1.2%)</span>
+<span class="text-slate-600 font-medium">Enrollment: +18.4%</span>
+</div>
+</div>
+</section>
+<!-- 4. Data Table: Laporan Kelulusan & Nilai Per Mata Kuliah (OBE Table) -->
+<section class="bg-white rounded-md border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+<!-- Table Header & Controls -->
+<div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-200 bg-slate-50/50">
+<div>
+<h3 class="text-sm font-bold text-slate-900">Data Evaluasi Kurikulum &amp; Nilai Per Mata Kuliah</h3>
+<p class="text-xs text-slate-500 mt-0.5">Laporan agregat semester genap berjalan terintegrasi silabus OBE (Outcome-Based Education).</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-slate-400 absolute left-2.5 text-base">filter_alt</span>
+<input class="h-8 pl-8 pr-3 bg-white text-slate-900 rounded border border-slate-300 text-xs placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="Saring kode MK atau dosen..." type="text">
+</div>
+<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">tune</span>
+<span class="">Konfigurasi Kolom</span>
+</button>
+</div>
+</div>
+<!-- Responsive Table Container -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 text-slate-500 text-[11px] font-semibold uppercase tracking-wider border-b border-slate-200">
+<th class="py-2.5 px-4">Kode MK</th>
+<th class="py-2.5 px-4">Nama Mata Kuliah</th>
+<th class="py-2.5 px-4">Dosen Pengampu</th>
+<th class="py-2.5 px-4 text-right">Peserta</th>
+<th class="py-2.5 px-4 text-right">Rata-rata</th>
+<th class="py-2.5 px-4">Tingkat Kelulusan</th>
+<th class="py-2.5 px-4">Status Akreditasi</th>
+<th class="py-2.5 px-4 text-center">Dokumen Evaluasi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 text-xs text-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-3 px-4 font-mono font-medium text-blue-700">CS4021</td>
+<td class="py-3 px-4">
+<span class="font-semibold text-slate-900 block">Sistem Terdistribusi &amp; Cloud Native Architecture</span>
+<span class="text-[11px] text-slate-500">SKS: 4 • Semester 7</span>
+</td>
+<td class="py-3 px-4 text-slate-600">Prof. Dr. Ir. Budi Rahardjo, M.Sc</td>
+<td class="py-3 px-4 text-right font-mono text-slate-700">428 Mhs</td>
+<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.74</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+<div class="h-full bg-emerald-600 rounded-full" style="width: 96.2%;"></div>
+</div>
+<span class="font-mono text-emerald-700 font-semibold">96.2%</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">ASIIN Certified</span>
+</td>
+<td class="py-3 px-4 text-center">
+<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
+<span class="">PDF QA</span>
+</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-3 px-4 font-mono font-medium text-blue-700">DS3015</td>
+<td class="py-3 px-4">
+<span class="font-semibold text-slate-900 block">Pembelajaran Mesin &amp; Analisis Prediktif</span>
+<span class="text-[11px] text-slate-500">SKS: 3 • Semester 5</span>
+</td>
+<td class="py-3 px-4 text-slate-600">Dr. Ratna Susanti, S.Kom., M.T.</td>
+<td class="py-3 px-4 text-right font-mono text-slate-700">512 Mhs</td>
+<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.58</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+<div class="h-full bg-emerald-600 rounded-full" style="width: 93.8%;"></div>
+</div>
+<span class="font-mono text-emerald-700 font-semibold">93.8%</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">ABET Aligned</span>
+</td>
+<td class="py-3 px-4 text-center">
+<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
+<span class="">PDF QA</span>
+</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-3 px-4 font-mono font-medium text-blue-700">SE2004</td>
+<td class="py-3 px-4">
+<span class="font-semibold text-slate-900 block">Rekayasa Perangkat Lunak Skala Korporasi</span>
+<span class="text-[11px] text-slate-500">SKS: 4 • Semester 4</span>
+</td>
+<td class="py-3 px-4 text-slate-600">Hendrawan Pratama, Ph.D</td>
+<td class="py-3 px-4 text-right font-mono text-slate-700">630 Mhs</td>
+<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.69</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+<div class="h-full bg-emerald-600 rounded-full" style="width: 95.1%;"></div>
+</div>
+<span class="font-mono text-emerald-700 font-semibold">95.1%</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Unggul - BAN-PT</span>
+</td>
+<td class="py-3 px-4 text-center">
+<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
+<span class="">PDF QA</span>
+</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/75 transition-colors">
+<td class="py-3 px-4 font-mono font-medium text-blue-700">CY5020</td>
+<td class="py-3 px-4">
+<span class="font-semibold text-slate-900 block">Keamanan Jaringan Lanjut &amp; Kriptografi</span>
+<span class="text-[11px] text-slate-500">SKS: 3 • Semester 6</span>
+</td>
+<td class="py-3 px-4 text-slate-600">Dr. Anton Subekti, S.T., M.Eng</td>
+<td class="py-3 px-4 text-right font-mono text-slate-700">310 Mhs</td>
+<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.41</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
+<div class="h-full bg-blue-600 rounded-full" style="width: 88.4%;"></div>
+</div>
+<span class="font-mono text-blue-700 font-semibold">88.4%</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">Audit Review</span>
+</td>
+<td class="py-3 px-4 text-center">
+<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
+<span class="">PDF QA</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-3 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 border-t border-slate-200 text-xs text-slate-500">
+<span class="">Menampilkan 1-4 dari 128 Mata Kuliah Terjadwal</span>
+<div class="flex items-center gap-1 font-mono">
+<button class="h-7 w-7 rounded border border-slate-300 bg-white flex items-center justify-center hover:bg-slate-100 text-slate-700 disabled:opacity-40">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="h-7 px-2.5 rounded bg-blue-700 text-white font-semibold">1</button>
+<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">2</button>
+<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">3</button>
+<span class="px-1 text-slate-400">...</span>
+<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">32</button>
+<button class="h-7 w-7 rounded border border-slate-300 bg-white flex items-center justify-center hover:bg-slate-100 text-slate-700">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 5. Audit & Compliance Formal Institutional Footer -->
+<footer class="p-4 rounded-md bg-white border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0">
+<span class="material-symbols-outlined text-xl">fact_check</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900 text-sm">Status Validasi &amp; Pelaporan BAN-PT / LAM-INFOKOM</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Tervalidasi LPMI</span>
+</div>
+<p class="text-slate-600 mt-0.5 text-xs">Data instrumen akreditasi 9 kriteria telah disinkronisasi dan disetujui Tim Penjaminan Mutu Internal. Siap diekspor ke format LKPS dan LED.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-sm text-emerald-700">table_chart</span>
+<span class="">Unduh Rekap Akreditasi (LKPS.xlsx)</span>
+</button>
+<button class="h-8 px-3 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-sm text-white">visibility</span>
+<span class="">Pratinjau Dokumen LED (PDF)</span>
+</button>
+</div>
+</footer>
+</div>
+</main>
+</div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Topbar -->
-            <header class="topbar">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search here...">
-                </div>
-                <div class="topbar-right">
-                    <div class="bell-icon"><i class="far fa-bell"></i></div>
-                    <div class="user-profile">
-                        <img src="https://ui-avatars.com/api/?name=Sarah+Connor&background=333&color=fff" alt="Sarah Connor">
-                        <div class="info">
-                            <span class="name">Sarah Connor</span>
-                            <span class="role">Administrator</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
 
-            <main class="content-area">
-                <div class="page-header">
-                    <div>
-                        <h1>Academic Report</h1>
-                        <p>Overview of student academic scores</p>
-                    </div>
-                    <button class="btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Report</button>
-                </div>
-
-                <!-- Table -->
-                <div class="table-card" style="padding: 32px;">
-                    <div class="report-header">
-                        <h2>Final Examination Report</h2>
-                        <p>Academic Year 2023/2024 - Even Semester</p>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>STUDENT NAME</th>
-                                <th>COURSE</th>
-                                <th>FINAL SCORE</th>
-                                <th>GRADE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>STU-001</td>
-                                <td>Sarah Jenkins</td>
-                                <td>Intro to UI/UX Design</td>
-                                <td><span class="score-badge">92</span></td>
-                                <td><span class="badge active">A</span></td>
-                            </tr>
-                            <tr>
-                                <td>STU-002</td>
-                                <td>David Kim</td>
-                                <td>Advanced Data Structures</td>
-                                <td><span class="score-badge">85</span></td>
-                                <td><span class="badge active">A-</span></td>
-                            </tr>
-                            <tr>
-                                <td>STU-004</td>
-                                <td>Aaliyah Jackson</td>
-                                <td>React Framework Basics</td>
-                                <td><span class="score-badge">78</span></td>
-                                <td><span class="badge pending">B+</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </main>
-        </div>
-    </div>
-</body>
-</html>
+</body></html>
