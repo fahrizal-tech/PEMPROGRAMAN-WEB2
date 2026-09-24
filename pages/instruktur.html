@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<title>Direktori &amp; Beban Kinerja Dosen (BKD) - Nexus LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+<!-- Fixed Left Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between select-none">
+<div class="flex flex-col flex-1 min-h-0">
+<!-- Logo Header -->
+<div class="h-16 flex items-center px-5 gap-3 border-b border-slate-200 flex-shrink-0">
+<img alt="Nexus LMS Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XxOcu5TwcyCk6tNPRlt0RzWBbTRtHPicEZuG8U7K_HbtTCYYnsata_E2SCWl4toGJ-TtIiflIYFxTNQlr2qL8cq1j6KjSboVF-BnPUwb9x7ipRBCtdnSaEeioeLBBKSx82pGOTF1CGvoh17sFBJM22a9dkU4MZYVGgJwR_BT1Ciyp6Yf60cFzws7gtniXPJ8-I5ewEzSje3hK_TxMNM8F33q8STqmib5KoKRWQv1fS362lJf7FPrKbiw"/>
+<span class="font-bold text-slate-900 text-base tracking-tight">Nexus LMS</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold uppercase tracking-wider ml-auto border border-slate-200">v2.4 EE</span>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto px-3 py-4 space-y-5">
+<!-- Main Group -->
+<div class="space-y-1">
+<div class="px-3 text-[11px] text-slate-400 uppercase tracking-wider font-semibold">MAIN</div>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="dashboard" href="#">
+<span class="material-symbols-outlined text-[19px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="analytics-reports" href="#">
+<span class="material-symbols-outlined text-[19px]">monitoring</span>
+<span>Analytics &amp; Reports</span>
+</a>
+</nav>
+</div>
+<!-- Akademik & Kursus -->
+<div class="space-y-1">
+<div class="px-3 text-[11px] text-slate-400 uppercase tracking-wider font-semibold">AKADEMIK &amp; KURSUS</div>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="data-master-kursus" href="#">
+<span class="material-symbols-outlined text-[19px]">menu_book</span>
+<span>Data Master Kursus</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="modul-materi" href="#">
+<span class="material-symbols-outlined text-[19px]">layers</span>
+<span>Modul &amp; Materi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="tugas-kuis" href="#">
+<span class="material-symbols-outlined text-[19px]">fact_check</span>
+<span>Tugas &amp; Kuis</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="kelas-virtual" href="#">
+<span class="material-symbols-outlined text-[19px]">video_camera_front</span>
+<span>Kelas Virtual</span>
+</a>
+</nav>
+</div>
+<!-- Pengguna -->
+<div class="space-y-1">
+<div class="px-3 text-[11px] text-slate-400 uppercase tracking-wider font-semibold">PENGGUNA</div>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="mahasiswa-siswa" href="#">
+<span class="material-symbols-outlined text-[19px]">school</span>
+<span>Mahasiswa &amp; Siswa</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-semibold bg-blue-50 text-blue-700 border border-blue-100" data-path="instruktur-dosen" href="#">
+<span class="material-symbols-outlined text-[19px] text-blue-600">badge</span>
+<span>Instruktur / Dosen</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="hak-akses-peran" href="#">
+<span class="material-symbols-outlined text-[19px]">shield</span>
+<span>Hak Akses &amp; Peran</span>
+</a>
+</nav>
+</div>
+<!-- Manajemen -->
+<div class="space-y-1">
+<div class="px-3 text-[11px] text-slate-400 uppercase tracking-wider font-semibold">MANAJEMEN</div>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="sertifikasi-digital" href="#">
+<span class="material-symbols-outlined text-[19px]">workspace_premium</span>
+<span>Sertifikasi Digital</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="keuangan-transaksi" href="#">
+<span class="material-symbols-outlined text-[19px]">credit_card</span>
+<span>Keuangan &amp; Transaksi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" data-path="pengaturan-sistem" href="#">
+<span class="material-symbols-outlined text-[19px]">tune</span>
+<span>Pengaturan Sistem</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+<!-- Status Footer -->
+<div class="p-3 border-t border-slate-200 bg-slate-50">
+<div class="flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-slate-200 shadow-sm">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-xs text-slate-600 font-medium">System Status</span>
+</div>
+<span class="font-mono text-xs text-emerald-600 font-medium">Operational</span>
+</div>
+</div>
+</aside>
+<!-- Main Container -->
+<div class="pl-64">
+<!-- Fixed Top Header -->
+<header class="fixed top-0 left-64 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 px-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<nav class="flex items-center text-xs text-slate-500 gap-1.5 font-medium">
+<span class="hover:text-slate-800 cursor-pointer">LMS Portal</span>
+<span class="material-symbols-outlined text-[14px] text-slate-400">chevron_right</span>
+<span class="hover:text-slate-800 cursor-pointer">Console</span>
+<span class="material-symbols-outlined text-[14px] text-slate-400">chevron_right</span>
+<span class="text-slate-900 font-semibold">Direktori Pengguna</span>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<!-- Search Input -->
+<div class="relative flex items-center w-72">
+<span class="material-symbols-outlined absolute left-2.5 text-[18px] text-slate-400 pointer-events-none">search</span>
+<input class="w-full pl-8 pr-14 py-1.5 bg-slate-50 text-xs text-slate-800 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-400" placeholder="Cari mahasiswa, NIM, dosen, NIDN..." type="text"/>
+<span class="absolute right-2 font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Ctrl K</span>
+</div>
+<!-- Language Switcher -->
+<div class="flex items-center border border-slate-200 rounded-lg p-0.5 bg-slate-50 text-xs">
+<button class="px-2 py-0.5 rounded font-semibold bg-white text-slate-900 shadow-sm border border-slate-200/60" type="button">ID</button>
+<button class="px-2 py-0.5 rounded text-slate-500 hover:text-slate-800" type="button">EN</button>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200" type="button">
+<span class="material-symbols-outlined text-[19px]">notifications</span>
+<span class="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+</button>
+<!-- Primary Action Button -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+<span>Tambah Pengguna</span>
+</button>
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- User Profile -->
+<div class="flex items-center gap-2.5 pl-1">
+<div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs ring-2 ring-blue-100">
+            AW
+          </div>
+<div class="flex flex-col text-left">
+<span class="text-xs font-semibold text-slate-900 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
+<span class="text-[11px] text-slate-500 leading-tight">Super Administrator</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Body Content -->
+<main class="w-full pt-20 pb-12 px-6 max-w-7xl mx-auto space-y-6">
+<!-- Section 1: Page Header -->
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-xs text-slate-500 font-medium tracking-wide uppercase">
+<span>DIREKTORI PENGGUNA</span>
+<span class="material-symbols-outlined text-[13px] text-slate-400">chevron_right</span>
+<span>INSTRUKTUR / DOSEN</span>
+<span class="material-symbols-outlined text-[13px] text-slate-400">chevron_right</span>
+<span class="text-blue-600 font-semibold">MANAJEMEN DEWAN PENGAMPU</span>
+</div>
+<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Direktori &amp; Beban Kinerja Dosen (BKD)</h1>
+<p class="text-sm text-slate-600 max-w-3xl leading-relaxed">
+            Pengelolaan dewan pengampu mata kuliah, pemantauan NIDN/NIDK, evaluasi beban SKS ajar semester aktif, indeks kepuasan mahasiswa (EDOM), serta validasi sertifikasi pendidik (Serdos).
+          </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-2.5 flex-wrap flex-shrink-0">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 hover:text-slate-900 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[17px] text-slate-500">table_view</span>
+<span>Unduh Rekapitulasi BKD (XLSX)</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 hover:text-slate-900 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[17px] text-slate-500">verified_user</span>
+<span>Audit Kinerja</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[17px]">add</span>
+<span>Tambah Dosen Baru</span>
+</button>
+</div>
+</div>
+<!-- Section 2: 4-Column Metric KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+<!-- KPI Card 1 -->
+<div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 transition-all">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Dosen &amp; Pengajar</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-3xl font-bold text-slate-900">186</span>
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-[11px] font-semibold">+6 Dosen Baru</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+<span class="material-symbols-outlined text-[22px]">groups</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 pt-3 border-t border-slate-100 mt-3">
+            142 Dosen Tetap · 44 Dosen Luar Biasa/Praktisi
+          </div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 transition-all">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Rata-rata Beban Ajar (BKD)</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-3xl font-bold text-slate-900">12.4</span>
+<span class="text-sm font-semibold text-slate-600">SKS</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-semibold">Sesuai Regulasi</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0 border border-slate-200">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 pt-3 border-t border-slate-100 mt-3">
+            Batas kepatuhan Ditjen Dikti: 12 - 16 SKS per semester
+          </div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 transition-all">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Rata-rata Indeks Kepuasan (EDOM)</span>
+<div class="flex items-baseline gap-1.5 mt-1">
+<span class="text-3xl font-bold text-slate-900">4.82</span>
+<span class="text-sm text-slate-400 font-normal">/ 5.00</span>
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-[11px] font-semibold ml-1">96.4% Positif</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 border border-amber-100">
+<span class="material-symbols-outlined text-[22px]">thumb_up</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 pt-3 border-t border-slate-100 mt-3">
+            Berdasarkan 8,450 evaluasi mahasiswa tengah semester
+          </div>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:border-slate-300 transition-all">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Kepatuhan Pelaporan BKD</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-3xl font-bold text-slate-900">98.9%</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-semibold">Terverifikasi</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100">
+<span class="material-symbols-outlined text-[22px]">rule</span>
+</div>
+</div>
+<div class="text-xs text-slate-500 pt-3 border-t border-slate-100 mt-3">
+            184 dari 186 berkas lolos validasi asesor fakultas
+          </div>
+</div>
+</div>
+<!-- Section 3: Filter & Search Toolbar Container -->
+<div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm space-y-4">
+<!-- Top Toolbar Row: Search + View Modes -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+<div class="relative w-full sm:max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-slate-400 pointer-events-none">search</span>
+<input class="w-full pl-9 pr-12 py-2 bg-slate-50 text-xs text-slate-900 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white placeholder:text-slate-400 transition-all" id="dosenSearchInput" placeholder="Cari nama dosen, NIDN, jabatan fungsional, kepakaran..." type="text"/>
+<span class="absolute right-2.5 top-2 font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">ESC</span>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-auto w-full sm:w-auto justify-end">
+<!-- View Mode Switcher -->
+<div class="flex items-center p-1 bg-slate-100 rounded-lg border border-slate-200 text-xs">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded bg-white text-slate-900 font-semibold shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">view_list</span>
+<span>Tabel Kinerja</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1 rounded text-slate-600 hover:text-slate-900 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">calendar_view_week</span>
+<span>Matriks Beban Jadwal</span>
+</button>
+</div>
+<!-- Reset Button -->
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-xs font-semibold transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Reset Filter</span>
+</button>
+</div>
+</div>
+<!-- Filter Dropdown Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-100">
+<div>
+<label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Jabatan Akademik</label>
+<select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
+<option value="">Semua Jabatan</option>
+<option value="prof">Guru Besar / Profesor</option>
+<option value="lektor_kepala">Lektor Kepala</option>
+<option value="lektor">Lektor</option>
+<option value="asisten_ahli">Asisten Ahli</option>
+<option value="praktisi">Praktisi Industri</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Fakultas &amp; Departemen</label>
+<select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
+<option value="">Semua Departemen</option>
+<option value="ti">Departemen Teknik Informatika</option>
+<option value="sd">Departemen Sains Data</option>
+<option value="si">Departemen Sistem Informasi</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Status Beban Ajar</label>
+<select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
+<option value="">Semua Status BKD</option>
+<option value="optimal">Memenuhi / Optimal (12-16 SKS)</option>
+<option value="overload">Kelebihan Beban (&gt;16 SKS)</option>
+<option value="underload">Kurang Beban (&lt;12 SKS)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Status Serdos</label>
+<select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
+<option value="">Semua Sertifikasi</option>
+<option value="nasional">Tersertifikasi Nasional</option>
+<option value="proses">Dalam Proses</option>
+<option value="tamu">Dosen Tamu</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Section 4: Enterprise Data Table -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+<!-- Batch Action Ribbon -->
+<div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" id="selectAllCheckbox" type="checkbox"/>
+<label class="text-xs font-semibold text-slate-700 cursor-pointer select-none" for="selectAllCheckbox" id="selectionCount">Pilih Semua Dosen</label>
+</div>
+<div class="h-4 w-px bg-slate-300"></div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate-500">print</span>
+<span>Cetak Beban Mengajar</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate-500">task</span>
+<span>Validasi RPS Terpadu</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px] text-slate-500">sync</span>
+<span>Sinkronisasi SISTER</span>
+</button>
+</div>
+</div>
+<div class="text-xs text-slate-500 font-medium">
+            Periode Akademik: <span class="font-semibold text-slate-800">2024/2025 Semester Ganjil</span>
+</div>
+</div>
+<!-- Strict Table Layout -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 text-[11px] font-semibold uppercase tracking-wider text-slate-600 border-b border-slate-200 select-none">
+<th class="w-12 px-4 py-3.5 text-center" scope="col">
+<span class="sr-only">Select</span>
+</th>
+<th class="w-64 px-4 py-3.5 font-semibold" scope="col">Dosen &amp; Identitas</th>
+<th class="w-52 px-4 py-3.5 font-semibold" scope="col">Departemen &amp; Keahlian</th>
+<th class="w-36 px-4 py-3.5 font-semibold" scope="col">Beban Mengajar (BKD)</th>
+<th class="w-32 px-4 py-3.5 font-semibold" scope="col">Nilai EDOM</th>
+<th class="w-40 px-4 py-3.5 font-semibold" scope="col">Sertifikasi &amp; Asesor</th>
+<th class="w-36 px-4 py-3.5 font-semibold" scope="col">Status Beban</th>
+<th class="w-28 px-4 py-3.5 text-right font-semibold" scope="col">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 text-xs">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-blue-200">
+                      BR
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Prof. Dr. Ir. Budi Rahardjo, M.Sc</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0012017301</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Guru Besar</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Teknik Informatika</div>
+<div class="text-slate-500 text-[11px]">Distributed Systems &amp; Cybersec</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-900">14 SKS</span>
+<span class="text-slate-500">3 MK · 5 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-blue-600 h-1.5 rounded-full" style="width: 87.5%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.91</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 94% (312 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium text-[10px]">Serdos Pendidik</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium text-[10px]">Asesor Nasional</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[11px] inline-block">
+                    Optimal (14 SKS)
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-purple-200">
+                      AN
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Dr. Ayu Nur Safitri, M.Eng, Ph.D</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0028048402</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Lektor Kepala</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Sains Data</div>
+<div class="text-slate-500 text-[11px]">Deep Learning &amp; Computer Vision</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-900">15 SKS</span>
+<span class="text-slate-500">4 MK · 6 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-blue-600 h-1.5 rounded-full" style="width: 93.7%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.88</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 98% (420 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium text-[10px]">Serdos Pendidik</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[11px] inline-block">
+                    Optimal (15 SKS)
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Overload -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-amber-200">
+                      HP
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Hendrik Pratama, S.T., M.Kom</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0015098904</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Lektor</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Teknik Informatika</div>
+<div class="text-slate-500 text-[11px]">Mobile Programming &amp; Flutter</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-amber-700">18 SKS</span>
+<span class="text-slate-500">5 MK · 8 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-amber-500 h-1.5 rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.74</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 89% (510 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium text-[10px]">Serdos Pendidik</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-semibold text-[11px] inline-block">
+                    Kelebihan Beban
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-slate-200">
+                      MS
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Dr. Muhammad Satrio Utomo, M.T.</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0003057805</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Lektor Kepala</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Sistem Informasi</div>
+<div class="text-slate-500 text-[11px]">Enterprise Architecture &amp; ERP</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-900">12 SKS</span>
+<span class="text-slate-500">3 MK · 4 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-blue-600 h-1.5 rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.80</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 92% (260 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium text-[10px]">Serdos Pendidik</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium text-[10px]">Asesor Nasional</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[11px] inline-block">
+                    Optimal (12 SKS)
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Industry Practitioner -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-indigo-200">
+                      FK
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Fadjar Kusuma, S.Kom, MBA</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDK: 8840291021</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Praktisi Ahli</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Teknik Informatika</div>
+<div class="text-slate-500 text-[11px]">DevOps &amp; Cloud Infrastructure</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-900">6 SKS</span>
+<span class="text-slate-500">1 MK · 2 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-slate-500 h-1.5 rounded-full" style="width: 37.5%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.95</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 96% (140 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium text-[10px]">Praktisi Industri</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-semibold text-[11px] inline-block">
+                    Dosen Tamu/Praktisi
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Underload -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-rose-200">
+                      RW
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Ratna Wulandari, S.Si., M.Stat</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0019129201</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Asisten Ahli</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Sains Data</div>
+<div class="text-slate-500 text-[11px]">Statistika Inferensial &amp; Big Data</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-rose-600">8 SKS</span>
+<span class="text-slate-500">2 MK · 3 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-rose-500 h-1.5 rounded-full" style="width: 50%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.68</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 82% (180 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 font-medium text-[10px]">Dalam Proses</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-semibold text-[11px] inline-block">
+                    Kurang SKS (&lt;12)
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="px-4 py-4 text-center">
+<input class="row-checkbox w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center flex-shrink-0 text-xs border border-blue-200">
+                      TI
+                    </div>
+<div class="min-w-0">
+<div class="font-semibold text-slate-900 truncate">Prof. Taufik Ismail, Ph.D, SMIEEE</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-mono text-[11px] text-slate-500">NIDN: 0008086903</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 font-medium text-[10px] border border-slate-200">Guru Besar</span>
+</div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="font-medium text-slate-900">Teknik Informatika</div>
+<div class="text-slate-500 text-[11px]">IoT &amp; Embedded Systems</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="space-y-1">
+<div class="flex items-center justify-between text-[11px]">
+<span class="font-bold text-slate-900">13 SKS</span>
+<span class="text-slate-500">3 MK · 4 Kelas</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-blue-600 h-1.5 rounded-full" style="width: 81.25%;"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div>
+<div class="flex items-center gap-1 font-semibold text-slate-900">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.93</span>
+<span class="text-slate-400 font-normal text-[11px]">/ 5.00</span>
+</div>
+<div class="text-[11px] text-slate-500 mt-0.5">Respon: 95% (385 mhs)</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium text-[10px]">Serdos Pendidik</span>
+<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium text-[10px]">Asesor Nasional</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold text-[11px] inline-block">
+                    Optimal (13 SKS)
+                  </span>
+</td>
+<td class="px-4 py-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Buka Profil Akademik" type="button">
+<span class="material-symbols-outlined text-[17px]">account_box</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Detail BKD &amp; Publikasi" type="button">
+<span class="material-symbols-outlined text-[17px]">insights</span>
+</button>
+<button class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" title="Menu Opsi" type="button">
+<span class="material-symbols-outlined text-[17px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+<div class="text-xs text-slate-600">
+            Menampilkan <span class="font-semibold text-slate-900">1 - 7</span> dari <span class="font-semibold text-slate-900">186</span> dosen pengampu
+          </div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-400 hover:text-slate-700 hover:bg-slate-50 flex items-center justify-center disabled:opacity-50 transition-colors" disabled="" type="button">
+<span class="material-symbols-outlined text-[17px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-blue-600 text-white font-semibold text-xs flex items-center justify-center shadow-xs" type="button">1</button>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center justify-center transition-colors" type="button">2</button>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center justify-center transition-colors" type="button">3</button>
+<span class="px-2 text-slate-400 text-xs">...</span>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center justify-center transition-colors" type="button">27</button>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Section 5: Bottom 2-Column Analytical Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left Panel: Distribusi Tridharma BKD -->
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm flex flex-col justify-between space-y-5">
+<div>
+<div class="flex items-center justify-between">
+<div>
+<span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">STANDAR BAN-PT &amp; LLDIKTI</span>
+<h3 class="text-base font-bold text-slate-900 mt-0.5">Distribusi Beban Kerja Dosen (BKD Semester Ganjil 2024/2025)</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">100% Kepatuhan</span>
+</div>
+<p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Rasio pemenuhan kewajiban Tridharma Perguruan Tinggi untuk dewan dosen tetap dan fungsional institusi.
+            </p>
+</div>
+<!-- Tridharma Breakdown Graphic -->
+<div class="space-y-4">
+<!-- Multi-segment progress bar -->
+<div class="h-3.5 w-full rounded-full bg-slate-100 overflow-hidden flex border border-slate-200/60 p-0.5">
+<div class="bg-blue-600 h-full rounded-l-full" style="width: 60%;" title="Pendidikan &amp; Pengajaran: 60%"></div>
+<div class="bg-sky-400 h-full" style="width: 25%;" title="Penelitian: 25%"></div>
+<div class="bg-slate-400 h-full rounded-r-full" style="width: 15%;" title="Pengabdian Masyarakat: 15%"></div>
+</div>
+<!-- Legend & Values -->
+<div class="grid grid-cols-3 gap-3 text-center">
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex flex-col items-center">
+<div class="flex items-center gap-1.5 text-blue-700 mb-1">
+<span class="w-2 h-2 rounded-full bg-blue-600 inline-block"></span>
+<span class="text-[11px] font-semibold uppercase">Pendidikan</span>
+</div>
+<span class="text-xl font-bold text-slate-900">60%</span>
+<span class="text-[11px] text-slate-500 mt-0.5">Rata-rata 8.2 SKS/Dosen</span>
+</div>
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex flex-col items-center">
+<div class="flex items-center gap-1.5 text-sky-700 mb-1">
+<span class="w-2 h-2 rounded-full bg-sky-400 inline-block"></span>
+<span class="text-[11px] font-semibold uppercase">Penelitian</span>
+</div>
+<span class="text-xl font-bold text-slate-900">25%</span>
+<span class="text-[11px] text-slate-500 mt-0.5">142 Proposal Terbit</span>
+</div>
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex flex-col items-center">
+<div class="flex items-center gap-1.5 text-slate-700 mb-1">
+<span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span>
+<span class="text-[11px] font-semibold uppercase">Pengabdian</span>
+</div>
+<span class="text-xl font-bold text-slate-900">15%</span>
+<span class="text-[11px] text-slate-500 mt-0.5">58 Program Mitra</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-100">
+<span class="text-xs text-slate-500">Perhitungan mengacu pada Rubrik Operasional BKD Dikti 2021</span>
+<button class="text-blue-600 hover:text-blue-700 hover:underline text-xs font-semibold" type="button">
+              Lihat Rekap Rubrik Tridharma →
+            </button>
+</div>
+</div>
+<!-- Right Panel: SISTER & PDDikti Integration Status -->
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm flex flex-col justify-between space-y-5">
+<div>
+<div class="flex items-center justify-between">
+<div>
+<span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">KONEKTIVITAS DATA PUSAT</span>
+<h3 class="text-base font-bold text-slate-900 mt-0.5">Integrasi Layanan Terpadu Kemenristekdikti / SISTER</h3>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>API Live v1.8</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Status sinkronisasi data identitas dosen, verifikasi sertifikasi, dan agregasi publikasi ilmiah nasional terakreditasi.
+            </p>
+</div>
+<!-- Sync Feed Rows -->
+<div class="space-y-2.5">
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100">
+<span class="material-symbols-outlined text-[19px]">badge</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-900">Master NIDN &amp; Status Ikatan Kerja</div>
+<div class="text-[11px] text-slate-500">186 Profil sinkron penuh ke PDDikti Neo Feeder</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-blue-50 border border-blue-200 font-mono text-[10px] text-blue-700 font-medium">Synced 10m ago</span>
+</div>
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0 border border-slate-200">
+<span class="material-symbols-outlined text-[19px]">library_books</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-900">Riwayat Publikasi SINTA &amp; Scopus</div>
+<div class="text-[11px] text-slate-500">328 Artikel ilmiah, H-index author terhubung otomatis</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] text-slate-600 font-medium">Update Terjadwal 02:00</span>
+</div>
+<div class="p-3 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100">
+<span class="material-symbols-outlined text-[19px]">verified</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-900">Verifikasi SK Asesor &amp; Serdos</div>
+<div class="text-[11px] text-slate-500">24 Dosen berkualifikasi asesor nasional teregistrasi aktif</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 font-mono text-[10px] text-emerald-700 font-medium">Terverifikasi</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-100">
+<span class="text-xs text-slate-500">Token Institusi: <span class="font-mono text-slate-700 font-medium">NEXUS-PTS-042018</span></span>
+<button class="flex items-center gap-1.5 text-blue-600 hover:text-blue-700 text-xs font-semibold" type="button">
+<span class="material-symbols-outlined text-[15px]">sync</span>
+<span>Jalankan Sinkronisasi Manual</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+    (function() {
+      // Checkbox interactive selection
+      const selectAll = document.getElementById('selectAllCheckbox');
+      const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+      const countLabel = document.getElementById('selectionCount');
+
+      function updateCount() {
+        const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
+        if (checkedCount > 0) {
+          countLabel.textContent = checkedCount + ' Dosen Dipilih';
+        } else {
+          countLabel.textContent = 'Pilih Semua Dosen';
+        }
+      }
+
+      if (selectAll) {
+        selectAll.addEventListener('change', function(e) {
+          rowCheckboxes.forEach(cb => {
+            cb.checked = e.target.checked;
+          });
+          updateCount();
+        });
+      }
+
+      rowCheckboxes.forEach(cb => {
+        cb.addEventListener('change', function() {
+          const allChecked = Array.from(rowCheckboxes).every(c => c.checked);
+          const anyChecked = Array.from(rowCheckboxes).some(c => c.checked);
+          if (selectAll) {
+            selectAll.checked = allChecked;
+            selectAll.indeterminate = anyChecked && !allChecked;
+          }
+          updateCount();
+        });
+      });
+
+      // Escape key to clear search
+      const searchInput = document.getElementById('dosenSearchInput');
+      if (searchInput) {
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && document.activeElement === searchInput) {
+            searchInput.value = '';
+            searchInput.blur();
+          }
+        });
+      }
+    })();
+  </script>
+</body></html>

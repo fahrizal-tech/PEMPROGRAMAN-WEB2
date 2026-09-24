@@ -1,40 +1,73 @@
-# Admin Panel LMS (Learning Management System)
+# Nexus LMS — Admin Panel
 
-Proyek ini adalah tugas untuk mata kuliah **Pemrograman Web 2 (Client-Side Programming)**. Fokus utama proyek ini adalah merancang dan mengimplementasikan antarmuka (UI) Halaman Admin Panel yang responsif, interaktif, dan informatif menggunakan teknologi Client-Side tanpa back-end/mock data only.
+Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan sebagai Tugas 1 mata kuliah **Pemrograman Web 2 (Client-Side Programming)**.
 
-## 📝 Deskripsi Proyek
-Proyek ini membangun antarmuka Admin Panel (Back-Office) untuk sistem informasi **LMS (Learning Management System)**. Desain antarmuka menggunakan pendekatan **Material Design** dengan karakteristik *clean layout*, bayangan (*subtle shadows*), tata letak grid/flexbox yang responsif, serta pemilihan warna *Education Blue* dan *Amber/Orange*.
+Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-## 🛠️ Teknologi yang Digunakan
-- **HTML5** (Semantik)
-- **CSS3** (Material Design layout)
-- **JavaScript** (Interaktivitas DOM & Mock Data)
+> **Status:** dalam pengembangan. Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
 
-## 📂 Struktur Direktori
+## Fitur Utama
+
+| Modul | Halaman | Ringkasan |
+| --- | --- | --- |
+| Portal Login | `index.html` | Autentikasi admin |
+| Dashboard | `pages/dashboard.html` | Ringkasan statistik & grafik (Chart.js) |
+| Data Master Kursus | `pages/data-master.html` | Tabel kursus dengan aksi Tambah / Edit / Hapus |
+| Form Kursus | `pages/form.html` | Input & edit data kursus dengan validasi |
+| Laporan & Analitik | `pages/laporan.html` | Rekap aktivitas akademik, cetak & ekspor |
+| Mahasiswa | `pages/mahasiswa.html` | Direktori mahasiswa & validasi KRS |
+| Instruktur | `pages/instruktur.html` | Direktori dosen & beban kinerja |
+| Kelas Virtual | `pages/kelas-virtual.html` | Jadwal & status sesi daring |
+| Tugas & Kuis | `pages/tugas-kuis.html` | Manajemen tugas & penilaian rubrik |
+| Sertifikasi | `pages/sertifikasi.html` | Penerbitan sertifikat digital |
+| Pengaturan | `pages/pengaturan.html` | Konfigurasi sistem |
+
+## Desain
+
+- **Tema visual:** Material Design, diterapkan lewat design system *Academic Admin Studio* ([spesifikasi](docs/design-system-stitch.md))
+- **Tools:** Google Stitch (wireframe & UI), Figma ([desain awal](https://www.figma.com/design/7aUyoUDLLLjVhcwW6yczcT/LMS-Admin-Panel?node-id=2-112&t=kEYvoVaPdIVuAusP-1))
+- **Dokumen perancangan:** [docs/perancangan.md](docs/perancangan.md)
+
+## Struktur Direktori
 
 ```text
-├── docs/                 # Dokumentasi (Milestone 1, ER-D, Wireframe)
-│   └── perancangan.md
-├── assets/               # Aset statis
-│   ├── css/              # File styling (style.css)
-│   ├── js/               # Script logika (main.js)
-│   └── img/              # Gambar dan icon
-├── pages/                # Halaman spesifik admin panel
-│   ├── dashboard.html
-│   ├── data-master.html
-│   ├── form.html
-│   └── laporan.html
-└── index.html            # Halaman Utama/Login Admin
+├── docs/
+│   ├── perancangan.md          # Milestone 1: menu, ER-D, user flow, design system
+│   ├── roadmap.md              # Rencana & checklist pengembangan
+│   ├── design-system-stitch.md # Token desain dari Stitch
+│   └── img/                    # Screenshot rancangan (Stitch & Figma)
+├── assets/
+│   ├── css/                    # Stylesheet
+│   ├── js/                     # Script aplikasi
+│   ├── img/                    # Logo & gambar
+│   └── data/                   # Seed data (mock database)
+├── pages/                      # Halaman admin panel
+├── index.html                  # Halaman Login
+├── .github/workflows/          # Otomasi (pemindai rahasia)
+├── CHANGELOG.md
+├── SECURITY.md
+└── README.md
 ```
 
-## 🚀 Milestones Tugas
+## Menjalankan Secara Lokal
 
-- [x] **Milestone 1 (Perencanaan & UI Wireframing)**: Pembuatan hirarki menu, konsep ER-D, dan wireframing UI di Figma.
-- [ ] **Milestone 2 (Slicing & Layouting)**: Implementasi layout dasar HTML/CSS, responsivitas.
-- [ ] **Milestone 3 (Implementasi & Interaktivitas UI)**: Pembuatan halaman spesifik, interaktivitas dengan JavaScript (validasi, Chart.js, dll).
+Aplikasi memakai JavaScript modules, jadi harus dibuka lewat web server lokal (tidak bisa dibuka langsung sebagai `file://`).
 
-## 🎨 Tautan Desain
-- [Figma Design - LMS Admin Panel](https://www.figma.com/design/7aUyoUDLLLjVhcwW6yczcT/LMS-Admin-Panel?node-id=2-112&t=kEYvoVaPdIVuAusP-1)
+**Opsi 1: VS Code**, pasang ekstensi *Live Server*, klik kanan `index.html`, lalu pilih **Open with Live Server**.
+
+**Opsi 2: Terminal**
+```bash
+npx serve .
+```
+Setelah itu buka `http://localhost:3000`.
+
+## Teknologi
+
+- HTML5 semantik
+- Tailwind CSS
+- JavaScript (ES Modules), tanpa framework
+- Chart.js
+- Material Symbols & font Inter
 
 ---
-*Dibuat untuk keperluan tugas perkuliahan.*
+Dibuat untuk keperluan tugas perkuliahan Pemrograman Web 2.
