@@ -1,3 +1,20 @@
-_backup_spa_sebelumnya/
-.DS_Store
+# Dependencies & build
 node_modules/
+
+# Sistem operasi & editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Tools AI / agent lokal
+.kilo/
+
+# Bahan referensi mentah hasil ekspor Stitch (screenshot sudah disalin ke docs/img/stitch)
+stitch_lms_front_end_admin_panel/
+
+# Catatan pribadi (tidak untuk dikumpulkan)
+EVALUASI_DAN_PANDUAN.md
+
+# Arsip
+*.zip

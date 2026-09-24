@@ -1,0 +1,7 @@
+# Normalisasi line ending agar konsisten di Windows/macOS/Linux
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff2 binary
