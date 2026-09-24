@@ -106,18 +106,18 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Galeri rancangan Stitch + evolusi desain (wireframe → mid → high fidelity)
 - [x] Rilis tag `v0.1.0`
 
-### Tahap 2 — Milestone 2: Slicing & Layouting (target: pekan 5)
+### Tahap 2 — Milestone 2: Slicing & Layouting (target: pekan 5) ✅
 - [x] Setup Tailwind CLI (`package.json`, `tailwind.config.js`) dengan token dari design system (48 warna, 13 ukuran font, 10 spasi, 17 font family); radius memakai standar Tailwind agar seragam
 - [x] Hasil build CSS di-commit (`assets/css/app.css`, 61 KB minified) → hosting tetap statis tanpa build server
 - [x] `pages/layout.html`: template master (`<aside>`, `<header>`, `<main>`, `<footer>`) + contoh komponen design system; diuji di 1280px, 390px, dan drawer terbuka
 - [x] Komponen sidebar + topbar + footer tunggal (`assets/js/components/layout.js`): menu dari satu sumber data, breadcrumb, profil admin, skip link
 - [x] Navigasi antarhalaman berfungsi di 11 halaman, penanda menu aktif otomatis
 - [x] Sidebar sesuai hirarki final di `perancangan.md` (hapus Modul & Materi, Hak Akses & Peran, Keuangan & Transaksi), branding seragam
-- [ ] Tab peran Dosen/Mahasiswa di login → pemberitahuan "di luar lingkup"
 - [x] Sidebar responsif: drawer + overlay + tombol burger di < 1024px (tutup via overlay/Esc, scroll terkunci, `aria-expanded`)
 - [x] Hapus Tailwind CDN & konfigurasi inline di setiap halaman (−1.700 baris), tombol aksi header dipindah ke konten
 - [x] Ganti 20 gambar dari `lh3.googleusercontent.com` (link sementara Stitch) dengan logo lokal / avatar inisial / placeholder
-- [ ] Rilis tag `v0.2.0`
+- [x] Uji E2E otomatis 16/16 lulus (login, navigasi, drawer, responsif, tanpa error JS)
+- [x] Rilis tag `v0.2.0`
 
 ### Tahap 3 — Data Layer Lokal
 - [ ] `assets/js/core/storage.js`: LocalAdapter (namespace, versi skema, reset)
@@ -132,9 +132,9 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 **Komponen bersama:** modal, dialog konfirmasi, toast, validator form, helper tabel (search, filter, sort, pagination).
 
 **Halaman wajib:**
-- [ ] `index.html` — Login: validasi, tampil/sembunyikan password, redirect ke dashboard
+- [ ] `index.html` — Login: validasi, tampil/sembunyikan password, redirect ke dashboard; tab default Admin/BAAK, tab Dosen/Mahasiswa → pemberitahuan "di luar lingkup"
 - [ ] `dashboard.html` — kartu statistik + Chart.js (tren pendaftaran, distribusi nilai, aktivitas) dari data lokal
-- [ ] `data-master.html` — tabel kursus: cari, filter, urut, paginasi, tombol Tambah/Edit/Hapus + modal konfirmasi
+- [ ] `data-master.html` — tabel kursus: cari, filter, urut, paginasi, tombol Tambah/Edit/Hapus + modal konfirmasi (kode MK tidak terpotong baris)
 - [ ] `form.html` — form kursus mode tambah/edit (`?id=`), validasi real-time, cek duplikat kode
 - [ ] `laporan.html` — rekap & log aktivitas, filter periode, cetak (`@media print`), ekspor CSV
 
