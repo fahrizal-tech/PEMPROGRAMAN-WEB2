@@ -123,11 +123,11 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `assets/js/core/storage.js`: LocalAdapter async (list/get/query/insert/update/remove, versi skema, reset, export/import, fallback memori, pemulihan data rusak, sinkron antar-tab)
 - [x] Uji unit `npm test` (Node test runner, tanpa dependensi): storage & integritas seed
 - [x] Data awal `assets/data/seed.js` (14 entitas, 266 baris data fiktif; format JS agar jalan tanpa server; deterministik; divalidasi: 0 error relasi & duplikat)
-- [ ] Service per entitas + relasi (misal: kursus tidak boleh dihapus jika masih punya KRS aktif)
+- [x] Service per entitas + relasi (`services.js`): kursus ber-KRS aktif tidak bisa dihapus, kuota KRS, total bobot tugas ≤ 100%, syarat kelulusan sertifikat, hapus berantai (modul/tugas/kelas), dll.
 - [ ] `auth.js`: login admin demo, session, *route guard*, logout
-- [ ] Pencatatan otomatis ke `LOG_AKTIVITAS` untuk setiap create/update/delete
-- [ ] Utilitas: format tanggal/angka Indonesia, generator ID, debounce, `escapeHTML`
-- [ ] Validasi & sanitasi data di service layer (bukan hanya di form)
+- [x] Pencatatan otomatis ke `LOG_AKTIVITAS` untuk setiap create/update/delete (+ aksi khusus: setujui/tolak KRS, beri nilai, terbit/cabut sertifikat)
+- [x] Utilitas (`utils.js`): format tanggal/angka Indonesia, debounce, `escapeHTML`, ekspor CSV aman (anti formula injection)
+- [x] Validasi & sanitasi data di service layer (`validators.js`, skema yang sama dipakai form) — uji unit total 41 lulus
 
 ### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7)
 **Komponen bersama:** modal, dialog konfirmasi, toast, validator form, helper tabel (search, filter, sort, pagination).
