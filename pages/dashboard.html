@@ -1,189 +1,25 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="web_dashboard" name="shell-type"/>
-<title>Nexus LMS Enterprise Dashboard</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-    @layer base {
-      html, body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-      body { overscroll-behavior: none; }
-      main > :first-child { margin-top: 0 !important; }
-      main > :last-child { margin-bottom: 0 !important; }
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-  </style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-            }
-          }
-        }
-      }
-    }
-  </script>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard · Nexus LMS</title>
+  <meta name="description" content="Ringkasan statistik dan grafik aktivitas pembelajaran.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <script src="../assets/js/components/layout.js" defer></script>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 antialiased font-sans">
-<!-- Left Sidebar Navigation -->
-<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between">
-<div class="flex flex-col flex-1 overflow-y-auto">
-<!-- Logo header -->
-<div class="h-16 px-6 flex items-center justify-between border-b border-slate-100">
-<div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-base shadow-sm">
-            N
-          </div>
-<span class="font-bold text-slate-900 tracking-tight text-lg">NEXUS</span>
-</div>
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 tracking-wide">v2.4 Enterprise</span>
-</div>
-<!-- Navigation links -->
-<nav class="flex-1 px-3 py-4 space-y-5">
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MAIN</span>
-<div class="flex flex-col gap-0.5 pt-1">
-<a aria-current="page" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-semibold text-sm transition-colors" data-path="dashboard" href="#">
-<span class="material-symbols-outlined text-[20px] text-blue-700">dashboard</span>
-<span>Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="analytics-and-reports" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">monitoring</span>
-<span>Analytics &amp; Reports</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">AKADEMIK &amp; KURSUS</span>
-<div class="flex flex-col gap-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="master-kursus" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">auto_stories</span>
-<span>Data Master Kursus</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="modul-dan-materi" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">folder_open</span>
-<span>Modul &amp; Materi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="tugas-dan-kuis" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">quiz</span>
-<span>Tugas &amp; Kuis</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="kelas-virtual" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">video_camera_front</span>
-<span>Kelas Virtual</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">PENGGUNA</span>
-<div class="flex flex-col gap-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="mahasiswa-dan-siswa" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">school</span>
-<span>Mahasiswa &amp; Siswa</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="instruktur-dan-dosen" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">badge</span>
-<span>Instruktur / Dosen</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="hak-akses-dan-peran" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">shield_person</span>
-<span>Hak Akses &amp; Peran</span>
-</a>
-</div>
-</div>
-<div class="space-y-1">
-<span class="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">MANAJEMEN</span>
-<div class="flex flex-col gap-0.5 pt-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="sertifikasi-digital" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">workspace_premium</span>
-<span>Sertifikasi Digital</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="keuangan-dan-transaksi" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">receipt_long</span>
-<span>Keuangan &amp; Transaksi</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 text-sm font-medium transition-colors" data-path="pengaturan-sistem" href="#">
-<span class="material-symbols-outlined text-[20px] text-slate-400">settings</span>
-<span>Pengaturan Sistem</span>
-</a>
-</div>
-</div>
-</nav>
-</div>
-<!-- Status footer -->
-<div class="p-3 border-t border-slate-100 bg-slate-50/70">
-<div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-white border border-slate-200">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<div class="flex flex-col">
-<span class="text-[11px] font-medium text-slate-500 leading-tight">System Status</span>
-<span class="text-xs font-semibold text-emerald-700 leading-tight">Operational</span>
-</div>
-</div>
-</div>
-</aside>
-<!-- Main Container -->
-<div class="pl-64">
-<!-- Top Header -->
-<header class="fixed top-0 left-64 right-0 h-16 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-8">
-<div class="flex items-center gap-2 text-sm text-slate-500">
-<span class="hover:text-slate-800 cursor-pointer font-medium">LMS Portal</span>
-<span class="material-symbols-outlined text-slate-400 text-base">chevron_right</span>
-<span class="text-slate-900 font-semibold">Console</span>
-</div>
-<!-- Search bar -->
-<div class="flex-1 max-w-lg mx-8">
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg pointer-events-none">search</span>
-<input class="w-full h-9 pl-9 pr-20 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder:text-slate-400 text-sm focus:outline-none focus:bg-white focus:border-blue-500 transition-colors" placeholder="Cari modul, materi, mahasiswa, atau transaksi..." type="text"/>
-<div class="absolute right-2.5 flex items-center">
-<kbd class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 text-[11px] font-mono">Ctrl + K</kbd>
-</div>
-</div>
-</div>
-<!-- Header actions & Profile -->
-<div class="flex items-center gap-3">
-<div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
-<button class="px-2 py-1 rounded text-xs font-semibold bg-white text-slate-800 shadow-sm">ID</button>
-<button class="px-2 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900">EN</button>
-</div>
-<button class="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-700 border border-transparent hover:border-slate-200 transition-colors">
-<span class="material-symbols-outlined text-xl">notifications</span>
-<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-600"></span>
-</button>
-<button class="h-9 px-3.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm flex items-center gap-1.5 shadow-sm transition-colors">
-<span class="material-symbols-outlined text-base">add</span>
-<span>Buat Baru</span>
-</button>
-<div class="h-6 w-px bg-slate-200 mx-1"></div>
-<div class="flex items-center gap-3 pl-1">
-<img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtuhg6DYRYiHjxijXSMzfqXYTHbKmaZ0reADnvbT7cketOXhtRyIcOYahq2yL2ubhvQ9SDwEpi4ysrdMsAonDnxq5HFymPh9yjJxpz9H1ZWflZ0dH8ouUEk6vg0csXOSmAUfk2OfJJCmEnXjozf6RadPQzdNBMNSS0-CnWgOhSnikcRkKbOD_5tMNGPj2Xq5hoUFKpXNztvraXvihcJduNz87jCjPT2UGJfe8h66kjcHX3O7HjoUs"/>
-<div class="hidden xl:flex flex-col text-left">
-<span class="text-sm font-semibold text-slate-800 leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="text-[12px] text-slate-500 leading-tight">Super Administrator</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content Area -->
-<main class="w-full pt-16 bg-[#f8fafc] min-h-screen">
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Dashboard"></header>
+
+    <main class="flex-1 min-w-0">
 <div class="flex flex-col w-full px-8 py-8 gap-6 text-slate-900 max-w-7xl mx-auto">
 <!-- Top Context & Quick Action Toolbar -->
 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -217,7 +53,7 @@
 </div>
 </div>
 <!-- Executive KPI Cards Row (5 Cards) -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-4">
 <!-- KPI 1 -->
 <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col justify-between hover:border-slate-300 transition-all">
 <div class="flex items-center justify-between">
@@ -233,7 +69,7 @@
               </span>
 </div>
 <div class="mt-3 h-7 w-full flex items-end">
-<svg class="w-full h-6 text-blue-600" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<svg class="w-full h-6 text-blue-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
 <path d="M0 20 L15 17 L30 18 L45 12 L60 14 L75 7 L90 9 L100 2" stroke="currentColor" stroke-linecap="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
 <path d="M0 20 L15 17 L30 18 L45 12 L60 14 L75 7 L90 9 L100 2 L100 24 L0 24 Z" fill="currentColor" fill-opacity="0.08"></path>
 </svg>
@@ -277,7 +113,7 @@
               </span>
 </div>
 <div class="mt-3 h-7 w-full flex items-end">
-<svg class="w-full h-6 text-emerald-600" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<svg class="w-full h-6 text-emerald-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
 <path d="M0 22 L20 19 L40 21 L55 14 L70 12 L85 8 L100 4" stroke="currentColor" stroke-linecap="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
 <path d="M0 22 L20 19 L40 21 L55 14 L70 12 L85 8 L100 4 L100 24 L0 24 Z" fill="currentColor" fill-opacity="0.08"></path>
 </svg>
@@ -365,16 +201,16 @@
 </div>
 <!-- Area Chart SVG Container -->
 <div class="relative w-full h-72">
-<svg class="w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 800 240">
+<svg class="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 800 240">
 <defs>
-<lineargradient id="gradientBlueLight" x1="0" x2="0" y1="0" y2="1">
+<linearGradient id="gradientBlueLight" x1="0" x2="0" y1="0" y2="1">
 <stop offset="0%" stop-color="#2563eb" stop-opacity="0.16"></stop>
 <stop offset="100%" stop-color="#2563eb" stop-opacity="0.01"></stop>
-</lineargradient>
-<lineargradient id="gradientSlateLight" x1="0" x2="0" y1="0" y2="1">
+</linearGradient>
+<linearGradient id="gradientSlateLight" x1="0" x2="0" y1="0" y2="1">
 <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.12"></stop>
 <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.0"></stop>
-</lineargradient>
+</linearGradient>
 </defs>
 <!-- Horizontal Grid Lines -->
 <line stroke="#f1f5f9" stroke-width="1" x1="40" x2="780" y1="20" y2="20"></line>
@@ -457,7 +293,7 @@
               </p>
 <!-- Donut Visual SVG -->
 <div class="relative w-44 h-44 mx-auto my-6 flex items-center justify-center">
-<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+<svg class="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
 <!-- Background Ring -->
 <circle cx="50" cy="50" fill="transparent" r="38" stroke="#f1f5f9" stroke-width="12"></circle>
 <!-- Rekayasa Perangkat Lunak: 35% -->
@@ -836,5 +672,8 @@
 </div>
 </div>
 </main>
-</div>
-</body></html>
+
+    <footer data-component="footer"></footer>
+  </div>
+</body>
+</html>
