@@ -161,7 +161,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 
 ### Tahap 5 — QA & Polesan
 - [x] Validasi HTML tanpa error — `npm run test:html` (html-validate: 12 file mentah + 11 DOM hasil render setelah login), masuk CI
-- [ ] Lighthouse: Performance, Accessibility, Best Practices ≥ 90
+- [x] Lighthouse ≥ 90 — `npm run test:lighthouse` (HP & `-- --desktop`, 11 halaman setelah login): HP 98–100, desktop 99–100 di Performance/Accessibility/Best Practices/SEO; perbaikan CLS (tinggi topbar, penahan `<main>` sampai skrip siap, font `display=optional`) & kontras warna
 - [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
 - [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
 - [ ] Hapus kode mati & data dummy yang tidak terpakai

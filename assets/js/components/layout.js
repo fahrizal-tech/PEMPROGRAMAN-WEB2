@@ -113,7 +113,7 @@
       });
       return (
         '<div class="space-y-1">' +
-        '<p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">' +
+        '<p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">' +
         escapeHTML(group.group) + "</p>" +
         '<ul class="space-y-0.5">' + links.join("") + "</ul></div>"
       );

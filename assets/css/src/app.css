@@ -73,3 +73,8 @@
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 }
+
+/* Sediakan tinggi topbar sebelum layout.js mengisinya agar konten tidak bergeser (CLS). */
+header[data-component="topbar"] { min-height: 4rem; }
+/* Lihat auth.js: <main> ditahan sampai skrip halaman selesai menyusun isi. */
+.js-pending main { visibility: hidden; }
