@@ -169,11 +169,11 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] Dependabot (npm & GitHub Actions, mingguan) + `npm audit` di CI; puppeteer-core 25 → 0 kerentanan
 
 ### Tahap 6 — Deploy & Presentasi
-- [ ] GitHub Pages aktif dari branch `main`
-- [ ] README berisi screenshot, akun demo, link live
-- [ ] Rilis tag `v1.0.0`
+- [x] GitHub Pages aktif dari branch `main` — https://fahrizal-tech.github.io/PEMPROGRAMAN-WEB2/
+- [x] README berisi screenshot (10 halaman + 3 HP), akun demo, link live
+- [x] Rilis tag `v1.0.0` (lalu v1.1.0, v1.2.0, v1.2.1)
 - [ ] Kirim link repository ke LMS Mentari
-- [ ] Naskah demo 5–7 menit (alur: login → dashboard → CRUD → form → laporan → responsif)
+- [x] Naskah demo 5–7 menit — [`docs/naskah-demo.md`](naskah-demo.md) (alur: login → dashboard → CRUD → form → laporan → responsif → proses QA)
 
 ### Tahap 7 — Pasca-Tugas: Menuju Produksi
 - [ ] Skema SQL dari ER-D di Supabase (PostgreSQL) + Row Level Security

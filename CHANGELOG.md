@@ -5,6 +5,19 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [1.2.1] — 2026-09-25 · Dokumentasi & Presentasi
+
+### Tahap 6
+
+#### Ditambahkan
+- README: link demo langsung, gambar Dashboard, galeri 10 halaman + 3 tampilan HP (`docs/img/screenshots/`).
+- `docs/naskah-demo.md`: naskah demo 5–7 menit, persiapan, pemetaan ke instruksi tugas, antisipasi pertanyaan.
+- Uji unit konsistensi nomor versi (package.json, layout, halaman login).
+
+#### Diperbaiki
+- Kartu **Sedang Live** di Dashboard: potongan label kode MK di tepi sampul dan ikon terpotong (opsi `compact` pada sampul otomatis).
+- Halaman login: tahun akademik kini dibaca dari Pengaturan (sebelumnya teks statis "TA 2024/2025"), nomor versi & tahun hak cipta diselaraskan.
+
 ## [1.2.0] — 2026-09-25 · QA & Polesan
 
 ### Tahap 5 — Kualitas, keamanan, aksesibilitas

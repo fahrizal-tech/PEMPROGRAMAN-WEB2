@@ -190,7 +190,7 @@
       var end = new Date(s.waktu_mulai).getTime() + s.durasi_menit * 60000;
       var sisa = Math.round((end - Date.now()) / 60000);
       return html`<article class="flex overflow-hidden rounded-2xl border border-red-200 bg-white shadow-sm ring-1 ring-red-100">
-        <div class="relative w-32 flex-shrink-0 overflow-hidden sm:w-40">${Nexus.cover.render(k, prodiMap[k.prodi_id] && prodiMap[k.prodi_id].kode, "h-full w-full")}
+        <div class="relative w-32 flex-shrink-0 overflow-hidden sm:w-40">${Nexus.cover.render(k, prodiMap[k.prodi_id] && prodiMap[k.prodi_id].kode, "h-full w-full", { compact: true })}
           <span class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white shadow"><span class="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true"></span>Live</span></div>
         <div class="flex min-w-0 flex-1 flex-col p-3">
           <p class="font-mono text-[11px] text-slate-500">${k.kode_mk}</p>
