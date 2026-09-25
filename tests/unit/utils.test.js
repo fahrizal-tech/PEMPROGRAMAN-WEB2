@@ -41,3 +41,10 @@ test("timeAgo relatif terhadap waktu acuan", () => {
   assert.equal(u.timeAgo("2026-09-24T09:58:00Z", now), "2 menit lalu");
   assert.equal(u.timeAgo("2026-09-22T10:00:00Z", now), "2 hari lalu");
 });
+
+test("localDate memakai tanggal lokal (bukan UTC)", () => {
+  const d = new Date(2026, 8, 25, 0, 30); // 25 Sep 00.30 waktu lokal
+  assert.equal(u.localDate(d), "2026-09-25");
+  assert.equal(u.localDate(d.toISOString()), "2026-09-25", "ISO UTC dikonversi kembali ke tanggal lokal");
+  assert.equal(u.localDate("bukan tanggal"), "");
+});

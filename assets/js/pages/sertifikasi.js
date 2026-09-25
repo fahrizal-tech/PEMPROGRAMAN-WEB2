@@ -110,7 +110,7 @@
       title: "Terbitkan Sertifikat",
       submitLabel: "Terbitkan (menunggu TTE)",
       service: { schema: FORM_SCHEMA, validate: function (d, o) { return Nexus.validate(FORM_SCHEMA, d, o); } },
-      initial: { jenis: "Sertifikat Kelulusan Kursus", tanggal_terbit: new Date().toISOString().slice(0, 10) },
+      initial: { jenis: "Sertifikat Kelulusan Kursus", tanggal_terbit: u.localDate() },
       fields: html`
         ${ui.field({ name: "mahasiswa_id", label: "Mahasiswa (sudah lulus kursus)", type: "select", required: true, options: mhsOpts, span: "sm:col-span-2" })}
         ${ui.field({ name: "kursus_id", label: "Kursus yang lulus", type: "select", required: true, span: "sm:col-span-2", help: "Hanya kursus dengan nilai akhir ≥ passing grade." })}

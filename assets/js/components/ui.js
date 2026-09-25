@@ -553,6 +553,7 @@
     var sortKey = o.defaultSort || null;
     var pageSize = o.pageSize || 10;
     var mode = o.cards ? "kartu" : "tabel";
+    var loaded = false; // sebelum data pertama termuat, tampilkan status memuat (bukan "kosong")
 
     function searchable(row) {
       if (!o.search) return "";
@@ -603,13 +604,14 @@
     }
 
     function render() {
+      if (!loaded) return loading();
       var list = visible();
       var pages = Math.max(1, Math.ceil(list.length / pageSize));
       if (page > pages) page = pages;
       var slice = list.slice((page - 1) * pageSize, page * pageSize);
       if (o.cards && mode === "kartu") {
         o.cards.container.innerHTML = slice.length
-          ? slice.map(function (r) { return o.cards.render(r).value; }).join("")
+          ? (o.cards.renderAll ? o.cards.renderAll(slice, list).value : slice.map(function (r) { return o.cards.render(r).value; }).join(""))
           : html`<div class="col-span-full">${emptyState(rows.length ? "Tidak ada data yang cocok" : (o.cards.emptyTitle || "Belum ada data"), rows.length ? "Ubah kata kunci pencarian atau filter." : o.emptyText)}</div>`.value;
         renderPager(list.length, pages);
         if (o.onRender) o.onRender(list, slice);
@@ -641,6 +643,7 @@
       loading();
       try {
         rows = await o.load();
+        loaded = true;
         render();
       } catch (e) {
         o.tbody.innerHTML = html`<tr><td colspan="${o.colspan}" class="px-4 py-10 text-center text-sm text-red-600">Gagal memuat data: ${e.message}</td></tr>`.value;
@@ -660,7 +663,12 @@
       visible: visible,
       setSort: function (k) { sortKey = k; render(); },
       /** Ganti tampilan "kartu" / "tabel" (bila o.cards tersedia). */
-      setMode: function (m) { mode = m; render(); },
+      setMode: function (m) {
+        mode = m;
+        // Kosongkan tampilan yang tidak aktif agar tidak ada tombol tersembunyi yang tertinggal.
+        if (o.cards) { if (m === "kartu") o.tbody.innerHTML = ""; else o.cards.container.innerHTML = ""; }
+        render();
+      },
       /** Ubah jumlah baris per halaman (mis. 100000 saat mencetak semua baris). */
       setPageSize: function (n) { pageSize = n; page = 1; render(); },
       reset: function () {

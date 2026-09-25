@@ -110,7 +110,7 @@
   /* ---------- Cadangan, pemulihan, reset ---------- */
   $("btn-cadangan").addEventListener("click", async function () {
     var backup = await db.exportAll();
-    u.download("nexus-lms-cadangan-" + new Date().toISOString().slice(0, 10) + ".json", JSON.stringify(backup, null, 2), "application/json");
+    u.download("nexus-lms-cadangan-" + u.localDate() + ".json", JSON.stringify(backup, null, 2), "application/json");
     ui.toast("Cadangan data diunduh.", "success");
   });
 

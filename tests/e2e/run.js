@@ -170,8 +170,9 @@ function findBrowser() {
     await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log tr")].every((tr) => /Login/.test(tr.textContent)));
     check(true, "laporan: filter log aksi Login");
     await page.select("#log-aksi", "");
-    await page.$eval("#log-dari", (e) => { e.value = "2026-09-22"; e.dispatchEvent(new Event("change")); });
-    await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log time")].every((t) => t.getAttribute("datetime") >= "2026-09-22"));
+    const duaHariLalu = await page.evaluate(() => Nexus.utils.localDate(new Date(Date.now() - 2 * 86400000)));
+    await page.$eval("#log-dari", (e, v) => { e.value = v; e.dispatchEvent(new Event("change")); }, duaHariLalu);
+    await page.waitForFunction((v) => [...document.querySelectorAll("#tabel-log time")].every((t) => Nexus.utils.localDate(t.getAttribute("datetime")) >= v), {}, duaHariLalu);
     check(true, "laporan: filter log dari tanggal");
     await page.$eval("#log-dari", (e) => { e.value = ""; e.dispatchEvent(new Event("change")); });
     await page.emulateMediaType("print");
@@ -282,7 +283,19 @@ function findBrowser() {
     /* ---------- Kelas Virtual ---------- */
     await page.goto(ROOT + "pages/kelas-virtual.html", NAV);
     await page.waitForFunction(() => /dari 8 data/.test(document.getElementById("tabel-counter").textContent));
-    check(/Live/.test(await page.$eval("#tabel-sesi tr", (t) => t.textContent)), "kelas virtual: 8 sesi, sesi live di urutan teratas");
+    // Tampilan kartu (default): dikelompokkan, sesi live pertama, hitung mundur.
+    const kartu = await page.evaluate(() => ({
+      n: document.querySelectorAll("#kartu-sesi article").length,
+      grup: [...document.querySelectorAll("#kartu-sesi h3")].map((h) => h.textContent.trim()),
+      pertama: document.querySelector("#kartu-sesi article").textContent,
+      tabelKosong: document.querySelectorAll("#tabel-sesi tr").length === 0,
+    }));
+    check(kartu.n === 8 && kartu.grup.join(",") === "Sedang Live,Akan Datang,Selesai" && /Live/.test(kartu.pertama) && kartu.tabelKosong,
+      `kelas virtual (kartu): 8 kartu dalam grup ${kartu.grup.join(" · ")}`);
+    check(/Mulai \d+ (menit|jam|hari) lagi/.test(await page.$eval("#kartu-sesi", (e) => e.textContent)), "kartu sesi terjadwal menampilkan hitung mundur");
+    await page.click('[data-view="tabel"]');
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-sesi tr").length > 0 && document.getElementById("kartu-sesi").classList.contains("hidden"));
+    check(/Live/.test(await page.$eval("#tabel-sesi tr", (t) => t.textContent)), "tombol Tabel → tabel tampil, sesi live di urutan teratas");
     const kvTerjadwal = await page.$eval('[data-to="live"]', (b) => b.getAttribute("data-status"));
     await page.click(`[data-status="${kvTerjadwal}"]`);
     await toastHas(/Sesi dimulai/);

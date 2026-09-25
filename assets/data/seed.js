@@ -13,8 +13,34 @@
 (function (global) {
   "use strict";
 
-  var VERSION = 1;
+  // v2: tanggal relatif terhadap hari ini (jadwal, tenggat, log selalu tampak aktual saat demo).
+  var VERSION = 2;
   var PERIODE = "2026/2027-Ganjil";
+
+  /* Tanggal relatif. Dibulatkan ke jam agar build berulang tetap identik (deterministik per jam). */
+  function waktuDasar() {
+    var d = new Date();
+    d.setMinutes(0, 0, 0);
+    return d;
+  }
+  function isoLokal(d) {
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1, 2) + "-" + pad(d.getDate(), 2) + "T" + pad(d.getHours(), 2) + ":" + pad(d.getMinutes(), 2) + ":00";
+  }
+  /** N menit dari sekarang (negatif = lalu). */
+  function menitDariSekarang(base, menit) {
+    return isoLokal(new Date(base.getTime() + menit * 60000));
+  }
+  /** Stempel waktu kejadian (UTC, format sama dengan new Date().toISOString() di aplikasi). */
+  function stempel(base, menit) {
+    return new Date(base.getTime() + menit * 60000).toISOString();
+  }
+  /** Hari ke-N dari hari ini pada jam tertentu. */
+  function hariKe(base, hari, jam, menit) {
+    var d = new Date(base);
+    d.setDate(d.getDate() + hari);
+    d.setHours(jam, menit || 0, 0, 0);
+    return isoLokal(d);
+  }
 
   // PRNG deterministik (mulberry32) agar data relasi selalu sama setiap build.
   function rng(seed) {
@@ -38,6 +64,7 @@
 
   function build() {
     var rand = rng(20260924);
+    var NOW = waktuDasar();
     var pick = function (arr) { return arr[Math.floor(rand() * arr.length)]; };
 
     /* ---------------- PROGRAM_STUDI ---------------- */
@@ -169,21 +196,21 @@
         krs.push({
           id: "krx_" + pad(krs.length + 1, 4), mahasiswa_id: m.id, kursus_id: k.id, periode: PERIODE, status: status,
           nilai_akhir: status === "disetujui" && rand() < 0.35 ? Math.round((55 + rand() * 43) * 10) / 10 : null,
-          diajukan_pada: "2026-08-" + pad(18 + Math.floor(rand() * 10), 2) + "T" + pad(8 + Math.floor(rand() * 9), 2) + ":" + pad(Math.floor(rand() * 60), 2) + ":00",
+          diajukan_pada: new Date(hariKe(NOW, -30 + Math.floor(rand() * 10), 8 + Math.floor(rand() * 9), Math.floor(rand() * 60))).toISOString(),
         });
       }
     });
 
     /* ---------------- KELAS_VIRTUAL + PRESENSI ---------------- */
     var kelasVirtual = [
-      ["kv_0001", "krs_102", 7, "Component Lifecycle & State Management", "2026-09-24T08:00:00", 100, "meet", "https://meet.google.com/gmt-tech-204", "selesai"],
-      ["kv_0002", "krs_101", 4, "Kubernetes Orchestration & Helm Deployment", "2026-09-24T09:00:00", 150, "zoom", "https://zoom.us/j/8842910000", "live"],
-      ["kv_0003", "krs_103", 4, "Convolutional Neural Network untuk Klasifikasi Citra", "2026-09-24T10:00:00", 100, "zoom", "https://zoom.us/j/9124021000", "live"],
-      ["kv_0004", "krs_104", 4, "Usability Testing Lab & Cognitive Walkthrough", "2026-09-24T13:00:00", 100, "meet", "https://meet.google.com/gmt-ux-101", "terjadwal"],
-      ["kv_0005", "krs_107", 4, "Penetration Testing Live Demo", "2026-09-24T14:00:00", 150, "teams", "https://teams.microsoft.com/l/meetup-join/cy409", "terjadwal"],
-      ["kv_0006", "krs_108", 3, "Lean Six Sigma & Supply Chain Resilience", "2026-09-24T16:00:00", 100, "zoom", "https://zoom.us/j/7711050000", "terjadwal"],
-      ["kv_0007", "krs_109", 2, "Normalisasi hingga BCNF", "2026-09-23T13:00:00", 100, "meet", "https://meet.google.com/gmt-si-201", "selesai"],
-      ["kv_0008", "krs_106", 5, "Dynamic Programming: Knapsack & LCS", "2026-09-25T08:00:00", 100, "zoom", "https://zoom.us/j/6106102000", "terjadwal"],
+      ["kv_0001", "krs_102", 7, "Component Lifecycle & State Management", menitDariSekarang(NOW, -300), 100, "meet", "https://meet.google.com/gmt-tech-204", "selesai"],
+      ["kv_0002", "krs_101", 4, "Kubernetes Orchestration & Helm Deployment", menitDariSekarang(NOW, -60), 150, "zoom", "https://zoom.us/j/8842910000", "live"],
+      ["kv_0003", "krs_103", 4, "Convolutional Neural Network untuk Klasifikasi Citra", menitDariSekarang(NOW, -30), 100, "zoom", "https://zoom.us/j/9124021000", "live"],
+      ["kv_0004", "krs_104", 4, "Usability Testing Lab & Cognitive Walkthrough", menitDariSekarang(NOW, 120), 100, "meet", "https://meet.google.com/gmt-ux-101", "terjadwal"],
+      ["kv_0005", "krs_107", 4, "Penetration Testing Live Demo", menitDariSekarang(NOW, 240), 150, "teams", "https://teams.microsoft.com/l/meetup-join/cy409", "terjadwal"],
+      ["kv_0006", "krs_108", 3, "Lean Six Sigma & Supply Chain Resilience", hariKe(NOW, 1, 9), 100, "zoom", "https://zoom.us/j/7711050000", "terjadwal"],
+      ["kv_0007", "krs_109", 2, "Normalisasi hingga BCNF", hariKe(NOW, -1, 13), 100, "meet", "https://meet.google.com/gmt-si-201", "selesai"],
+      ["kv_0008", "krs_106", 5, "Dynamic Programming: Knapsack & LCS", hariKe(NOW, 2, 8), 100, "zoom", "https://zoom.us/j/6106102000", "terjadwal"],
     ].map(function (r) {
       var mod = modul.filter(function (m) { return m.kursus_id === r[1]; })[Math.min(r[2], 99) - 1];
       return { id: r[0], kursus_id: r[1], modul_id: mod ? mod.id : null, judul: r[3], waktu_mulai: r[4], durasi_menit: r[5], platform: r[6], tautan: r[7], status: r[8] };
@@ -200,14 +227,14 @@
 
     /* ---------------- TUGAS_KUIS + PENGUMPULAN ---------------- */
     var tugas = [
-      ["tgs_0001", "krs_102", "Tugas 03: Implementasi SPA dengan State Management", "tugas", 15, "2026-10-01T23:59:00", "aktif"],
-      ["tgs_0002", "krs_106", "Kuis Formatif 02: Greedy & Dynamic Programming", "kuis", 10, "2026-09-20T18:00:00", "ditutup"],
-      ["tgs_0003", "krs_101", "UTS: Perancangan Arsitektur Microservices", "uts", 25, "2026-10-20T23:59:00", "draft"],
-      ["tgs_0004", "krs_107", "Tugas Praktik 01: Audit Kerentanan OWASP Top 10", "tugas", 20, "2026-09-18T23:59:00", "ditutup"],
-      ["tgs_0005", "krs_104", "Kuis Singkat 04: Heuristic Usability & Persona", "kuis", 5, "2026-09-26T17:00:00", "aktif"],
-      ["tgs_0006", "krs_109", "Tugas 02: Normalisasi Skema Basis Data", "tugas", 15, "2026-09-30T23:59:00", "aktif"],
-      ["tgs_0007", "krs_103", "Tugas 01: Klasifikasi Citra dengan CNN", "tugas", 20, "2026-10-05T23:59:00", "aktif"],
-      ["tgs_0008", "krs_110", "Kuis 01: Distribusi Sampling", "kuis", 10, "2026-09-19T12:00:00", "ditutup"],
+      ["tgs_0001", "krs_102", "Tugas 03: Implementasi SPA dengan State Management", "tugas", 15, hariKe(NOW, 6, 23, 59), "aktif"],
+      ["tgs_0002", "krs_106", "Kuis Formatif 02: Greedy & Dynamic Programming", "kuis", 10, hariKe(NOW, -5, 18), "ditutup"],
+      ["tgs_0003", "krs_101", "UTS: Perancangan Arsitektur Microservices", "uts", 25, hariKe(NOW, 25, 23, 59), "draft"],
+      ["tgs_0004", "krs_107", "Tugas Praktik 01: Audit Kerentanan OWASP Top 10", "tugas", 20, hariKe(NOW, -7, 23, 59), "ditutup"],
+      ["tgs_0005", "krs_104", "Kuis Singkat 04: Heuristic Usability & Persona", "kuis", 5, hariKe(NOW, 1, 17), "aktif"],
+      ["tgs_0006", "krs_109", "Tugas 02: Normalisasi Skema Basis Data", "tugas", 15, hariKe(NOW, 5, 23, 59), "aktif"],
+      ["tgs_0007", "krs_103", "Tugas 01: Klasifikasi Citra dengan CNN", "tugas", 20, hariKe(NOW, 10, 23, 59), "aktif"],
+      ["tgs_0008", "krs_110", "Kuis 01: Distribusi Sampling", "kuis", 10, hariKe(NOW, -6, 12), "ditutup"],
     ].map(function (r) {
       return { id: r[0], kursus_id: r[1], judul: r[2], jenis: r[3], bobot_persen: r[4], deadline: r[5], status: r[6] };
     });
@@ -220,7 +247,7 @@
         var dinilai = t.status === "ditutup" || rand() < 0.4;
         pengumpulan.push({
           id: "pgm_" + pad(pengumpulan.length + 1, 4), tugas_id: t.id, mahasiswa_id: x.mahasiswa_id,
-          dikumpulkan_pada: t.deadline.slice(0, 8) + pad(Math.max(1, Number(t.deadline.slice(8, 10)) - Math.floor(rand() * 4)), 2) + "T" + pad(9 + Math.floor(rand() * 13), 2) + ":" + pad(Math.floor(rand() * 60), 2) + ":00",
+          dikumpulkan_pada: (new Date(Math.min(new Date(t.deadline).getTime() - Math.floor(rand() * 4) * 86400000 - Math.floor(rand() * 600) * 60000, NOW.getTime() - (1 + Math.floor(rand() * 48)) * 3600000))).toISOString(),
           nilai: dinilai ? Math.round(58 + rand() * 40) : null,
           skor_plagiarisme: Math.floor(rand() * (rand() < 0.1 ? 35 : 12)),
           status: dinilai ? "dinilai" : rand() < 0.1 ? "revisi" : "menunggu",
@@ -233,34 +260,34 @@
       return mahasiswa.filter(function (m) { return m.nim === nim; })[0].id;
     }
     var sertifikat = [
-      ["srt_0001", "NXS/TIF/2026/00041", "2110511124", "krs_101", "Sertifikat Kelulusan Kursus", "2026-07-18", "Dr. Adrian Wicaksono, M.Kom.", "terbit"],
-      ["srt_0002", "NXS/SIF/2026/00042", "2110513049", "krs_109", "Sertifikat Kelulusan Kursus", "2026-07-18", "Dr. Muhammad Satrio Utomo, M.T.", "menunggu_tte"],
-      ["srt_0003", "NXS/SDA/2026/00043", "2010512088", "krs_103", "Sertifikat Kompetensi Associate Data Scientist", "2026-07-12", "Prof. Rian Hidayat, Ph.D.", "terbit"],
-      ["srt_0004", "NXS/TIF/2026/00044", "2110511031", "krs_107", "Sertifikat Kelulusan Kursus", "2026-07-18", "Taufik Hidayat, M.Kom., CEH", "terbit"],
-      ["srt_0005", "NXS/TIF/2026/00045", "2110511124", "krs_106", "Sertifikat Kelulusan Kursus", "2026-07-20", "Dr. Adrian Wicaksono, M.Kom.", "terbit"],
-      ["srt_0006", "NXS/SIF/2026/00046", "2110513049", "krs_112", "Sertifikat Kelulusan Kursus", "2025-12-15", "Dr. Muhammad Satrio Utomo, M.T.", "dicabut"],
-      ["srt_0007", "NXS/TIF/2026/00047", "2110511031", "krs_102", "Sertifikat Kelulusan Kursus", "2026-07-20", "Siti Paramitha, S.T., M.Sc.", "menunggu_tte"],
+      ["srt_0001", "NXS/TIF/2026/00041", "2110511124", "krs_101", "Sertifikat Kelulusan Kursus", hariKe(NOW, -69, 9).slice(0, 10), "Dr. Adrian Wicaksono, M.Kom.", "terbit"],
+      ["srt_0002", "NXS/SIF/2026/00042", "2110513049", "krs_109", "Sertifikat Kelulusan Kursus", hariKe(NOW, -69, 9).slice(0, 10), "Dr. Muhammad Satrio Utomo, M.T.", "menunggu_tte"],
+      ["srt_0003", "NXS/SDA/2026/00043", "2010512088", "krs_103", "Sertifikat Kompetensi Associate Data Scientist", hariKe(NOW, -75, 9).slice(0, 10), "Prof. Rian Hidayat, Ph.D.", "terbit"],
+      ["srt_0004", "NXS/TIF/2026/00044", "2110511031", "krs_107", "Sertifikat Kelulusan Kursus", hariKe(NOW, -69, 9).slice(0, 10), "Taufik Hidayat, M.Kom., CEH", "terbit"],
+      ["srt_0005", "NXS/TIF/2026/00045", "2110511124", "krs_106", "Sertifikat Kelulusan Kursus", hariKe(NOW, -67, 9).slice(0, 10), "Dr. Adrian Wicaksono, M.Kom.", "terbit"],
+      ["srt_0006", "NXS/SIF/2026/00046", "2110513049", "krs_112", "Sertifikat Kelulusan Kursus", hariKe(NOW, -284, 9).slice(0, 10), "Dr. Muhammad Satrio Utomo, M.T.", "dicabut"],
+      ["srt_0007", "NXS/TIF/2026/00047", "2110511031", "krs_102", "Sertifikat Kelulusan Kursus", hariKe(NOW, -67, 9).slice(0, 10), "Siti Paramitha, S.T., M.Sc.", "menunggu_tte"],
     ].map(function (r) {
       return { id: r[0], nomor_registrasi: r[1], mahasiswa_id: mhsByNim(r[2]), kursus_id: r[3], jenis: r[4], tanggal_terbit: r[5], penandatangan: r[6], status: r[7] };
     });
 
     /* ---------------- ADMIN, LOG, PENGATURAN ---------------- */
     var admin = [
-      { id: "adm_001", nama: "Dr. Adrian Wicaksono, M.Kom.", email: "admin@nexus.ac.id", peran: "super_admin", login_terakhir: "2026-09-23T16:42:00" },
-      { id: "adm_002", nama: "Rina Puspitasari, S.Kom.", email: "baak@nexus.ac.id", peran: "admin_akademik", login_terakhir: "2026-09-24T07:55:00" },
+      { id: "adm_001", nama: "Dr. Adrian Wicaksono, M.Kom.", email: "admin@nexus.ac.id", peran: "super_admin", login_terakhir: stempel(NOW, -1260) },
+      { id: "adm_002", nama: "Rina Puspitasari, S.Kom.", email: "baak@nexus.ac.id", peran: "admin_akademik", login_terakhir: stempel(NOW, -95) },
     ];
 
     var logAktivitas = [
-      ["2026-09-24T07:55:00", "adm_002", "login", "admin", "adm_002", "Masuk ke panel admin"],
-      ["2026-09-24T08:10:00", "adm_002", "update", "krs", "krx_0003", "Menyetujui KRS mahasiswa"],
-      ["2026-09-23T16:42:00", "adm_001", "login", "admin", "adm_001", "Masuk ke panel admin"],
-      ["2026-09-23T16:50:00", "adm_001", "create", "kursus", "krs_111", "Menambahkan kursus TK-320 Sistem Tertanam & IoT"],
-      ["2026-09-23T17:05:00", "adm_001", "update", "kursus", "krs_105", "Mengubah status BF-210 menjadi draft"],
-      ["2026-09-22T10:20:00", "adm_002", "create", "kelas_virtual", "kv_0008", "Menjadwalkan sesi Dynamic Programming (CS-102)"],
-      ["2026-09-22T09:15:00", "adm_002", "update", "mahasiswa", "mhs_0005", "Mengubah status Bagus Wicaksono menjadi cuti"],
-      ["2026-09-21T14:30:00", "adm_001", "update", "sertifikat", "srt_0006", "Mencabut sertifikat NXS/SIF/2026/00046"],
-      ["2026-09-20T11:00:00", "adm_001", "create", "tugas_kuis", "tgs_0006", "Membuat Tugas 02: Normalisasi Skema Basis Data"],
-      ["2026-09-19T08:45:00", "adm_002", "delete", "kursus", "krs_099", "Menghapus kursus uji coba TST-001"],
+      [stempel(NOW, -95), "adm_002", "login", "admin", "adm_002", "Masuk ke panel admin"],
+      [stempel(NOW, -80), "adm_002", "update", "krs", "krx_0003", "Menyetujui KRS mahasiswa"],
+      [stempel(NOW, -1260), "adm_001", "login", "admin", "adm_001", "Masuk ke panel admin"],
+      [stempel(NOW, -1252), "adm_001", "create", "kursus", "krs_111", "Menambahkan kursus TK-320 Sistem Tertanam & IoT"],
+      [stempel(NOW, -1237), "adm_001", "update", "kursus", "krs_105", "Mengubah status BF-210 menjadi draft"],
+      [stempel(NOW, -2940), "adm_002", "create", "kelas_virtual", "kv_0008", "Menjadwalkan sesi Dynamic Programming (CS-102)"],
+      [stempel(NOW, -3005), "adm_002", "update", "mahasiswa", "mhs_0005", "Mengubah status Bagus Wicaksono menjadi cuti"],
+      [stempel(NOW, -4150), "adm_001", "update", "sertifikat", "srt_0006", "Mencabut sertifikat NXS/SIF/2026/00046"],
+      [stempel(NOW, -5820), "adm_001", "create", "tugas_kuis", "tgs_0006", "Membuat Tugas 02: Normalisasi Skema Basis Data"],
+      [stempel(NOW, -7395), "adm_002", "delete", "kursus", "krs_099", "Menghapus kursus uji coba TST-001"],
     ].map(function (r, i) {
       return { id: "log_" + pad(i + 1, 4), admin_id: r[1], aksi: r[2], entitas: r[3], entitas_id: r[4], deskripsi: r[5], waktu: r[0] };
     });
@@ -270,7 +297,7 @@
       ["kode_pt", "001024"],
       ["email_helpdesk", "helpdesk@nexus.ac.id"],
       ["periode_aktif", PERIODE],
-      ["batas_krs", "2026-09-30"],
+      ["batas_krs", hariKe(NOW, 5, 0).slice(0, 10)],
       ["zona_waktu", "Asia/Jakarta"],
       ["sesi_timeout_menit", "30"],
       ["passing_grade_default", "60"],

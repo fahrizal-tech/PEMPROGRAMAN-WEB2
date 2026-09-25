@@ -25,6 +25,13 @@
       return new Intl.DateTimeFormat("id-ID", opt).format(d);
     },
 
+    /** Tanggal lokal "YYYY-MM-DD" dari ISO (UTC atau lokal) / Date; default hari ini. */
+    localDate: function (value) {
+      var d = value ? new Date(value) : new Date();
+      if (isNaN(d)) return "";
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    },
+
     /** "3 menit lalu", "2 hari lalu", atau tanggal bila > 7 hari. */
     timeAgo: function (iso, now) {
       var diff = ((now ? new Date(now) : new Date()) - new Date(iso)) / 1000;

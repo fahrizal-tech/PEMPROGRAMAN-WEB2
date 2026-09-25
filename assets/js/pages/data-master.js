@@ -156,7 +156,7 @@
       { label: "Jumlah Modul", value: "jumlahModul" }, { label: "Periode", value: "periode" },
       { label: "Status", value: function (k) { return ui.statusLabel(k.status); } },
     ]);
-    u.download("data-kursus-" + new Date().toISOString().slice(0, 10) + ".csv", csv, "text/csv;charset=utf-8");
+    u.download("data-kursus-" + u.localDate() + ".csv", csv, "text/csv;charset=utf-8");
     ui.toast(rows.length + " kursus diekspor ke CSV.", "success");
   });
 

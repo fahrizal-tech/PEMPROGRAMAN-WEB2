@@ -81,7 +81,7 @@
 
     /* ---------- Grafik: tren KRS ---------- */
     var perHari = {};
-    krs.forEach(function (x) { var d = String(x.diajukan_pada || "").slice(0, 10); if (d) perHari[d] = (perHari[d] || 0) + 1; });
+    krs.forEach(function (x) { var d = x.diajukan_pada ? u.localDate(x.diajukan_pada) : ""; if (d) perHari[d] = (perHari[d] || 0) + 1; });
     var hari = Object.keys(perHari).sort();
     var kumulatif = 0;
     var dataKum = hari.map(function (d) { kumulatif += perHari[d]; return kumulatif; });
