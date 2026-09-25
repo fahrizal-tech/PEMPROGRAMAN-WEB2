@@ -5,6 +5,27 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [1.0.0] — 2026-09-25 · Milestone 3 selesai
+
+### Tahap 4 — Halaman & Interaktivitas (bagian 2)
+
+#### Ditambahkan
+- **Mahasiswa**: KPI (termasuk "perlu perhatian"), antrean validasi KRS (setujui, tolak beralasan, setujui semua dengan laporan), tabel + filter + ekspor CSV, tambah/edit di modal, detail KRS.
+- **Instruktur / Dosen**: beban mengajar menurut BKD (12–16 SKS), EDOM, Serdos, filter, CRUD di modal, detail kursus diampu.
+- **Kelas Virtual**: jadwal (live di atas), status terjadwal → live → selesai, presensi per sesi, penjadwalan dengan modul mengikuti kursus.
+- **Tugas & Kuis**: tenggat & progres pengumpulan, sisa bobot kursus, penilaian (terlambat, plagiarisme > 20%), ekspor nilai.
+- **Sertifikasi Digital**: verifikasi nomor registrasi, terbit hanya untuk yang lulus, TTE, cabut, pratinjau & cetak sertifikat.
+- **Pengaturan Sistem**: profil institusi, akademik, sesi, akun admin & peran, unduh/pulihkan cadangan, reset data.
+- Komponen `ui.field` & `ui.formModal` (form dalam modal tersambung ke validasi service).
+- Service: `kelasVirtual.peserta`/`savePresensi`; aturan sertifikat terbit tidak dapat dihapus.
+
+#### Diperbaiki
+- Badan toast tembus-klik agar tidak menghalangi tombol di modal.
+- Filter bar tidak lagi memotong teks dropdown.
+
+#### Pengujian
+- 54 uji unit & 88 uji E2E (seluruh halaman, termasuk siklus cadangkan → reset → pulihkan); diagnostik otomatis saat uji gagal.
+
 ## [0.4.0] — 2026-09-25 · Milestone 3 (halaman wajib)
 
 ### Tahap 4 — Halaman & Interaktivitas (bagian 1)

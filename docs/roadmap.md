@@ -131,7 +131,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Utilitas (`utils.js`): format tanggal/angka Indonesia, debounce, `escapeHTML`, ekspor CSV aman (anti formula injection)
 - [x] Validasi & sanitasi data di service layer (`validators.js`, skema yang sama dipakai form) — uji unit total 41 lulus
 
-### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7)
+### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7) ✅
 - [x] **Komponen bersama** (`assets/js/components/ui.js`): template HTML anti-XSS, badge status, toast, modal aksesibel (fokus terkunci, Esc), konfirmasi, hapus dengan penjelasan dampak/penghalang, form tervalidasi per kolom, tabel (cari, filter, urut, halaman, kosong/memuat). Etalase interaktif di `layout.html`.
 
 **Halaman wajib:**
@@ -148,7 +148,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `kelas-virtual.html` — KPI sesi, jadwal (live di atas), status terjadwal → live → selesai, presensi per sesi (hadir/izin/alpa, tandai semua), jadwalkan/edit sesi (modul menyesuaikan kursus, tautan wajib https), hapus
 - [x] `tugas-kuis.html` — KPI (koreksi, pengumpulan, plagiarisme), tabel dengan tenggat & progres, buat/edit (sisa bobot kursus), penilaian per pengumpulan (terlambat, plagiarisme > 20%), ekspor nilai CSV
 - [x] `sertifikasi.html` — KPI, verifikasi nomor registrasi, terbitkan hanya untuk yang lulus (nomor otomatis, penandatangan = dosen), TTE satuan/semua, cabut dengan konfirmasi, draf dapat dihapus (terbit tidak), pratinjau & cetak sertifikat
-- [ ] `pengaturan.html` — profil institusi, preferensi, reset/ekspor/impor data
+- [x] `pengaturan.html` — profil institusi, akademik, keamanan sesi (tervalidasi, hanya kolom berubah disimpan), daftar akun admin & peran, unduh/pulihkan cadangan JSON (tervalidasi), reset data (konfirmasi ketik RESET)
+- [x] Rilis tag `v1.0.0` (seluruh halaman berfungsi)
 
 ### Tahap 5 — QA & Polesan
 - [ ] Validasi HTML W3C tanpa error

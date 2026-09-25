@@ -395,6 +395,49 @@ function findBrowser() {
     check(/Diberikan kepada/.test(await page.$eval("#sertifikat-cetak", (e) => e.textContent)), "pratinjau sertifikat tampil (siap cetak)");
     await page.keyboard.press("Escape");
 
+    /* ---------- Pengaturan Sistem ---------- */
+    await page.goto(ROOT + "pages/pengaturan.html", NAV);
+    await page.waitForFunction(() => document.getElementById("fld-nama_institusi").value.length > 0 && document.querySelectorAll("#tabel-admin tr").length === 2);
+    check(/Anda/.test(await page.$eval("#tabel-admin", (t) => t.textContent)), "pengaturan: nilai dimuat, 2 akun admin (akun aktif ditandai)");
+    await page.$eval("#fld-kode_pt", (e) => { e.value = ""; });
+    await page.type("#fld-kode_pt", "12");
+    await page.click("#btn-simpan");
+    await page.waitForSelector("#fld-kode_pt-error");
+    check(/6 digit/.test(await page.$eval("#fld-kode_pt-error", (e) => e.textContent)), "pengaturan: kode PT tidak valid ditolak");
+    await page.click("#btn-batal");
+    await page.$eval("#fld-nama_institusi", (e) => { e.value = ""; });
+    await page.type("#fld-nama_institusi", "Universitas Uji E2E");
+    await page.click("#btn-simpan");
+    await toastHas(/1 pengaturan berhasil disimpan/);
+    check((await page.evaluate(async () => Nexus.services.pengaturan.get("nama_institusi"))) === "Universitas Uji E2E", "pengaturan: nama institusi tersimpan (hanya kolom yang berubah)");
+
+    const backupFile = path.join(require("node:os").tmpdir(), "nexus-e2e-cadangan.json");
+    fs.writeFileSync(backupFile, JSON.stringify(await page.evaluate(() => Nexus.storage.exportAll())));
+    await page.click("#btn-cadangan");
+    await toastHas(/Cadangan data diunduh/);
+    check(true, "unduh cadangan JSON");
+
+    await page.click("#btn-reset-data");
+    await page.waitForSelector("#konfirmasi-reset");
+    await page.type("#konfirmasi-reset", "reset");
+    await clickDialog("Reset Data");
+    await toastHas(/Ketik RESET/);
+    await page.$eval("#konfirmasi-reset", (e) => { e.value = "RESET"; });
+    await nav(() => clickDialog("Reset Data"));
+    await toastHas(/dikembalikan ke kondisi awal/);
+    await page.waitForFunction(() => document.getElementById("fld-nama_institusi").value.length > 0);
+    check((await page.$eval("#fld-nama_institusi", (e) => e.value)) === "Institut Teknologi dan Komputasi Nexus", "reset data: konfirmasi RESET wajib, data kembali ke awal");
+
+    const fileInput = await page.$("#file-pulihkan");
+    await fileInput.uploadFile(backupFile);
+    await page.waitForSelector('[role="dialog"]');
+    await nav(() => clickDialog("Ya, pulihkan"));
+    await toastHas(/berhasil dipulihkan/);
+    await page.waitForFunction(() => document.getElementById("fld-nama_institusi").value.length > 0);
+    check((await page.$eval("#fld-nama_institusi", (e) => e.value)) === "Universitas Uji E2E", "pulihkan dari cadangan → data kembali seperti saat dicadangkan");
+    fs.unlinkSync(backupFile);
+    await page.evaluate(() => Nexus.storage.reset());
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
 

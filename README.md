@@ -4,23 +4,23 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** 4 halaman wajib (Dashboard, Data Master, Form, Laporan) berfungsi penuh dengan data. Halaman pendukung sedang dikembangkan.
+> **Status:** v1.0.0 — seluruh halaman berfungsi dengan data lokal, teruji otomatis (54 uji unit, 88 uji E2E).
 
 ## Fitur Utama
 
 | Modul | Halaman | Ringkasan |
 | --- | --- | --- |
-| Portal Login | `index.html` | Autentikasi admin |
-| Dashboard | `pages/dashboard.html` | Ringkasan statistik & grafik (Chart.js) |
-| Data Master Kursus | `pages/data-master.html` | Tabel kursus dengan aksi Tambah / Edit / Hapus |
-| Form Kursus | `pages/form.html` | Input & edit data kursus dengan validasi |
-| Laporan & Analitik | `pages/laporan.html` | Rekap aktivitas akademik, cetak & ekspor |
-| Mahasiswa | `pages/mahasiswa.html` | Direktori mahasiswa & validasi KRS |
-| Instruktur | `pages/instruktur.html` | Direktori dosen & beban kinerja |
-| Kelas Virtual | `pages/kelas-virtual.html` | Jadwal & status sesi daring |
-| Tugas & Kuis | `pages/tugas-kuis.html` | Manajemen tugas & penilaian rubrik |
-| Sertifikasi | `pages/sertifikasi.html` | Penerbitan sertifikat digital |
-| Pengaturan | `pages/pengaturan.html` | Konfigurasi sistem |
+| Portal Login | `index.html` | Login demo, validasi, pembatasan percobaan, sesi |
+| Dashboard | `pages/dashboard.html` | 5 KPI, 3 grafik Chart.js, aktivitas terbaru, kursus teratas |
+| Data Master Kursus | `pages/data-master.html` | Tabel kursus: cari/filter/urut, Tambah/Edit/Hapus berpenjelasan, ekspor CSV |
+| Form Kursus | `pages/form.html` | Tambah/edit kursus + struktur modul, validasi per kolom |
+| Laporan & Analitik | `pages/laporan.html` | Rekap akademik, log aktivitas, ekspor CSV, cetak A4/PDF |
+| Mahasiswa | `pages/mahasiswa.html` | CRUD mahasiswa, antrean validasi KRS, deteksi perlu perhatian |
+| Instruktur | `pages/instruktur.html` | CRUD dosen, beban mengajar (BKD), EDOM, Serdos |
+| Kelas Virtual | `pages/kelas-virtual.html` | Jadwal sesi, status live, presensi mahasiswa |
+| Tugas & Kuis | `pages/tugas-kuis.html` | Asesmen per kursus (bobot ≤ 100%), penilaian, ekspor nilai |
+| Sertifikasi | `pages/sertifikasi.html` | Terbit/TTE/cabut sertifikat, verifikasi nomor, cetak sertifikat |
+| Pengaturan | `pages/pengaturan.html` | Profil institusi, akademik, sesi, akun admin, cadangan/pulihkan/reset data |
 
 ## Desain
 
