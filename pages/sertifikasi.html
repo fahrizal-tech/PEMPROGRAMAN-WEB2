@@ -20,6 +20,7 @@
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/sertifikasi.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <aside data-component="sidebar"></aside>
@@ -27,805 +28,99 @@
   <div class="flex min-h-screen flex-col lg:pl-64">
     <header data-component="topbar" data-title="Sertifikasi Digital"></header>
 
-    <main class="flex-1 min-w-0 px-gutter-desktop"><div class="flex flex-col w-full pb-space-2xl">
-<!-- Breadcrumb & Top Utility Header -->
-<div class="flex flex-col gap-space-sm pt-space-md mb-space-xl">
-<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
-<span>Manajemen</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span>Sertifikasi Digital</span>
-<span class="material-symbols-outlined text-[14px]">chevron_right</span>
-<span class="text-on-surface font-medium">Penerbitan &amp; Verifikasi</span>
-</div>
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-lg">
-<div>
-<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Penerbitan Sertifikasi Digital &amp; SKPI</h1>
-<p class="font-body-sm text-body-sm text-secondary mt-0.5 max-w-4xl">
-          Pengelolaan sertifikat kompetensi mahasiswa, Surat Keterangan Pendamping Ijazah (SKPI), penomoran ijazah nasional (PIN Kemendikbudristek), dan validasi dokumen akademik elektronik tersertifikasi BSrE.
-        </p>
-</div>
-<div class="flex items-center gap-space-sm shrink-0">
-<button class="h-9 px-space-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md rounded-lg shadow-sm transition-colors flex items-center gap-space-xs" type="button">
-<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
-<span>Unduh Log Penerbitan (XLSX)</span>
-</button>
-<button class="h-9 px-space-md bg-primary-container text-on-primary-container hover:opacity-95 font-label-md text-label-md rounded-lg shadow-sm transition-all flex items-center gap-space-xs" type="button">
-<span class="material-symbols-outlined text-[18px]">add_task</span>
-<span>+ Terbitkan Sertifikat Massal</span>
-</button>
-</div>
-</div>
-</div>
-<!-- KPI Metric Panels -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg mb-space-xl">
-<!-- KPI 1 -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between">
-<span class="font-label-xs text-label-xs uppercase tracking-wider text-secondary font-semibold">Total Sertifikat Terbit</span>
-<span class="p-1.5 rounded-lg bg-surface-container text-primary">
-<span class="material-symbols-outlined text-[20px]">verified</span>
-</span>
-</div>
-<div class="mt-space-sm flex items-baseline gap-space-xs">
-<span class="font-display-lg text-display-lg text-on-surface font-bold">4,820</span>
-<span class="font-label-xs text-label-xs text-on-primary-fixed-variant bg-surface-container-high px-1.5 py-0.5 rounded-full font-semibold">+12% Wisuda Gasal</span>
-</div>
-</div>
-<p class="font-body-xs text-body-xs text-secondary mt-space-md pt-space-xs">
-        3,210 Ijazah/SKPI &amp; 1,610 Sertifikat Pelatihan/Kompetensi
-      </p>
-</div>
-<!-- KPI 2 -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between">
-<span class="font-label-xs text-label-xs uppercase tracking-wider text-secondary font-semibold">Penomoran PIN Nasional</span>
-<span class="px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">Sinkron PDDikti</span>
-</div>
-<div class="mt-space-sm flex items-baseline gap-space-xs">
-<span class="font-display-lg text-display-lg text-on-surface font-bold">98.4%</span>
-<span class="font-label-xs text-label-xs text-secondary">Terverifikasi</span>
-</div>
-</div>
-<div class="space-y-1.5 mt-space-md pt-space-xs">
-<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 98.4%;"></div>
-</div>
-<p class="font-body-xs text-body-xs text-secondary">4,742 terbit PIN, 78 berkas menunggu verifikasi pusat</p>
-</div>
-</div>
-<!-- KPI 3 -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between">
-<span class="font-label-xs text-label-xs uppercase tracking-wider text-secondary font-semibold">Akses Verifikasi QR Publik</span>
-<span class="p-1.5 rounded-lg bg-surface-container text-secondary">
-<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-</span>
-</div>
-<div class="mt-space-sm flex items-baseline gap-space-xs">
-<span class="font-display-lg text-display-lg text-on-surface font-bold">12,490</span>
-<span class="font-label-xs text-label-xs text-secondary">Kali Dilihat</span>
-</div>
-</div>
-<div class="flex items-center gap-space-xs mt-space-md pt-space-xs">
-<span class="material-symbols-outlined text-[16px] text-primary">domain_verification</span>
-<p class="font-body-xs text-body-xs text-secondary">Validasi oleh mitra industri &amp; rekruter instansi</p>
-</div>
-</div>
-<!-- KPI 4 -->
-<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between">
-<span class="font-label-xs text-label-xs uppercase tracking-wider text-secondary font-semibold">Menunggu Tanda Tangan TTE</span>
-<span class="px-2 py-0.5 rounded-full bg-[#fffbeb] text-[#92400e] font-label-xs text-label-xs font-semibold">Perlu Approval</span>
-</div>
-<div class="mt-space-sm flex items-baseline gap-space-xs">
-<span class="font-display-lg text-display-lg text-on-surface font-bold">24</span>
-<span class="font-label-xs text-label-xs text-secondary">Antrean Berkas</span>
-</div>
-</div>
-<p class="font-body-xs text-body-xs text-secondary mt-space-md pt-space-xs">
-        Sertifikat Uji Kompetensi BNSP &amp; Yudisium Periode IV
-      </p>
-</div>
-</div>
-<!-- Operational Filter Toolbar -->
-<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md mb-space-lg">
-<!-- Top Filter Controls -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md">
-<!-- Search Input -->
-<div class="md:col-span-4 relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-secondary text-[20px] pointer-events-none">search</span>
-<input class="w-full h-9 pl-10 pr-4 bg-surface-container-low text-on-surface placeholder:text-secondary rounded-lg font-body-sm text-body-sm focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="certSearch" placeholder="Cari nomor seri, nama lulusan, NIM, atau jenis..." type="text">
-</div>
-<!-- Dropdown: Jenis Dokumen -->
-<div class="md:col-span-2">
-<select class="w-full h-9 px-3 bg-surface-container-low text-on-surface rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-<option value="">Semua Jenis Dokumen</option>
-<option value="skpi">SKPI Nasional</option>
-<option value="ijazah">Ijazah Elektronik</option>
-<option value="kompetensi">Sertifikasi Kompetensi BNSP</option>
-<option value="transkrip">Transkrip Akademik Resmi</option>
-</select>
-</div>
-<!-- Dropdown: Prodi / Fakultas -->
-<div class="md:col-span-3">
-<select class="w-full h-9 px-3 bg-surface-container-low text-on-surface rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-<option value="">Semua Program Studi / Fakultas</option>
-<option value="if">S1 Teknik Informatika</option>
-<option value="si">S1 Sistem Informasi</option>
-<option value="ds">S1 Sains Data</option>
-<option value="te">S1 Teknik Elektro</option>
-<option value="ti">S1 Teknologi Informasi</option>
-</select>
-</div>
-<!-- Dropdown: Periode Yudisium -->
-<div class="md:col-span-2">
-<select class="w-full h-9 px-3 bg-surface-container-low text-on-surface rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-<option value="">Periode 2024/2025 Gasal</option>
-<option value="p4">Yudisium Periode IV (Nov 2024)</option>
-<option value="p3">Yudisium Periode III (Agt 2024)</option>
-<option value="p2">Yudisium Periode II (Mei 2024)</option>
-</select>
-</div>
-<!-- Reset Filter Button -->
-<div class="md:col-span-1 flex items-center justify-end">
-<button class="h-9 w-full bg-surface-container-low hover:bg-surface-container text-secondary hover:text-on-surface rounded-lg flex items-center justify-center transition-colors" title="Muat Ulang Filter" type="button">
-<span class="material-symbols-outlined text-[18px]">refresh</span>
-</button>
-</div>
-</div>
-<!-- Bulk Action & Status Secondary Bar -->
-<div class="pt-space-sm flex flex-wrap items-center justify-between gap-space-md">
-<div class="flex items-center gap-space-md flex-wrap">
-<label class="inline-flex items-center gap-2 cursor-pointer font-label-sm text-label-sm text-secondary">
-<input class="w-4 h-4 rounded text-primary focus:ring-primary" id="selectAllCheckbox" type="checkbox">
-<span>Pilih Semua Halaman Ini (7 Dokumen)</span>
-</label>
-<span class="text-outline-variant font-code-sm">|</span>
-<div class="flex items-center gap-1.5">
-<button class="h-8 px-2.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-lg flex items-center gap-1.5 transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px] text-primary">draw</span>
-<span>Tanda Tangan TTE Massal</span>
-</button>
-<button class="h-8 px-2.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-lg flex items-center gap-1.5 transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px] text-secondary">print</span>
-<span>Cetak Ulang Arsip</span>
-</button>
-<button class="h-8 px-2.5 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-lg flex items-center gap-1.5 transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
-<span>Verifikasi QR Massal</span>
-</button>
-</div>
-</div>
-<div class="flex items-center gap-2 font-label-xs text-label-xs text-secondary">
-<span>Status TTE:</span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-medium">
-<span class="w-1.5 h-1.5 rounded-full bg-[#065f46]"></span>4,710 Sah
-        </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fffbeb] text-[#92400e] font-medium">
-<span class="w-1.5 h-1.5 rounded-full bg-[#92400e]"></span>24 Menunggu
-        </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-secondary font-medium">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>86 Draf
-        </span>
-</div>
-</div>
-</div>
-<!-- Primary Enterprise Data Table -->
-<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-xl">
-<div class="overflow-x-auto">
-<table class="w-full text-left font-body-sm text-body-sm">
-<thead class="bg-surface-container-low text-secondary font-label-xs text-label-xs uppercase tracking-wider">
-<tr>
-<th class="w-10 px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</th>
-<th class="px-4 py-3 font-semibold">Mahasiswa &amp; Identitas</th>
-<th class="px-4 py-3 font-semibold">Jenis Dokumen &amp; Skema</th>
-<th class="px-4 py-3 font-semibold">Nomor Registrasi (PIN / ID)</th>
-<th class="px-4 py-3 font-semibold">Tanggal Terbit</th>
-<th class="px-4 py-3 font-semibold">Penandatangan TTE</th>
-<th class="px-4 py-3 font-semibold">Status Dokumen</th>
-<th class="px-4 py-3 text-right font-semibold">Aksi Validasi</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container text-on-surface">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Arya Dananjaya, S.Kom.</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210801124</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Teknik Informatika</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Surat Keterangan Pendamping Ijazah (SKPI)</span>
-<span class="font-label-xs text-label-xs text-secondary">Skema: KKNI Level 6 Rekayasa Perangkat Lunak</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">PIN: 2024.1.00412.091</span>
-<button class="text-secondary hover:text-primary" title="Salin PIN" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>18 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Yudisium IV-2024</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Prof. Ir. Bambang Soediro, Ph.D</span>
-<span class="font-label-xs text-label-xs text-secondary">Dekan Fakultas Ilmu Komputer</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#065f46]"></span>Aktif &amp; Sah
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Salin Tautan QR Verifikasi" type="button">
-<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Clarissa Aurelia Permata</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210802049</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Sistem Informasi</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Ijazah Sarjana Elektronik (e-Diploma)</span>
-<span class="font-label-xs text-label-xs text-secondary">Peminatan Enterprise Architecture</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">PIN: 2024.1.00412.092</span>
-<button class="text-secondary hover:text-primary" title="Salin PIN" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>18 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Yudisium IV-2024</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="font-label-xs text-label-xs text-secondary">Rektor / Penandatangan Utama</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#fffbeb] text-[#92400e] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#92400e]"></span>Menunggu TTE
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Kirim Notifikasi TTE" type="button">
-<span class="material-symbols-outlined text-[18px]">send</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Muhammad Rizky Pratama</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20200801088</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Sains Data</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Sertifikasi BNSP: Associate Data Scientist</span>
-<span class="font-label-xs text-label-xs text-secondary">LSP Informatika Nasional</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">REG: LSP-0091-ADS-2024</span>
-<button class="text-secondary hover:text-primary" title="Salin REG" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>12 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Uji Kompetensi Gel. 2</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">LSP P1 / Asesor Utama BNSP</span>
-<span class="font-label-xs text-label-xs text-secondary">Ketua Lembaga Sertifikasi Profesi</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#065f46]"></span>Aktif &amp; Sah
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Salin Tautan QR Verifikasi" type="button">
-<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Nabila Syifa Zahra</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210803014</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Teknik Elektro</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Transkrip Nilai Akademik Akhir</span>
-<span class="font-label-xs text-label-xs text-secondary">IPK: 3.91 (Dengan Pujian / Cumlaude)</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">TRN: 2024-TE-0019</span>
-<button class="text-secondary hover:text-primary" title="Salin Nomor" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>15 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">BA Yudisium TE-24</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Ir. Hendarman, M.T.</span>
-<span class="font-label-xs text-label-xs text-secondary">Wakil Rektor Bid. Akademik</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#065f46]"></span>Aktif &amp; Sah
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Salin Tautan QR Verifikasi" type="button">
-<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 5 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Farhan Alamsyah</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210801031</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Teknik Informatika</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Surat Keterangan Pendamping Ijazah (SKPI)</span>
-<span class="font-label-xs text-label-xs text-secondary">Aktivitas Internasional &amp; Riset IoT</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">PIN: 2024.1.00412.095</span>
-<button class="text-secondary hover:text-primary" title="Salin PIN" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>18 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Yudisium IV-2024</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Prof. Ir. Bambang Soediro, Ph.D</span>
-<span class="font-label-xs text-label-xs text-secondary">Dekan Fakultas Ilmu Komputer</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-secondary font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Draf Disiapkan
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Edit Draf" type="button">
-<span class="material-symbols-outlined text-[18px]">edit_document</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat Pratinjau" type="button">
-<span class="material-symbols-outlined text-[18px]">visibility</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 6 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Jessica Christie Tanuwijaya</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210804002</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Teknologi Informasi</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Sertifikasi Cloud Computing Architect</span>
-<span class="font-label-xs text-label-xs text-secondary">Kurikulum Kolaborasi AWS Academy</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">CRT-AWS-24-998</span>
-<button class="text-secondary hover:text-primary" title="Salin Sertifikat ID" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>05 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Sertifikasi Industri</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Direktorat ICT &amp; Training</span>
-<span class="font-label-xs text-label-xs text-secondary">Pusat Sertifikasi Kompetensi</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#065f46]"></span>Aktif &amp; Sah
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Salin Tautan QR Verifikasi" type="button">
-<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 7 -->
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-4 py-3 text-center">
-<input class="row-checkbox w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox">
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-semibold text-on-surface">Bagas Wicaksono Aji</span>
-<span class="font-code-sm text-code-sm text-secondary">NIM: 20210802102</span>
-<span class="font-label-xs text-label-xs text-secondary">S1 Sistem Informasi</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface">Surat Keterangan Pendamping Ijazah (SKPI)</span>
-<span class="font-label-xs text-label-xs text-secondary">Kompetensi Manajemen Layanan TI</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex items-center gap-1.5">
-<span class="font-code-sm text-code-sm text-on-surface">PIN: 2024.1.00412.099</span>
-<button class="text-secondary hover:text-primary" title="Salin PIN" type="button">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-</button>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span>18 Nov 2024</span>
-<span class="font-label-xs text-label-xs text-secondary">Yudisium IV-2024</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<div class="flex flex-col">
-<span class="font-medium">Prof. Ir. Bambang Soediro, Ph.D</span>
-<span class="font-label-xs text-label-xs text-secondary">Dekan Fakultas Ilmu Komputer</span>
-</div>
-</td>
-<td class="px-4 py-3">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#fffbeb] text-[#92400e] font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-[#92400e]"></span>Menunggu TTE
-              </span>
-</td>
-<td class="px-4 py-3 text-right">
-<div class="flex items-center justify-end gap-1">
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Lihat PDF Dokumen" type="button">
-<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-primary transition-colors" title="Kirim Notifikasi TTE" type="button">
-<span class="material-symbols-outlined text-[18px]">send</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-surface-container text-secondary hover:text-on-surface transition-colors" title="Opsi Berkas" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Data Table Pagination Footer -->
-<div class="px-space-md py-space-sm bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm">
-<div class="font-body-xs text-body-xs text-secondary">
-        Menampilkan <span class="font-semibold text-on-surface">1 - 7</span> dari <span class="font-semibold text-on-surface">4,820</span> data sertifikasi akademik
-      </div>
-<div class="flex items-center gap-space-md">
-<div class="flex items-center gap-space-xs font-body-xs text-body-xs text-secondary">
-<span>Baris per halaman:</span>
-<select class="h-7 px-2 bg-surface-container-lowest text-on-surface rounded font-body-xs text-body-xs focus:outline-none">
-<option value="7">7</option>
-<option value="15">15</option>
-<option value="25">25</option>
-<option value="50">50</option>
-</select>
-</div>
-<div class="flex items-center gap-1">
-<button class="w-7 h-7 rounded bg-surface-container-lowest text-secondary hover:text-on-surface flex items-center justify-center disabled:opacity-40" disabled="" type="button">
-<span class="material-symbols-outlined text-[16px]">chevron_left</span>
-</button>
-<button class="w-7 h-7 rounded bg-primary-container text-on-primary-container font-label-xs text-label-xs font-bold flex items-center justify-center" type="button">1</button>
-<button class="w-7 h-7 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-xs text-label-xs flex items-center justify-center" type="button">2</button>
-<button class="w-7 h-7 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-xs text-label-xs flex items-center justify-center" type="button">3</button>
-<span class="px-1 text-secondary text-xs">...</span>
-<button class="w-7 h-7 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-xs text-label-xs flex items-center justify-center" type="button">689</button>
-<button class="w-7 h-7 rounded bg-surface-container-lowest text-secondary hover:text-on-surface flex items-center justify-center" type="button">
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Operational Configuration Bottom 2-Column Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
-<!-- Col 1: Konfigurasi Sertifikat & Penomoran Otomatis -->
-<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-start justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="p-2 rounded-lg bg-surface-container text-primary">
-<span class="material-symbols-outlined text-[22px]">tag</span>
-</span>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface">Konfigurasi Sertifikat &amp; Penomoran Otomatis</h2>
-<p class="font-body-xs text-body-xs text-secondary mt-0.5">Parameter standar format PIN PDDikti dan skema penomoran SKPI kampus</p>
-</div>
-</div>
-<button class="text-primary hover:text-on-primary-fixed-variant font-label-xs text-label-xs font-semibold" type="button">Ubah Skema</button>
-</div>
-<div class="space-y-space-md mt-space-lg">
-<!-- Item 1 -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">Format Ijazah PIN Kemendikbudristek</span>
-<span class="font-code-sm text-code-sm text-secondary">[TAHUN].[JENJANG].[KODE_PT].[NO_URUT]</span>
-</div>
-<span class="px-2 py-0.5 bg-[#ecfdf5] text-[#065f46] rounded-full font-label-xs text-label-xs font-semibold">Tersinkronisasi API</span>
-</div>
-<!-- Item 2 -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">Format Penomoran SKPI Institusi</span>
-<span class="font-code-sm text-code-sm text-secondary">SKPI/NEXUS/[KODE_PRODI]/[ROM_BULAN]/[TAHUN]</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary font-medium">Prefix Default</span>
-</div>
-<!-- Item 3 -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">Masa Berlaku Validasi QR Publik</span>
-<span class="font-body-xs text-body-xs text-secondary">Akses verifikasi tanpa batas (Permanen di repositori publik)</span>
-</div>
-<span class="px-2 py-0.5 bg-surface-container text-on-surface rounded-full font-label-xs text-label-xs font-medium">Aktif</span>
-</div>
-</div>
-</div>
-<div class="mt-space-lg pt-space-md flex items-center justify-between font-label-xs text-label-xs text-secondary">
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-[#065f46]">sync_saved_locally</span>
-          Terakhir sinkronisasi database PDDikti: 19 Nov 2024, 08:30 WIB
-        </span>
-<button class="text-primary hover:underline font-medium" type="button">Audit Trail</button>
-</div>
-</div>
-<!-- Col 2: Otoritas Tanda Tangan Elektronik (TTE BSrE / BSSN) -->
-<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-start justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="p-2 rounded-lg bg-surface-container text-primary">
-<span class="material-symbols-outlined text-[22px]">security</span>
-</span>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface">Otoritas Tanda Tangan Elektronik (BSrE / BSSN)</h2>
-<p class="font-body-xs text-body-xs text-secondary mt-0.5">Sertifikat digital pimpinan, HSM server, &amp; stempel elektronik tersertifikasi</p>
-</div>
-</div>
-<span class="px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#065f46] font-label-xs text-label-xs font-semibold">Terkoneksi CA</span>
-</div>
-<div class="space-y-space-md mt-space-lg">
-<!-- Authority 1 -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-xs text-primary">
-                RE
-              </div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">Dr. Adrian Wicaksono, M.Kom (Rektor)</span>
-<span class="font-body-xs text-body-xs text-secondary">Sertifikat OID BSrE ID-BSSN-2023-9941</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs text-[#065f46] font-semibold block">Valid s/d Jan 2026</span>
-<span class="font-code-sm text-code-sm text-secondary">Token HSM Siap</span>
-</div>
-</div>
-<!-- Authority 2 -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-xs text-primary">
-                DK
-              </div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">Prof. Ir. Bambang Soediro, Ph.D (Dekan)</span>
-<span class="font-body-xs text-body-xs text-secondary">Sertifikat OID BSrE ID-BSSN-2023-8820</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs text-[#065f46] font-semibold block">Valid s/d Agu 2025</span>
-<span class="font-code-sm text-code-sm text-secondary">Token HSM Siap</span>
-</div>
-</div>
-<!-- Stempel Elektronik -->
-<div class="p-space-md bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex items-center gap-space-md">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-[18px]">verified</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface">e-Seal Digital Institusi Kampus</span>
-<span class="font-body-xs text-body-xs text-secondary">Segel elektronik dokumen legal Peruri / BSSN</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs text-primary font-semibold block">Sisa Kuota: 18,240</span>
-<span class="font-body-xs text-body-xs text-secondary">Automated Signing</span>
-</div>
-</div>
-</div>
-</div>
-<div class="mt-space-lg pt-space-md flex items-center justify-between font-label-xs text-label-xs text-secondary">
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-primary">lock</span>
-          Enkripsi SHA-256 with RSA 4096-bit Keys
-        </span>
-<button class="text-primary hover:underline font-medium" type="button">Uji Koneksi HSM</button>
-</div>
-</div>
-</div>
-</div>
-<script>
-  // Simple interactive selection behavior
-  (function() {
-    const selectAll = document.getElementById('selectAllCheckbox');
-    const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Manajemen · Kelulusan</p>
+          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Penerbitan &amp; Verifikasi Sertifikat</h2>
+          <p class="mt-1 max-w-2xl text-sm text-slate-500">Terbitkan sertifikat kelulusan kursus, tandatangani (TTE), cabut bila perlu, dan verifikasi keaslian nomor registrasi.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="btn-tte-semua" class="inline-flex items-center gap-2 rounded-lg border border-emerald-300 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-not-allowed disabled:opacity-50">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">draw</span>TTE Semua yang Menunggu
+          </button>
+          <button type="button" id="btn-tambah" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">workspace_premium</span>Terbitkan Sertifikat
+          </button>
+        </div>
+      </section>
 
-    if (selectAll) {
-      selectAll.addEventListener('change', function() {
-        rowCheckboxes.forEach(cb => {
-          cb.checked = selectAll.checked;
-        });
-      });
-    }
+      <section aria-label="Ringkasan sertifikat" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Sertifikat</p><span class="material-symbols-outlined rounded-lg bg-blue-50 p-2 text-[20px] text-blue-600" aria-hidden="true">workspace_premium</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-total">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-total-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Terbit (Sah)</p><span class="material-symbols-outlined rounded-lg bg-emerald-50 p-2 text-[20px] text-emerald-600" aria-hidden="true">verified</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-terbit">-</p>
+          <p class="mt-1 text-xs text-slate-500">Dapat diverifikasi publik</p>
+        </article>
+        <article class="rounded-xl border border-amber-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Menunggu TTE</p><span class="material-symbols-outlined rounded-lg bg-amber-50 p-2 text-[20px] text-amber-600" aria-hidden="true">pending</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-tte">-</p>
+          <p class="mt-1 text-xs text-slate-500">Belum ditandatangani</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Siap Diterbitkan</p><span class="material-symbols-outlined rounded-lg bg-indigo-50 p-2 text-[20px] text-indigo-600" aria-hidden="true">school</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-siap">-</p>
+          <p class="mt-1 text-xs text-slate-500">Mahasiswa lulus kursus, belum bersertifikat</p>
+        </article>
+      </section>
 
-    // Quick filter simulation on search input
-    const searchInput = document.getElementById('certSearch');
-    if (searchInput) {
-      searchInput.addEventListener('keyup', function(e) {
-        const query = e.target.value.toLowerCase();
-        const rows = document.querySelectorAll('tbody tr');
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          if (text.includes(query)) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      });
-    }
-  })();
-</script></main>
+      <!-- Verifikasi -->
+      <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="judul-verif">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
+          <div class="lg:w-80">
+            <h3 id="judul-verif" class="flex items-center gap-2 text-base font-semibold text-slate-900"><span class="material-symbols-outlined text-[20px] text-blue-600" aria-hidden="true">qr_code_scanner</span>Verifikasi Keaslian</h3>
+            <p class="mt-1 text-xs text-slate-500">Masukkan nomor registrasi yang tertera pada sertifikat.</p>
+          </div>
+          <form id="form-verif" class="flex flex-1 flex-col gap-3 sm:flex-row" novalidate>
+            <label for="nomor-verif" class="sr-only">Nomor registrasi</label>
+            <input id="nomor-verif" type="text" placeholder="NXS/TIF/2026/00041" autocomplete="off" class="block w-full rounded-lg border-slate-300 font-mono text-sm uppercase focus:border-blue-500 focus:ring-blue-500">
+            <button type="submit" class="whitespace-nowrap rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2">Verifikasi</button>
+          </form>
+        </div>
+        <div id="hasil-verif" class="mt-4 hidden" role="status" aria-live="polite"></div>
+      </section>
+
+      <section aria-label="Pencarian dan filter sertifikat" class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <div class="relative min-w-[16rem] flex-1">
+            <label for="f-cari" class="sr-only">Cari sertifikat</label>
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400" aria-hidden="true">search</span>
+            <input id="f-cari" type="search" placeholder="Cari nomor, nama mahasiswa, NIM, atau kursus…" class="block w-full rounded-lg border-slate-300 pl-9 text-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="flex w-full gap-2 sm:w-auto"><label for="f-status" class="sr-only">Status</label>
+            <select id="f-status" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua status</option><option value="terbit">Terbit</option><option value="menunggu_tte">Menunggu TTE</option><option value="dicabut">Dicabut</option></select>
+            <button type="button" id="btn-reset" class="rounded-lg border border-slate-300 bg-white px-3 text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Reset pencarian dan filter" title="Reset filter"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">filter_alt_off</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Daftar sertifikat" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <caption class="sr-only">Daftar sertifikat</caption>
+            <thead class="bg-slate-50">
+              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <th scope="col" class="px-4 py-3">Nomor Registrasi</th>
+                <th scope="col" class="px-4 py-3">Mahasiswa</th>
+                <th scope="col" class="px-4 py-3">Kursus &amp; Jenis</th>
+                <th scope="col" class="px-4 py-3">Terbit &amp; Penandatangan</th>
+                <th scope="col" class="px-4 py-3">Status</th>
+                <th scope="col" class="px-4 py-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-srt" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p id="tabel-counter"></p>
+          <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel sertifikat"></nav>
+        </div>
+      </section>
+    </main>
 
     <footer data-component="footer"></footer>
   </div>

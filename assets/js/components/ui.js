@@ -101,11 +101,13 @@
     var region = toastRegion();
     while (region.children.length >= 4) region.firstChild.remove();
     var el = document.createElement("div");
-    el.className = "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 text-sm shadow-lg transition-all duration-200 " + t[1];
+    // Badan toast tembus-klik agar tidak menghalangi tombol di bawahnya (mis. di dalam modal);
+    // hanya tombol tutup yang dapat diklik.
+    el.className = "pointer-events-none flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 text-sm shadow-lg transition-all duration-200 " + t[1];
     el.appendChild(toNode(html`
       <span class="material-symbols-outlined text-[20px] ${t[2]}" aria-hidden="true">${t[0]}</span>
       <p class="flex-1 leading-snug">${message}</p>
-      <button type="button" class="-mr-1 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Tutup notifikasi">
+      <button type="button" class="pointer-events-auto -mr-1 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Tutup notifikasi">
         <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
       </button>`));
     var remove = function () { el.classList.add("opacity-0"); setTimeout(function () { el.remove(); }, 200); };
@@ -411,6 +413,79 @@
   }
 
   /* =====================================================================
+   * Kolom form & form dalam modal (dipakai halaman-halaman CRUD)
+   * ===================================================================== */
+  var INPUT = "block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500";
+
+  /**
+   * Satu kolom form lengkap.
+   * @param {object} o { name, label, type ("text"|"email"|"number"|"date"|"datetime-local"|"select"|"textarea"|"checkbox"),
+   *                     required, options [[nilai, label]], placeholder, help, span (kelas grid), attrs (string atribut tambahan) }
+   */
+  function field(o) {
+    var id = "fld-" + o.name;
+    var star = o.required ? html` <span class="text-red-500" aria-hidden="true">*</span>` : "";
+    var attrs = raw(o.attrs || "");
+    var control;
+    if (o.type === "select") {
+      control = html`<select id="${id}" name="${o.name}" class="${INPUT}" ${attrs}>
+        ${o.placeholder !== false ? html`<option value="">${o.placeholder || "Pilih…"}</option>` : ""}
+        ${(o.options || []).map(function (op) { return html`<option value="${op[0]}">${op[1]}</option>`; })}
+      </select>`;
+    } else if (o.type === "textarea") {
+      control = html`<textarea id="${id}" name="${o.name}" rows="${o.rows || 3}" placeholder="${o.placeholder || ""}" class="${INPUT}" ${attrs}></textarea>`;
+    } else if (o.type === "checkbox") {
+      return html`<div class="${o.span || ""}">
+        <label class="flex items-center gap-2 text-sm text-slate-700"><input id="${id}" name="${o.name}" type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" ${attrs}>${o.label}</label>
+        ${o.help ? html`<p class="mt-1 text-xs text-slate-500">${o.help}</p>` : ""}
+      </div>`;
+    } else {
+      control = html`<input id="${id}" name="${o.name}" type="${o.type || "text"}" placeholder="${o.placeholder || ""}" class="${INPUT}" ${attrs}>`;
+    }
+    return html`<div class="${o.span || ""}">
+      <label for="${id}" class="mb-1 block text-sm font-medium text-slate-700">${o.label}${star}</label>
+      ${control}
+      ${o.help ? html`<p class="mt-1 text-xs text-slate-500">${o.help}</p>` : ""}
+    </div>`;
+  }
+
+  /**
+   * Buka form dalam modal yang terhubung ke service.
+   * @param {object} o { title, fields (ui.html), service, initial, save: async (data) → row, success: (row) → pesan, size,
+   *                     onOpen: (form) → void untuk kolom yang saling bergantung }
+   * @returns Promise<row|null>
+   */
+  function formModal(o) {
+    return new Promise(function (resolve) {
+      var formId = "form-" + Math.random().toString(36).slice(2, 8);
+      var form;
+      var m = modal({
+        title: o.title,
+        size: o.size || "lg",
+        body: html`<form id="${formId}" novalidate class="grid grid-cols-1 gap-4 sm:grid-cols-2">${o.fields}<button type="submit" class="hidden" tabindex="-1" aria-hidden="true"></button></form>`,
+        onClose: function (row) { resolve(row || null); },
+        actions: [
+          { label: "Batal", variant: "secondary" },
+          { label: o.submitLabel || "Simpan", variant: "primary", onClick: function () { form.requestSubmit(); return false; } },
+        ],
+      });
+      form = document.getElementById(formId);
+      fillForm(form, o.initial || {});
+      bindForm(form, {
+        service: o.service,
+        onSubmit: async function (data) {
+          var row = await o.save(data);
+          if (o.success) toast(o.success(row), "success");
+          m.close(row);
+        },
+      });
+      if (o.onOpen) o.onOpen(form);
+      var first = form.querySelector("input:not([type=hidden]):not([type=checkbox]), select, textarea");
+      if (first) first.focus();
+    });
+  }
+
+  /* =====================================================================
    * Tabel data: cari, filter, urut, halaman, tampilan kosong
    * ===================================================================== */
   /**
@@ -574,6 +649,8 @@
     formData: formData,
     fillForm: fillForm,
     bindForm: bindForm,
+    field: field,
+    formModal: formModal,
     setFieldError: setFieldError,
     dataTable: dataTable,
     onDataChange: onDataChange,

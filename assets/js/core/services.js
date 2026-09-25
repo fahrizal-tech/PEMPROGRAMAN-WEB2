@@ -408,6 +408,39 @@
     cascade: function (v) { return removeWhere("presensi", function (p) { return p.kelas_virtual_id === v.id; }); },
   });
 
+  /** Peserta sah sebuah sesi = mahasiswa dengan KRS disetujui pada kursus sesi tersebut. */
+  kelasVirtual.peserta = async function (kelasId) {
+    var kv = await db.get("kelas_virtual", kelasId);
+    if (!kv) throw new BusinessError("NOT_FOUND", "Sesi kelas virtual tidak ditemukan.");
+    var ids = (await db.query("krs", function (x) { return x.kursus_id === kv.kursus_id && x.status === "disetujui"; }))
+      .map(function (x) { return x.mahasiswa_id; });
+    return db.query("mahasiswa", function (m) { return ids.indexOf(m.id) !== -1; });
+  };
+
+  /**
+   * Simpan presensi sebuah sesi. entries: [{ mahasiswa_id, status: hadir|izin|alpa }]
+   * Mahasiswa di luar peserta sah ditolak; entri yang sudah ada diperbarui.
+   */
+  kelasVirtual.savePresensi = async function (kelasId, entries) {
+    var kv = await db.get("kelas_virtual", kelasId);
+    if (!kv) throw new BusinessError("NOT_FOUND", "Sesi kelas virtual tidak ditemukan.");
+    if (kv.status === "terjadwal") throw new BusinessError("BELUM_MULAI", "Presensi hanya dapat diisi untuk sesi yang sedang live atau sudah selesai.");
+    var peserta = (await kelasVirtual.peserta(kelasId)).map(function (m) { return m.id; });
+    entries.forEach(function (e) {
+      if (peserta.indexOf(e.mahasiswa_id) === -1) throw new BusinessError("BUKAN_PESERTA", "Mahasiswa " + e.mahasiswa_id + " bukan peserta kursus ini.");
+      if (["hadir", "izin", "alpa"].indexOf(e.status) === -1) throw new ValidationError({ status: "Status presensi harus hadir, izin, atau alpa." });
+    });
+    var existing = await db.query("presensi", function (p) { return p.kelas_virtual_id === kelasId; });
+    for (var i = 0; i < entries.length; i++) {
+      var found = existing.filter(function (p) { return p.mahasiswa_id === entries[i].mahasiswa_id; })[0];
+      if (found) { if (found.status !== entries[i].status) await db.update("presensi", found.id, { status: entries[i].status }); }
+      else await db.insert("presensi", { kelas_virtual_id: kelasId, mahasiswa_id: entries[i].mahasiswa_id, status: entries[i].status });
+    }
+    var hadir = entries.filter(function (e) { return e.status === "hadir"; }).length;
+    await log("update", "presensi", kelasId, "Menyimpan presensi sesi \"" + kv.judul + "\" (" + hadir + "/" + entries.length + " hadir)");
+    return db.query("presensi", function (p) { return p.kelas_virtual_id === kelasId; });
+  };
+
   /* ==================== TUGAS & KUIS ==================== */
   var tugasBase = createService({
     table: "tugas_kuis",
@@ -475,6 +508,11 @@
       if (!lulus.length && m.status !== "lulus") {
         throw new ValidationError({ mahasiswa_id: m.nama + " belum lulus " + k.kode_mk + " (nilai akhir di bawah passing grade " + k.passing_grade + " atau belum dinilai)." });
       }
+    },
+    impact: async function (id) {
+      var srt = await db.get("sertifikat", id);
+      // Sertifikat terbit/dicabut adalah dokumen resmi: gunakan Cabut, bukan hapus (jejak verifikasi tetap ada).
+      return { blockers: srt && srt.status !== "menunggu_tte" ? ["sertifikat berstatus " + (srt.status === "terbit" ? "terbit" : "dicabut") + " merupakan dokumen resmi — gunakan aksi Cabut"] : [], cascades: [] };
     },
   });
 

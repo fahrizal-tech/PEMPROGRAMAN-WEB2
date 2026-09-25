@@ -20,6 +20,7 @@
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/kelas-virtual.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <aside data-component="sidebar"></aside>
@@ -27,671 +28,82 @@
   <div class="flex min-h-screen flex-col lg:pl-64">
     <header data-component="topbar" data-title="Kelas Virtual"></header>
 
-    <main class="flex-1 min-w-0 px-space-xl py-space-xl"><div class="flex flex-col w-full">
-<!-- Breadcrumb & Top Bar -->
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-xl">
-<div class="flex flex-col gap-space-xs">
-<div class="flex items-center gap-space-xs text-secondary font-label-xs text-label-xs tracking-wider uppercase">
-<span>Akademik &amp; Kursus</span>
-<span class="material-symbols-outlined text-[13px] text-outline">chevron_right</span>
-<span>Kelas Virtual</span>
-<span class="material-symbols-outlined text-[13px] text-outline">chevron_right</span>
-<span class="text-primary font-semibold">Jadwal &amp; Monitoring</span>
-</div>
-<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">
-        Pusat Manajemen Kelas Virtual &amp; Sesi Daring Sinkronus
-      </h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant max-w-4xl">
-        Pengaturan jadwal telekonferensi terintegrasi (Zoom / Google Meet / BigBlueButton), pemantauan presensi otomatis mahasiswa, dan arsip rekaman perkuliahan berkualifikasi institusi.
-      </p>
-</div>
-<div class="flex items-center gap-space-sm self-start lg:self-center shrink-0">
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md font-medium shadow-sm hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px] text-secondary">sync</span>
-<span>Sinkronisasi SIAKAD</span>
-</button>
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-primary-container text-on-primary font-label-md text-label-md font-medium shadow-sm hover:bg-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">add</span>
-<span>+ Jadwalkan Sesi Baru</span>
-</button>
-</div>
-</div>
-<!-- KPI Cards Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-xl">
-<!-- KPI 1 -->
-<div class="bg-surface-container-lowest p-space-lg rounded shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Sesi Hari Ini</span>
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-label-xs text-label-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          3 Live
-        </span>
-</div>
-<div class="flex items-baseline gap-space-sm mb-space-xs">
-<span class="font-headline-lg text-headline-lg font-bold text-on-surface">14</span>
-<span class="font-body-xs text-body-xs text-on-surface-variant">Perkuliahan Daring</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant font-body-xs text-body-xs">
-<span class="material-symbols-outlined text-[15px] text-emerald-600">sensors</span>
-<span>3 sesi sedang aktif dan dipantau</span>
-</div>
-</div>
-<!-- KPI 2 -->
-<div class="bg-surface-container-lowest p-space-lg rounded shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Kehadiran Rata-rata</span>
-<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-label-xs text-label-xs font-semibold">
-<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
-          +1.8%
-        </span>
-</div>
-<div class="flex items-baseline gap-space-sm mb-space-xs">
-<span class="font-headline-lg text-headline-lg font-bold text-on-surface">96.2%</span>
-<span class="font-body-xs text-body-xs text-on-surface-variant">vs Pekan Lalu</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant font-body-xs text-body-xs">
-<span class="material-symbols-outlined text-[15px] text-primary">verified_user</span>
-<span>Terverifikasi biometrik &amp; log aktivitas</span>
-</div>
-</div>
-<!-- KPI 3 -->
-<div class="bg-surface-container-lowest p-space-lg rounded shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Durasi Streaming Pekan Ini</span>
-<span class="material-symbols-outlined text-[18px] text-secondary">graphic_eq</span>
-</div>
-<div class="flex items-baseline gap-space-sm mb-space-xs">
-<span class="font-headline-lg text-headline-lg font-bold text-on-surface">240</span>
-<span class="font-body-xs text-body-xs text-on-surface-variant">Jam Kuliah Efektif</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant font-body-xs text-body-xs">
-<span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
-<span>Beban server bandwidth 32% (Optimal)</span>
-</div>
-</div>
-<!-- KPI 4 -->
-<div class="bg-surface-container-lowest p-space-lg rounded shadow-sm flex flex-col justify-between">
-<div class="flex items-center justify-between mb-space-sm">
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Penyimpanan Cloud Rekaman</span>
-<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-xs text-label-xs font-semibold">
-          Encrypted S3
-        </span>
-</div>
-<div class="flex items-baseline gap-space-sm mb-space-xs">
-<span class="font-headline-lg text-headline-lg font-bold text-on-surface">1.4 TB</span>
-<span class="font-body-xs text-body-xs text-on-surface-variant">/ 5.0 TB (28%)</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant font-body-xs text-body-xs">
-<span class="material-symbols-outlined text-[15px] text-secondary">inventory_2</span>
-<span>Retensi otomatis tersimpan 180 hari</span>
-</div>
-</div>
-</div>
-<!-- Live Highlight Banner (Active Class Monitor) -->
-<div class="bg-surface-container-lowest rounded shadow-sm p-space-lg mb-space-xl relative overflow-hidden">
-<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500"></div>
-<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-lg">
-<div class="flex flex-col md:flex-row items-start md:items-center gap-space-lg">
-<div class="relative flex-shrink-0">
-<div class="w-16 h-16 rounded  shadow-sm flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400" role="img" aria-label="High quality professional corporate lecturer delivering a university computer science online lecture in a sleek modern digital broadcast room with subtle blue LED backlighting and high technology displays"><span class="material-symbols-outlined text-[28px]" aria-hidden="true">image</span></div>
-<span class="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
-</span>
-</div>
-<div class="flex flex-col gap-1 min-w-0">
-<div class="flex flex-wrap items-center gap-space-xs">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded font-label-xs text-label-xs uppercase font-semibold bg-emerald-100 text-emerald-800">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-              Live Sekarang
-            </span>
-<span class="font-code-sm text-code-sm text-secondary bg-surface-container px-1.5 py-0.5 rounded">CS-301</span>
-<span class="text-secondary font-label-xs text-label-xs font-medium">Kelas A Regular</span>
-<span class="text-outline font-label-xs text-label-xs">•</span>
-<span class="text-secondary font-label-xs text-label-xs">Semester Ganjil 2024/2025</span>
-</div>
-<h2 class="font-headline-md text-headline-md font-bold text-on-surface truncate">
-            Arsitektur Cloud Computing &amp; Microservices
-          </h2>
-<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md text-on-surface-variant font-body-sm text-body-sm">
-<span class="flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-secondary">person</span>
-              Dr. Adrian Wicaksono, M.Kom
-            </span>
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
-              09:00 - 11:30 WIB (Berjalan 45 Menit)
-            </span>
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-secondary">group</span>
-              142/145 Mahasiswa Hadir <span class="font-semibold text-emerald-700">(98%)</span>
-</span>
-<span class="flex items-center gap-1 font-code-sm text-code-sm bg-surface-container-low px-1.5 py-0.5 rounded text-secondary">
-              Zoom Room #884-2910-4491
-            </span>
-</div>
-</div>
-</div>
-<div class="flex items-center gap-space-sm flex-wrap shrink-0">
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-surface-container-low text-on-surface font-label-md text-label-md font-medium hover:bg-surface-container transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px] text-secondary">fact_check</span>
-<span>Lihat Log Presensi Real-time</span>
-</button>
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-primary-container text-on-primary font-label-md text-label-md font-medium shadow-sm hover:bg-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">visibility</span>
-<span>Masuk Sebagai Pengawas / Supervisor</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Filter & Action Toolbar -->
-<div class="bg-surface-container-lowest rounded shadow-sm p-space-md mb-space-lg flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md">
-<div class="flex flex-wrap items-center gap-space-sm flex-1">
-<!-- Search Input -->
-<div class="relative min-w-[240px] flex-1 max-w-sm">
-<span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
-<input class="w-full pl-8 pr-space-md py-1.5 bg-surface-container-lowest text-on-surface rounded font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-container-low" placeholder="Cari sesi kelas, kode MK, dosen..." type="text">
-</div>
-<!-- Date Selector Dropdown -->
-<div class="flex items-center bg-surface-container-lowest px-space-sm py-1.5 rounded text-on-surface font-body-sm text-body-sm shadow-xs">
-<span class="material-symbols-outlined text-[16px] text-secondary mr-1.5">calendar_today</span>
-<span class="font-medium">Rabu, 23 Oktober 2024</span>
-<span class="material-symbols-outlined text-[16px] text-outline ml-1.5">arrow_drop_down</span>
-</div>
-<!-- Filter Prodi -->
-<div class="flex items-center bg-surface-container-lowest px-space-sm py-1.5 rounded text-on-surface font-body-sm text-body-sm">
-<span class="text-secondary mr-1">Prodi:</span>
-<span class="font-medium">S1 Teknik Informatika</span>
-<span class="material-symbols-outlined text-[16px] text-outline ml-1.5">arrow_drop_down</span>
-</div>
-<!-- Filter Status -->
-<div class="flex items-center bg-surface-container-lowest px-space-sm py-1.5 rounded text-on-surface font-body-sm text-body-sm">
-<span class="text-secondary mr-1">Status:</span>
-<span class="font-medium">Semua (Live, Terjadwal, Selesai)</span>
-<span class="material-symbols-outlined text-[16px] text-outline ml-1.5">arrow_drop_down</span>
-</div>
-<!-- Filter Platform -->
-<div class="flex items-center bg-surface-container-lowest px-space-sm py-1.5 rounded text-on-surface font-body-sm text-body-sm">
-<span class="text-secondary mr-1">Platform:</span>
-<span class="font-medium">Semua Platform</span>
-<span class="material-symbols-outlined text-[16px] text-outline ml-1.5">arrow_drop_down</span>
-</div>
-</div>
-<!-- View Mode Switch -->
-<div class="flex items-center self-end xl:self-center bg-surface-container p-0.5 rounded">
-<button class="inline-flex items-center gap-1 px-space-sm py-1 rounded font-label-xs text-label-xs font-semibold bg-surface-container-lowest text-primary shadow-xs" type="button">
-<span class="material-symbols-outlined text-[16px]">view_list</span>
-<span>Daftar Agenda</span>
-</button>
-<button class="inline-flex items-center gap-1 px-space-sm py-1 rounded font-label-xs text-label-xs font-medium text-secondary hover:text-on-surface transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">calendar_view_week</span>
-<span>Jadwal Mingguan</span>
-</button>
-</div>
-</div>
-<!-- Schedule Data Table -->
-<div class="bg-surface-container-lowest rounded shadow-sm overflow-hidden mb-space-xl">
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low text-secondary uppercase font-label-xs text-label-xs tracking-wider">
-<th class="py-space-md px-space-lg font-semibold">Waktu &amp; Status</th>
-<th class="py-space-md px-space-lg font-semibold">Mata Kuliah &amp; Modul Bahasan</th>
-<th class="py-space-md px-space-lg font-semibold">Dosen Pengampu &amp; Pengajar</th>
-<th class="py-space-md px-space-lg font-semibold">Platform &amp; Ruang Virtual</th>
-<th class="py-space-md px-space-lg font-semibold">Presensi Mahasiswa</th>
-<th class="py-space-md px-space-lg font-semibold text-right">Rekaman &amp; Aksi</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container-low text-body-sm font-body-sm text-on-surface">
-<!-- Row 1: Selesai -->
-<tr class="hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-medium text-on-surface">08:00 - 09:40 WIB</span>
-<span class="inline-flex items-center w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-surface-container text-secondary">
-                  Selesai
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-primary">WD-204</span>
-<span>Client-Side Web Frameworks</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 07: Component Lifecycle &amp; State Management</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex items-center gap-space-sm">
-<span class="w-8 h-8  inline-flex flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700" aria-hidden="true">SP</span>
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Siti Paramitha, S.T., M.Sc.</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Lab Web Engineering</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-emerald-700">video_call</span>
-                  Google Meet
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">ID: gmt-tech-204</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-label-xs font-label-xs font-semibold">
-<span class="text-on-surface">110 / 112 Hadir</span>
-<span class="text-emerald-700 font-bold">98.2%</span>
-</div>
-<div class="w-28 bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-emerald-600 h-1.5 rounded-full" style="width: 98.2%"></div>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px] text-primary">download</span>
-<span>Unduh Rekaman (1080p)</span>
-</button>
-<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="Lihat Rekap Presensi" type="button">
-<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 2: Live Berlangsung -->
-<tr class="bg-surface-container-low/40 hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-semibold text-primary">09:00 - 11:30 WIB</span>
-<span class="inline-flex items-center gap-1 w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-emerald-100 text-emerald-800">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                  Live Berlangsung
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-primary">CS-301</span>
-<span>Arsitektur Cloud Computing</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 08: Kubernetes Orchestration &amp; Helm Deployment</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex items-center gap-space-sm">
-<span class="w-8 h-8  inline-flex flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700" aria-hidden="true">AW</span>
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Dr. Adrian Wicaksono, M.Kom</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Cloud &amp; Infra Specialist</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
-                  Zoom Enterprise
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">Room #884-2910</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-label-xs font-label-xs font-semibold">
-<span class="text-on-surface">142 / 145 Hadir</span>
-<span class="text-emerald-700 font-bold">97.9%</span>
-</div>
-<div class="w-28 bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-emerald-600 h-1.5 rounded-full" style="width: 97.9%"></div>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-primary-container text-on-primary text-label-xs font-label-xs font-semibold shadow-xs hover:bg-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px]">meeting_room</span>
-<span>Masuk Room</span>
-</button>
-<button class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container text-secondary hover:text-on-surface text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span>Pantau</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 3: Live Berlangsung -->
-<tr class="bg-surface-container-low/40 hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-semibold text-primary">10:00 - 11:40 WIB</span>
-<span class="inline-flex items-center gap-1 w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-emerald-100 text-emerald-800">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                  Live Berlangsung
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-primary">DS-402</span>
-<span>Machine Learning Terapan</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 06: Convolutional Neural Network for Image Classification</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex items-center gap-space-sm">
-<span class="w-8 h-8  inline-flex flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-700" aria-hidden="true">RH</span>
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Prof. Rian Hidayat, Ph.D.</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Data Science Group</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
-                  Zoom Pro
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">Room #912-4021</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-label-xs font-label-xs font-semibold">
-<span class="text-on-surface">96 / 98 Hadir</span>
-<span class="text-emerald-700 font-bold">98.0%</span>
-</div>
-<div class="w-28 bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-emerald-600 h-1.5 rounded-full" style="width: 98.0%"></div>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-primary-container text-on-primary text-label-xs font-label-xs font-semibold shadow-xs hover:bg-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px]">meeting_room</span>
-<span>Masuk Room</span>
-</button>
-<button class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container text-secondary hover:text-on-surface text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span>Pantau</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 4: Mendatang -->
-<tr class="hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-medium text-on-surface">13:00 - 14:40 WIB</span>
-<span class="inline-flex items-center w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-surface-container text-primary">
-                  Mendatang
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-secondary">UX-101</span>
-<span>Human-Computer Interaction</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 05: Usability Testing Lab &amp; Cognitive Walkthrough</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Nadia Maharani, M.Ds.</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Laboratorium UI/UX Design</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-emerald-700">video_call</span>
-                  Google Meet
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">ID: gmt-ux-101</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<span class="font-body-sm text-body-sm text-secondary">60 Mahasiswa Terdaftar</span>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px] text-secondary">content_copy</span>
-<span>Salin Tautan Join</span>
-</button>
-<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="Pengaturan Sesi" type="button">
-<span class="material-symbols-outlined text-[18px]">tune</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 5: Mendatang (BBB Lab) -->
-<tr class="hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-medium text-on-surface">14:00 - 16:30 WIB</span>
-<span class="inline-flex items-center w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-surface-container text-primary">
-                  Mendatang
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-secondary">CY-409</span>
-<span>Keamanan Siber &amp; Ethical Hacking</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 09: Penetration Testing Live Demo &amp; Kali Linux Lab</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Taufik Hidayat, M.Kom., CEH</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Cyber Defense Centre</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-indigo-700">dns</span>
-                  BigBlueButton Lab
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">Dedicated Sandbox Server</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<span class="font-body-sm text-body-sm text-secondary">45 Mahasiswa Terdaftar</span>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px] text-secondary">terminal</span>
-<span>Siapkan Sandbox Lab</span>
-</button>
-<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="Pengaturan Sesi" type="button">
-<span class="material-symbols-outlined text-[18px]">tune</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 6: Mendatang -->
-<tr class="hover:bg-surface transition-colors">
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col gap-1">
-<span class="font-code-sm text-code-sm font-medium text-on-surface">16:00 - 17:40 WIB</span>
-<span class="inline-flex items-center w-max px-2 py-0.5 rounded-full font-label-xs text-label-xs font-semibold bg-surface-container text-primary">
-                  Mendatang
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<div class="flex items-center gap-1.5 font-semibold text-on-surface">
-<span class="font-code-sm text-code-sm text-secondary">BM-105</span>
-<span>Fundamental Manajemen Operasional</span>
-</div>
-<span class="font-body-xs text-body-xs text-secondary mt-0.5">Sesi 04: Lean Six Sigma Review &amp; Supply Chain Resilience</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="font-medium text-on-surface leading-tight">Lestari Wahyuni, S.E., M.M.</span>
-<span class="font-body-xs text-body-xs text-outline leading-tight">Departemen Bisnis Digital</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<div class="flex flex-col">
-<span class="inline-flex items-center gap-1 font-medium text-on-surface">
-<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
-                  Zoom Pro
-                </span>
-<span class="font-code-sm text-code-sm text-secondary mt-0.5">Room #771-1050</span>
-</div>
-</td>
-<td class="py-space-md px-space-lg align-middle">
-<span class="font-body-sm text-body-sm text-secondary">70 Mahasiswa Terdaftar</span>
-</td>
-<td class="py-space-md px-space-lg align-middle text-right">
-<div class="inline-flex items-center gap-space-xs justify-end">
-<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container text-label-xs font-label-xs font-medium transition-colors" type="button">
-<span class="material-symbols-outlined text-[15px] text-secondary">content_copy</span>
-<span>Salin Tautan Join</span>
-</button>
-<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="Pengaturan Sesi" type="button">
-<span class="material-symbols-outlined text-[18px]">tune</span>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Table Pagination Footer -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm px-space-lg py-space-md bg-surface-container-lowest">
-<span class="font-body-xs text-body-xs text-secondary">
-        Menampilkan <span class="font-semibold text-on-surface">1 - 6</span> dari <span class="font-semibold text-on-surface">14</span> sesi perkuliahan daring hari ini
-      </span>
-<div class="flex items-center gap-1">
-<button class="px-2.5 py-1 rounded text-outline font-label-xs text-label-xs bg-surface-container-low cursor-not-allowed" disabled="" type="button">
-          Sebelumnya
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Akademik &amp; Kursus · Sesi Daring</p>
+          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Jadwal &amp; Sesi Kelas Virtual</h2>
+          <p class="mt-1 max-w-2xl text-sm text-slate-500">Jadwalkan sesi daring, kelola status sesi, dan catat presensi mahasiswa.</p>
+        </div>
+        <button type="button" id="btn-tambah" class="inline-flex items-center gap-2 self-start rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 lg:self-auto">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>Jadwalkan Sesi
         </button>
-<button class="px-2.5 py-1 rounded text-on-primary bg-primary-container font-label-xs text-label-xs font-semibold" type="button">
-          1
-        </button>
-<button class="px-2.5 py-1 rounded text-secondary hover:bg-surface-container font-label-xs text-label-xs font-medium" type="button">
-          2
-        </button>
-<button class="px-2.5 py-1 rounded text-secondary hover:bg-surface-container font-label-xs text-label-xs font-medium" type="button">
-          3
-        </button>
-<button class="px-2.5 py-1 rounded text-secondary hover:bg-surface-container font-label-xs text-label-xs font-medium" type="button">
-          Selanjutnya
-        </button>
-</div>
-</div>
-</div>
-<!-- Operational Infrastructure Section -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
-<!-- Panel 1: Webhook & Teleconference Health -->
-<div class="bg-surface-container-lowest rounded shadow-sm p-space-lg">
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-[20px] text-primary">hub</span>
-<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">
-            Status Integrasi Webhook &amp; API Video Conference
-          </h3>
-</div>
-<span class="font-code-sm text-[11px] text-secondary bg-surface-container px-2 py-0.5 rounded font-mono">
-          Ping 12ms
-        </span>
-</div>
-<div class="space-y-space-sm">
-<div class="flex items-center justify-between p-space-sm rounded bg-surface-container-low">
-<div class="flex items-center gap-space-sm">
-<div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Zoom Enterprise Edu Cluster</span>
-<span class="font-body-xs text-body-xs text-secondary">JWT Authentication &amp; Webhook Event Streaming (OAuth 2.0)</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">99.9% Uptime</span>
-</div>
-</div>
-<div class="flex items-center justify-between p-space-sm rounded bg-surface-container-low">
-<div class="flex items-center gap-space-sm">
-<div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">Google Workspace for Education</span>
-<span class="font-body-xs text-body-xs text-secondary">Calendar Sync &amp; Google Meet Real-time Attendance Ingestion</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Terkoneksi</span>
-</div>
-</div>
-<div class="flex items-center justify-between p-space-sm rounded bg-surface-container-low">
-<div class="flex items-center gap-space-sm">
-<div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-<div class="flex flex-col">
-<span class="font-label-md text-label-md font-semibold text-on-surface">BigBlueButton Cluster (On-Premises)</span>
-<span class="font-body-xs text-body-xs text-secondary">Kapasitas Dedicated Server 800 Concurrent Participants</span>
-</div>
-</div>
-<div class="text-right">
-<span class="font-label-xs text-label-xs font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Siap Siaga</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Panel 2: Attendance Policies & Compliance Rules -->
-<div class="bg-surface-container-lowest rounded shadow-sm p-space-lg flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-[20px] text-primary">policy</span>
-<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">
-              Kebijakan Presensi Otomatis &amp; Log Kehadiran
-            </h3>
-</div>
-<span class="font-label-xs text-label-xs font-semibold text-primary uppercase">Regulasi Akademik</span>
-</div>
-<ul class="space-y-space-sm text-body-sm font-body-sm text-on-surface-variant">
-<li class="flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0 mt-0.5">check_circle</span>
-<span><strong class="text-on-surface">Ambang batas minimum presensi:</strong> Mahasiswa wajib hadir minimal 75% dari total durasi aktif sesi untuk dicatat otomatis sebagai "Hadir Penuh" di SIAKAD.</span>
-</li>
-<li class="flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0 mt-0.5">check_circle</span>
-<span><strong class="text-on-surface">Verifikasi identitas dan log IP:</strong> Sistem mencatat IP address, device footprint, dan geo-location enkripsi SHA-256 untuk memitigasi titip absen perkuliahan.</span>
-</li>
-<li class="flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">info</span>
-<span><strong class="text-on-surface">Penyimpanan rekaman otomatis:</strong> File recording dikompresi ke H.264 1080p dan diarsipkan ke cold storage AWS S3 Jakarta Region dalam 2 jam pasca sesi berakhir.</span>
-</li>
-</ul>
-</div>
-<div class="flex items-center justify-between pt-space-md border-t border-surface-container-low mt-space-md">
-<span class="font-body-xs text-body-xs text-secondary">
-          Terakhir disinkronisasi dengan SK Rektor No. 402/AKD/2024
-        </span>
-<button class="font-label-xs text-label-xs font-semibold text-primary hover:underline" type="button">
-          Ubah Parameter Kebijakan
-        </button>
-</div>
-</div>
-</div>
-</div></main>
+      </section>
+
+      <section aria-label="Ringkasan sesi" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-xl border border-red-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Sedang Live</p><span class="relative flex h-3 w-3" aria-hidden="true"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span></span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-live">-</p>
+          <p class="mt-1 text-xs text-slate-500">Sesi berlangsung saat ini</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Terjadwal</p><span class="material-symbols-outlined rounded-lg bg-blue-50 p-2 text-[20px] text-blue-600" aria-hidden="true">event_upcoming</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-terjadwal">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-terjadwal-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Selesai</p><span class="material-symbols-outlined rounded-lg bg-slate-100 p-2 text-[20px] text-slate-600" aria-hidden="true">task_alt</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-selesai">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-selesai-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Rata-rata Kehadiran</p><span class="material-symbols-outlined rounded-lg bg-emerald-50 p-2 text-[20px] text-emerald-600" aria-hidden="true">how_to_reg</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-hadir">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-hadir-sub">&nbsp;</p>
+        </article>
+      </section>
+
+      <section aria-label="Pencarian dan filter sesi" class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <div class="relative min-w-[16rem] flex-1">
+            <label for="f-cari" class="sr-only">Cari sesi</label>
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400" aria-hidden="true">search</span>
+            <input id="f-cari" type="search" placeholder="Cari judul sesi, kode MK, atau dosen…" class="block w-full rounded-lg border-slate-300 pl-9 text-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="w-full sm:w-auto"><label for="f-tanggal" class="sr-only">Tanggal</label><input id="f-tanggal" type="date" title="Filter tanggal" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"></div>
+          <div class="w-full sm:w-auto"><label for="f-platform" class="sr-only">Platform</label>
+            <select id="f-platform" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua platform</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="teams">Microsoft Teams</option></select></div>
+          <div class="flex w-full gap-2 sm:w-auto"><label for="f-status" class="sr-only">Status</label>
+            <select id="f-status" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua status</option><option value="live">Live</option><option value="terjadwal">Terjadwal</option><option value="selesai">Selesai</option></select>
+            <button type="button" id="btn-reset" class="rounded-lg border border-slate-300 bg-white px-3 text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Reset pencarian dan filter" title="Reset filter"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">filter_alt_off</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Daftar sesi kelas virtual" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <caption class="sr-only">Daftar sesi kelas virtual</caption>
+            <thead class="bg-slate-50">
+              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <th scope="col" class="px-4 py-3">Waktu</th>
+                <th scope="col" class="px-4 py-3">Sesi &amp; Kursus</th>
+                <th scope="col" class="px-4 py-3">Dosen</th>
+                <th scope="col" class="px-4 py-3">Platform</th>
+                <th scope="col" class="px-4 py-3">Presensi</th>
+                <th scope="col" class="px-4 py-3">Status</th>
+                <th scope="col" class="px-4 py-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-sesi" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p id="tabel-counter"></p>
+          <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel sesi"></nav>
+        </div>
+      </section>
+    </main>
 
     <footer data-component="footer"></footer>
   </div>
