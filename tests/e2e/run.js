@@ -461,6 +461,13 @@ function findBrowser() {
     await page.type("#nama", "Kursus Uji Otomatis");
     await page.type("#deskripsi", "Kursus ini dibuat oleh uji otomatis E2E untuk memastikan alur tambah data berjalan.");
     await page.select("#instruktur_id", "dsn_002");
+    check(!!(await page.$("#sampul-preview svg")), "form: pratinjau sampul otomatis (SVG) tampil");
+    const pngFile = path.join(require("node:os").tmpdir(), "nexus-e2e-sampul.png");
+    fs.writeFileSync(pngFile, Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVR42mNk+M9QzwAEjDAGNzYAAB0HBf+Lx4PlAAAAAElFTkSuQmCC", "base64"));
+    await (await page.$("#file-sampul")).uploadFile(pngFile);
+    await page.waitForSelector("#sampul-preview img");
+    check(/^data:image\/(webp|jpeg)/.test(await page.$eval("#cover", (e) => e.value)), "form: unggah PNG → dikompres (WebP/JPEG) & pratinjau berganti gambar");
+    fs.unlinkSync(pngFile);
     await page.type("#modul-judul-0", "Pengantar");
     await page.click("#btn-tambah-modul");
     await page.type("#modul-judul-1", "Pendalaman Materi");
@@ -475,6 +482,7 @@ function findBrowser() {
     await toastHas(/TS-201 berhasil ditambahkan/);
     await page.waitForFunction(() => /dari 13/.test(document.getElementById("tabel-counter").textContent));
     check(where() === "data-master.html", "tambah kursus → kembali ke data master + toast, total 13");
+    check(await page.evaluate(async () => /^data:image\//.test(((await Nexus.services.kursus.query((k) => k.kode_mk === "TS-201"))[0] || {}).cover || "")), "sampul unggahan tersimpan bersama kursus");
 
     await page.type("#f-cari", "TS-201");
     await page.waitForFunction(() => /2 modul/.test(document.getElementById("tabel-kursus").textContent));

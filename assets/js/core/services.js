@@ -166,6 +166,8 @@
       passing_grade: { label: "Passing grade", required: true, type: "integer", min: 0, max: 100 },
       periode: { label: "Periode", required: true, pattern: PERIODE_PATTERN },
       status: { label: "Status", required: true, oneOf: ["draft", "publikasi", "arsip"] },
+      cover: { label: "Sampul", maxLength: 200000,
+        pattern: [/^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$/, "Sampul harus berupa gambar WebP, JPEG, atau PNG."] },
     },
     check: async function (data, existing) {
       if (!existing) return;

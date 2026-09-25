@@ -126,10 +126,46 @@
     else if (errors.modul) general.scrollIntoView({ block: "center" });
   }
 
+  /* ---------- Sampul kursus ---------- */
+  var prodiKode = {};
+  function renderCover() {
+    var data = { kode_mk: $("kode_mk").value.trim().toUpperCase() || "KODE-MK", nama: $("nama").value, cover: $("cover").value };
+    $("sampul-preview").innerHTML = Nexus.cover.render(data, prodiKode[$("prodi_id").value], "h-full w-full").value;
+    var custom = !!$("cover").value;
+    $("btn-hapus-sampul").classList.toggle("hidden", !custom);
+    $("btn-hapus-sampul").classList.toggle("inline-flex", custom);
+  }
+  ["kode_mk", "nama"].forEach(function (id) { $(id).addEventListener("input", u.debounce(renderCover, 150)); });
+  $("prodi_id").addEventListener("change", renderCover);
+  $("file-sampul").addEventListener("change", async function (e) {
+    var file = e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    var status = $("sampul-status");
+    status.className = "mt-1 text-xs font-medium text-slate-500";
+    status.textContent = "Memproses gambar…";
+    try {
+      $("cover").value = await Nexus.cover.compress(file);
+      status.className = "mt-1 text-xs font-medium text-emerald-700";
+      status.textContent = "Sampul siap (" + Math.round($("cover").value.length * 0.75 / 1024) + " KB). Simpan kursus untuk menerapkan.";
+      setDirty(true);
+      renderCover();
+    } catch (err) {
+      status.className = "mt-1 text-xs font-medium text-red-600";
+      status.textContent = err.message;
+    }
+  });
+  $("btn-hapus-sampul").addEventListener("click", function () {
+    $("cover").value = "";
+    $("sampul-status").textContent = "";
+    setDirty(true);
+    renderCover();
+  });
+
   /* ---------- Isi pilihan & data awal ---------- */
   async function init() {
     var r = await Promise.all([S.programStudi.list(), S.instruktur.list(), S.pengaturan.all()]);
-    r[0].forEach(function (p) { $("prodi_id").add(new Option(p.nama + " (" + p.jenjang + ")", p.id)); });
+    r[0].forEach(function (p) { prodiKode[p.id] = p.kode; $("prodi_id").add(new Option(p.nama + " (" + p.jenjang + ")", p.id)); });
     r[1].sort(function (a, b) { return a.nama.localeCompare(b.nama, "id"); })
       .forEach(function (d) { $("instruktur_id").add(new Option(d.nama + " — NIDN " + d.nidn, d.id)); });
 
@@ -153,6 +189,7 @@
         .map(function (m) { return { id: m.id, judul: m.judul, tipe_materi: m.tipe_materi }; });
     }
     updateCounter();
+    renderCover();
     renderModules();
     setDirty(false);
   }
