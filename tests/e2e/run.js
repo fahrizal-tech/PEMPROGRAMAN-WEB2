@@ -42,7 +42,11 @@ function findBrowser() {
   const where = () => page.url().split("/").pop();
   page.on("pageerror", (e) => errors.push(`${where()}: ${e.message}`));
   page.on("console", (m) => {
-    if (m.type() === "error" && !/fonts\.g|Tracking|favicon/.test(m.text())) errors.push(`${where()}: ${m.text()}`);
+    if (m.type() === "error" && (/^CSP dilanggar/.test(m.text()) || !/fonts\.g|Tracking|favicon/.test(m.text()))) errors.push(`${where()}: ${m.text()}`);
+  });
+  // Setiap pelanggaran Content-Security-Policy dihitung sebagai error.
+  await page.evaluateOnNewDocument(() => {
+    document.addEventListener("securitypolicyviolation", (e) => console.error(`CSP dilanggar: ${e.violatedDirective} ← ${e.blockedURI || "inline"}`));
   });
 
   let beforeUnloadDialogs = 0;

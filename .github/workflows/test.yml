@@ -19,6 +19,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Audit kerentanan dependensi
+        run: npm audit --audit-level=high
       - name: Cek CSS hasil build sudah diperbarui
         run: |
           npm run build:css

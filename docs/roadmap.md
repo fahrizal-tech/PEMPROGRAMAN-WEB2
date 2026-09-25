@@ -165,8 +165,8 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
 - [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
 - [ ] Hapus kode mati & data dummy yang tidak terpakai
-- [ ] *Content-Security-Policy* via `<meta>`, `integrity` (SRI) pada CDN, `rel="noopener"` pada link eksternal
-- [ ] Aktifkan Dependabot untuk dependency npm
+- [x] *Content-Security-Policy* via `<meta>` di 12 halaman (E2E gagal bila ada pelanggaran), `rel="noopener noreferrer"` pada link eksternal; SRI tidak diperlukan (tidak ada skrip CDN, Chart.js lokal)
+- [x] Dependabot (npm & GitHub Actions, mingguan) + `npm audit` di CI; puppeteer-core 25 → 0 kerentanan
 
 ### Tahap 6 — Deploy & Presentasi
 - [ ] GitHub Pages aktif dari branch `main`
