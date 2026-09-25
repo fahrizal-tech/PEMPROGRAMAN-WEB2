@@ -148,13 +148,17 @@ function findBrowser() {
       const charts = ["chart-krs", "chart-prodi", "chart-kursus"].map((id) => !!(window.Chart && Chart.getChart(document.getElementById(id))));
       return {
         krsOk: document.getElementById("kpi-krs").textContent === String(krs.filter((x) => x.status === "diajukan").length),
-        charts, logs: document.querySelectorAll("#log-list li").length, top: document.querySelectorAll("#top-kursus tr").length,
+        charts, logs: document.querySelectorAll("#log-list li").length, top: document.querySelectorAll("#top-kursus a").length, topCover: document.querySelectorAll("#top-kursus svg, #top-kursus img").length,
+        live: document.querySelectorAll("#live-list article").length, liveHidden: document.getElementById("live-section").classList.contains("hidden"),
+        ringkasan: document.getElementById("ringkasan-hari").textContent,
         srRows: document.querySelectorAll("#data-kursus tbody tr").length,
       };
     });
     check(dash.krsOk, "dashboard: KPI KRS menunggu sesuai data");
     check(dash.charts.every(Boolean), `dashboard: 3 grafik Chart.js tampil (${dash.charts.join(",")})`);
-    check(dash.logs === 6 && dash.top === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kursus teratas`);
+    check(dash.logs === 6 && dash.top === 5 && dash.topCover === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kartu kursus teratas bersampul`);
+    check(!dash.liveHidden && dash.live === 2, `dashboard: bagian Sedang Live menampilkan ${dash.live} sesi`);
+    check(/2 sesi sedang live · \d+ KRS menunggu validasi · \d+ tugas menunggu koreksi/.test(dash.ringkasan), `banner: ${dash.ringkasan}`);
     check(dash.srRows > 0, "dashboard: data grafik tersedia untuk pembaca layar");
 
     /* ---------- Laporan ---------- */
@@ -170,8 +174,9 @@ function findBrowser() {
     await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log tr")].every((tr) => /Login/.test(tr.textContent)));
     check(true, "laporan: filter log aksi Login");
     await page.select("#log-aksi", "");
-    await page.$eval("#log-dari", (e) => { e.value = "2026-09-22"; e.dispatchEvent(new Event("change")); });
-    await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log time")].every((t) => t.getAttribute("datetime") >= "2026-09-22"));
+    const duaHariLalu = await page.evaluate(() => Nexus.utils.localDate(new Date(Date.now() - 2 * 86400000)));
+    await page.$eval("#log-dari", (e, v) => { e.value = v; e.dispatchEvent(new Event("change")); }, duaHariLalu);
+    await page.waitForFunction((v) => [...document.querySelectorAll("#tabel-log time")].every((t) => Nexus.utils.localDate(t.getAttribute("datetime")) >= v), {}, duaHariLalu);
     check(true, "laporan: filter log dari tanggal");
     await page.$eval("#log-dari", (e) => { e.value = ""; e.dispatchEvent(new Event("change")); });
     await page.emulateMediaType("print");
@@ -282,7 +287,19 @@ function findBrowser() {
     /* ---------- Kelas Virtual ---------- */
     await page.goto(ROOT + "pages/kelas-virtual.html", NAV);
     await page.waitForFunction(() => /dari 8 data/.test(document.getElementById("tabel-counter").textContent));
-    check(/Live/.test(await page.$eval("#tabel-sesi tr", (t) => t.textContent)), "kelas virtual: 8 sesi, sesi live di urutan teratas");
+    // Tampilan kartu (default): dikelompokkan, sesi live pertama, hitung mundur.
+    const kartu = await page.evaluate(() => ({
+      n: document.querySelectorAll("#kartu-sesi article").length,
+      grup: [...document.querySelectorAll("#kartu-sesi h3")].map((h) => h.textContent.trim()),
+      pertama: document.querySelector("#kartu-sesi article").textContent,
+      tabelKosong: document.querySelectorAll("#tabel-sesi tr").length === 0,
+    }));
+    check(kartu.n === 8 && kartu.grup.join(",") === "Sedang Live,Akan Datang,Selesai" && /Live/.test(kartu.pertama) && kartu.tabelKosong,
+      `kelas virtual (kartu): 8 kartu dalam grup ${kartu.grup.join(" · ")}`);
+    check(/Mulai \d+ (menit|jam|hari) lagi/.test(await page.$eval("#kartu-sesi", (e) => e.textContent)), "kartu sesi terjadwal menampilkan hitung mundur");
+    await page.click('[data-view="tabel"]');
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-sesi tr").length > 0 && document.getElementById("kartu-sesi").classList.contains("hidden"));
+    check(/Live/.test(await page.$eval("#tabel-sesi tr", (t) => t.textContent)), "tombol Tabel → tabel tampil, sesi live di urutan teratas");
     const kvTerjadwal = await page.$eval('[data-to="live"]', (b) => b.getAttribute("data-status"));
     await page.click(`[data-status="${kvTerjadwal}"]`);
     await toastHas(/Sesi dimulai/);
@@ -444,6 +461,11 @@ function findBrowser() {
     await page.goto(ROOT + "pages/data-master.html", NAV);
     await page.waitForFunction(() => /dari 12/.test(document.getElementById("tabel-counter").textContent));
     check((await page.$eval("#kpi-total", (e) => e.textContent)) === "12", "data master: 12 kursus + KPI dari data");
+    const katalog = await page.evaluate(() => ({ n: document.querySelectorAll("#kartu-kursus article").length, sampul: document.querySelectorAll("#kartu-kursus article svg, #kartu-kursus article img").length }));
+    check(katalog.n === 12 && katalog.sampul === 12, `katalog (kartu): ${katalog.n} kartu kursus bersampul`);
+    await page.click('[data-view="tabel"]');
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-kursus tr").length > 0 && document.getElementById("kartu-kursus").classList.contains("hidden"));
+    check(true, "tombol Tabel → tabel kursus tampil");
     await page.select("#f-status", "draft");
     await page.waitForFunction(() => /dari 2 data/.test(document.getElementById("tabel-counter").textContent));
     check((await rowsIn("#tabel-kursus")) === 2, "data master: filter status draft → 2");
@@ -461,6 +483,13 @@ function findBrowser() {
     await page.type("#nama", "Kursus Uji Otomatis");
     await page.type("#deskripsi", "Kursus ini dibuat oleh uji otomatis E2E untuk memastikan alur tambah data berjalan.");
     await page.select("#instruktur_id", "dsn_002");
+    check(!!(await page.$("#sampul-preview svg")), "form: pratinjau sampul otomatis (SVG) tampil");
+    const pngFile = path.join(require("node:os").tmpdir(), "nexus-e2e-sampul.png");
+    fs.writeFileSync(pngFile, Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVR42mNk+M9QzwAEjDAGNzYAAB0HBf+Lx4PlAAAAAElFTkSuQmCC", "base64"));
+    await (await page.$("#file-sampul")).uploadFile(pngFile);
+    await page.waitForSelector("#sampul-preview img");
+    check(/^data:image\/(webp|jpeg)/.test(await page.$eval("#cover", (e) => e.value)), "form: unggah PNG → dikompres (WebP/JPEG) & pratinjau berganti gambar");
+    fs.unlinkSync(pngFile);
     await page.type("#modul-judul-0", "Pengantar");
     await page.click("#btn-tambah-modul");
     await page.type("#modul-judul-1", "Pendalaman Materi");
@@ -475,9 +504,11 @@ function findBrowser() {
     await toastHas(/TS-201 berhasil ditambahkan/);
     await page.waitForFunction(() => /dari 13/.test(document.getElementById("tabel-counter").textContent));
     check(where() === "data-master.html", "tambah kursus → kembali ke data master + toast, total 13");
+    check(await page.evaluate(async () => /^data:image\//.test(((await Nexus.services.kursus.query((k) => k.kode_mk === "TS-201"))[0] || {}).cover || "")), "sampul unggahan tersimpan bersama kursus");
 
     await page.type("#f-cari", "TS-201");
-    await page.waitForFunction(() => /2 modul/.test(document.getElementById("tabel-kursus").textContent));
+    // Tunggu pencarian diterapkan (tinggal 1 baris) sebelum mengklik Edit.
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-kursus [data-hapus]").length === 1 && /2 modul/.test(document.getElementById("tabel-kursus").textContent));
     await nav(() => page.click('a[href^="form.html?id="]'));
     await page.waitForFunction(() => document.getElementById("nama").value === "Kursus Uji Otomatis");
     check(/Edit Kursus TS-201/.test(await page.$eval("#judul-form", (e) => e.textContent)), "edit: data & 2 modul dimuat");
@@ -535,14 +566,45 @@ function findBrowser() {
     await mobile.setViewport({ width: 390, height: 844 });
     await mobile.setRequestInterception(true);
     mobile.on("request", (r) => (/fonts\.(googleapis|gstatic)/.test(r.url()) ? r.abort() : r.continue()));
-    const wide = [];
-    for (const m of ["index", ...MENU.map((x) => `pages/${x}`), "pages/form", "pages/layout"]) {
-      await mobile.goto(`${ROOT}${m}.html`, NAV);
+    // Halaman login diukur saat belum masuk (bila sudah masuk, login langsung dialihkan).
+    const lebarLogin = {};
+    for (const width of [390, 768]) {
+      await mobile.setViewport({ width, height: 900 });
+      await mobile.goto(`${ROOT}index.html`, NAV);
       await sleep(300);
-      const w = await mobile.evaluate(() => document.documentElement.scrollWidth);
-      if (w > 390) wide.push(`${m} (${w}px)`);
+      lebarLogin[width] = await mobile.evaluate(() => document.documentElement.scrollWidth);
     }
-    check(wide.length === 0, `12 halaman pas di 390px tanpa font: ${wide.join(", ") || "semua pas"}`);
+    // Tab baru tidak berbagi sessionStorage → login dulu agar halaman admin benar-benar terbuka.
+    await mobile.type("#identifier", DEMO.email);
+    await mobile.type("#password", DEMO.password);
+    await Promise.all([mobile.waitForNavigation(NAV), mobile.click('#login-form button[type="submit"]')]);
+    // Kembalikan pilihan tampilan ke default (kartu) agar tampilan kartu ikut diuji.
+    await mobile.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("nexus-lms:view:")).forEach((k) => localStorage.removeItem(k)));
+    for (const width of [390, 768]) {
+      await mobile.setViewport({ width, height: 900 });
+      const wide = lebarLogin[width] > width ? [`index (${lebarLogin[width]}px)`] : [];
+      const dialihkan = [];
+      for (const m of [...MENU, "form", "layout"]) {
+        await mobile.goto(`${ROOT}pages/${m}.html`, NAV);
+        await sleep(300);
+        const info = await mobile.evaluate(() => ({ w: document.documentElement.scrollWidth, page: location.pathname.split("/").pop() }));
+        if (info.page !== `${m}.html`) dialihkan.push(m);
+        if (info.w > width) wide.push(`${m} (${info.w}px)`);
+      }
+      check(dialihkan.length === 0 && wide.length === 0,
+        `12 halaman (termasuk login) pas di ${width}px tanpa font, mode kartu: ${wide.join(", ") || "semua pas"}${dialihkan.length ? " | DIALIHKAN: " + dialihkan.join(", ") : ""}`);
+    }
+
+    // Tampilan kosong berilustrasi pada katalog (mode kartu).
+    await mobile.goto(`${ROOT}pages/data-master.html`, NAV);
+    await mobile.waitForSelector('[data-view="kartu"]');
+    const modeAwal = await mobile.$eval('[data-view="kartu"]', (b) => b.getAttribute("aria-pressed"));
+    if (modeAwal !== "true") await mobile.click('[data-view="kartu"]');
+    await mobile.waitForFunction(() => document.querySelectorAll("#kartu-kursus article").length > 0);
+    await mobile.type("#f-cari", "tidak-ada-kursus-ini");
+    await sleep(800);
+    const kosong = await mobile.evaluate(() => ({ teks: document.getElementById("kartu-kursus").textContent.replace(/\s+/g, " ").trim().slice(0, 80), svg: !!document.querySelector("#kartu-kursus svg") }));
+    check(/Tidak ada data yang cocok/.test(kosong.teks) && kosong.svg, `katalog: pencarian tanpa hasil → tampilan kosong berilustrasi (${kosong.teks})`);
     await mobile.close();
 
     /* ---------- Keluar ---------- */

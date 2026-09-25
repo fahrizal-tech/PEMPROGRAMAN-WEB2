@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** v1.0.0 — seluruh halaman berfungsi dengan data lokal, teruji otomatis (54 uji unit, 88 uji E2E).
+> **Status:** v1.1.0 — seluruh halaman berfungsi dengan data lokal; tampilan kartu bergambar (katalog kursus, kelas virtual, dashboard); teruji otomatis (56 uji unit, 99 uji E2E).
 
 ## Fitur Utama
 

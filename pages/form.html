@@ -19,6 +19,7 @@
   <script src="../assets/js/core/validators.js" defer></script>
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
+  <script src="../assets/js/components/cover.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
   <script src="../assets/js/pages/form.js" defer></script>
 </head>
@@ -128,6 +129,35 @@
                     <span><span class="block text-sm font-semibold text-slate-800">Arsip</span><span class="text-xs text-slate-500">Kurikulum lama, tidak aktif</span></span>
                   </label>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sampul -->
+          <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:p-6" aria-labelledby="judul-sampul">
+            <div class="flex items-start gap-3 border-b border-slate-100 pb-4">
+              <span class="material-symbols-outlined rounded-lg bg-pink-50 p-2 text-[20px] text-pink-600" aria-hidden="true">image</span>
+              <div>
+                <h3 id="judul-sampul" class="text-base font-semibold text-slate-900">Sampul Kursus</h3>
+                <p class="text-xs text-slate-500">Tampil di katalog kursus, dashboard, dan kelas virtual.</p>
+              </div>
+            </div>
+            <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,22rem)_1fr]">
+              <div id="sampul-preview" class="aspect-video overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm"></div>
+              <div>
+                <p class="text-sm text-slate-600">Tanpa unggahan, sampul dibuat otomatis dari <strong>kode MK</strong> dan warna <strong>program studi</strong>.</p>
+                <input type="hidden" id="cover" name="cover">
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <label for="file-sampul" class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-blue-500">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">upload</span>Unggah Gambar
+                    <input id="file-sampul" type="file" accept="image/png,image/jpeg,image/webp" class="sr-only">
+                  </label>
+                  <button type="button" id="btn-hapus-sampul" class="hidden items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">auto_awesome</span>Gunakan Sampul Otomatis
+                  </button>
+                </div>
+                <p class="mt-2 text-xs text-slate-500">PNG, JPG, atau WebP, maksimal 5 MB. Otomatis dipotong 16:9 dan dikompres.</p>
+                <p id="sampul-status" class="mt-1 text-xs font-medium" role="status" aria-live="polite"></p>
               </div>
             </div>
           </section>

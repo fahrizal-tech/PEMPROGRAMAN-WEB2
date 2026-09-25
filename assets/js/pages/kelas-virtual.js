@@ -20,8 +20,9 @@
   }
 
   async function loadAll() {
-    var r = await Promise.all([S.kelasVirtual.list(), S.kursus.list(), S.modul.list(), S.instruktur.list(), S.krs.list(), S.presensi.list()]);
+    var r = await Promise.all([S.kelasVirtual.list(), S.kursus.list(), S.modul.list(), S.instruktur.list(), S.krs.list(), S.presensi.list(), S.programStudi.list()]);
     db = { sesi: r[0], kursus: r[1], modul: r[2], dosen: r[3], krs: r[4], presensi: r[5] };
+    db.prodiKode = {}; r[6].forEach(function (p) { db.prodiKode[p.id] = p.kode; });
     var map = function (list) { var m = {}; list.forEach(function (x) { m[x.id] = x; }); return m; };
     db.kursusMap = map(db.kursus); db.modulMap = map(db.modul); db.dosenMap = map(db.dosen);
 
@@ -31,9 +32,9 @@
       var peserta = db.krs.filter(function (x) { return x.kursus_id === s.kursus_id && x.status === "disetujui"; }).length;
       var pres = db.presensi.filter(function (p) { return p.kelas_virtual_id === s.id; });
       return Object.assign({}, s, {
-        kode: k.kode_mk, kursus: k.nama, dosen: d.nama || "-", modul: db.modulMap[s.modul_id],
+        kode: k.kode_mk, kursus: k.nama, dosen: d.nama || "-", modul: db.modulMap[s.modul_id], kursusObj: k, prodiKode: db.prodiKode[k.prodi_id],
         peserta: peserta, tercatat: pres.length, hadir: pres.filter(function (p) { return p.status === "hadir"; }).length,
-        tanggal: String(s.waktu_mulai).slice(0, 10),
+        tanggal: u.localDate(s.waktu_mulai),
       });
     });
     renderKpi();
@@ -42,7 +43,7 @@
 
   function renderKpi() {
     var rows = db.rows, by = function (st) { return rows.filter(function (s) { return s.status === st; }); };
-    var today = new Date().toISOString().slice(0, 10);
+    var today = u.localDate();
     $("kpi-live").textContent = by("live").length;
     $("kpi-terjadwal").textContent = by("terjadwal").length;
     $("kpi-terjadwal-sub").textContent = by("terjadwal").filter(function (s) { return s.tanggal === today; }).length + " dijadwalkan hari ini";
@@ -54,10 +55,97 @@
   }
 
   var ORDER = { live: 0, terjadwal: 1, selesai: 2 };
+
+  /* ---------- Tampilan kartu ---------- */
+  var PLATFORM_STYLE = { zoom: "text-blue-700", meet: "text-emerald-700", teams: "text-indigo-700" };
+  var GROUPS = [
+    ["live", "Sedang Live", "sensors", "text-red-600"],
+    ["terjadwal", "Akan Datang", "event_upcoming", "text-blue-600"],
+    ["selesai", "Selesai", "task_alt", "text-slate-500"],
+  ];
+
+  function durasi(ms) {
+    var m = Math.round(ms / 60000);
+    if (m < 60) return m + " menit";
+    if (m < 1440) return Math.round(m / 60) + " jam";
+    return Math.round(m / 1440) + " hari";
+  }
+
+  /** Keterangan waktu relatif: hitung mundur mulai/selesai atau "N hari lalu". */
+  function waktuRelatif(s) {
+    var now = Date.now(), start = new Date(s.waktu_mulai).getTime(), end = start + s.durasi_menit * 60000;
+    if (s.status === "live") return now < end ? ["Berakhir " + durasi(end - now) + " lagi", "bg-red-600"] : ["Melewati jadwal selesai", "bg-amber-600"];
+    if (s.status === "terjadwal") return now < start ? ["Mulai " + durasi(start - now) + " lagi", "bg-blue-600"] : ["Terlambat dimulai", "bg-amber-600"];
+    return ["Selesai " + u.timeAgo(new Date(end).toISOString()), "bg-slate-700"];
+  }
+
+  function card(s) {
+    var p = PLATFORM[s.platform] || [s.platform, "link"];
+    var rel = waktuRelatif(s);
+    var pct = s.peserta ? Math.round((s.hadir / s.peserta) * 100) : 0;
+    var badge = s.status === "live"
+      ? html`<span class="inline-flex items-center gap-1.5 rounded-full bg-red-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-white"></span></span>Live</span>`
+      : html`<span class="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow">${ui.statusLabel(s.status)}</span>`;
+    var aksi = s.status === "terjadwal"
+      ? html`<button type="button" data-status="${s.id}" data-to="live" class="flex-1 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">Mulai Sesi</button>`
+      : s.status === "live"
+        ? html`<a href="${s.tautan}" target="_blank" rel="noopener noreferrer" class="flex-1 whitespace-nowrap rounded-lg bg-blue-600 px-3 py-2 text-center text-xs font-semibold text-white hover:bg-blue-700">Masuk ↗</a>
+          <button type="button" data-status="${s.id}" data-to="selesai" class="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Selesaikan</button>`
+        : html`<button type="button" data-presensi="${s.id}" class="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">${s.tercatat ? "Lihat Presensi" : "Isi Presensi"}</button>`;
+    return html`<article class="group flex flex-col overflow-hidden rounded-2xl border ${s.status === "live" ? "border-red-200 ring-1 ring-red-100" : "border-slate-200"} bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div class="relative aspect-video overflow-hidden">
+        ${Nexus.cover.render(Object.assign({}, s.kursusObj, { kode_mk: s.kode }), s.prodiKode, "h-full w-full transition duration-300 group-hover:scale-[1.03]")}
+        <div class="absolute right-3 top-3">${badge}</div>
+        <span class="absolute bottom-3 left-3 rounded-md ${rel[1]} px-2 py-1 text-[11px] font-semibold text-white shadow">${rel[0]}</span>
+        <span class="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-md bg-white/95 px-2 py-1 text-[11px] font-semibold shadow ${PLATFORM_STYLE[s.platform] || "text-slate-700"}">
+          <span class="material-symbols-outlined text-[14px]" aria-hidden="true">${p[1]}</span>${p[0]}</span>
+      </div>
+      <div class="flex flex-1 flex-col p-4">
+        <p class="text-[11px] font-medium text-slate-500"><span class="font-mono">${s.kode}</span>${s.modul ? " · Pertemuan " + s.modul.pertemuan_ke : ""}</p>
+        <h4 class="mt-1 line-clamp-2 font-semibold leading-snug text-slate-900">${s.judul}</h4>
+        <p class="mt-0.5 line-clamp-1 text-xs text-slate-500">${s.kursus}</p>
+        <p class="mt-3 flex items-center gap-1.5 text-xs text-slate-600">
+          <span class="material-symbols-outlined text-[16px] text-slate-400" aria-hidden="true">schedule</span>${u.formatDate(s.waktu_mulai)} · ${jam(s.waktu_mulai, s.durasi_menit)}
+        </p>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-[11px] font-semibold text-indigo-700" aria-hidden="true">${u.initials(s.dosen)}</span>
+          <span class="truncate text-xs text-slate-700">${s.dosen}</span>
+        </div>
+        <div class="mt-3">
+          ${s.status === "terjadwal" ? html`<p class="text-xs text-slate-500"><span class="font-semibold text-slate-800">${s.peserta}</span> peserta terdaftar</p>` : html`
+            <div class="flex justify-between text-xs"><span class="text-slate-500">Kehadiran</span><span class="font-semibold text-slate-800">${s.tercatat ? s.hadir + " / " + s.peserta : "Belum diisi"}</span></div>
+            <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full rounded-full ${s.tercatat ? "bg-emerald-500" : "bg-slate-200"}" style="width:${s.tercatat ? pct : 0}%"></div></div>`}
+        </div>
+        <div class="mt-auto flex items-center gap-2 pt-4">
+          ${aksi}
+          ${s.status === "live" ? html`<button type="button" data-presensi="${s.id}" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Presensi ${s.judul}" title="Presensi"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">how_to_reg</span></button>` : ""}
+          <button type="button" data-edit="${s.id}" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Edit ${s.judul}" title="Edit"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">edit</span></button>
+          <button type="button" data-hapus="${s.id}" class="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600" aria-label="Hapus ${s.judul}" title="Hapus"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  /** Kartu dikelompokkan per status; jumlah grup dihitung dari seluruh hasil filter. */
+  function renderGroups(slice, list) {
+    return html`${GROUPS.map(function (g) {
+      var items = slice.filter(function (s) { return s.status === g[0]; });
+      if (!items.length) return "";
+      var total = list.filter(function (s) { return s.status === g[0]; }).length;
+      return html`<div class="col-span-full flex items-center gap-2 pt-2 first:pt-0">
+          <span class="material-symbols-outlined text-[20px] ${g[3]}" aria-hidden="true">${g[2]}</span>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-700">${g[1]}</h3>
+          <span class="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-700">${total}</span>
+          <span class="h-px flex-1 bg-slate-200" aria-hidden="true"></span>
+        </div>
+        ${items.map(card)}`;
+    })}`;
+  }
   var table = ui.dataTable({
     tbody: $("tabel-sesi"),
     colspan: 7,
-    pageSize: 10,
+    pageSize: 12,
+    cards: { container: $("kartu-sesi"), renderAll: renderGroups, emptyTitle: "Belum ada sesi kelas virtual" },
     load: loadAll,
     emptyText: "Belum ada sesi. Klik \"Jadwalkan Sesi\" untuk menambahkan.",
     search: { input: $("f-cari"), fields: ["judul", "kode", "kursus", "dosen"] },
@@ -190,7 +278,7 @@
   }
 
   /* ---------- Aksi tabel ---------- */
-  $("tabel-sesi").addEventListener("click", async function (e) {
+  async function onAction(e) {
     var btn = e.target.closest("[data-edit],[data-hapus],[data-presensi],[data-status]");
     if (!btn) return;
     var id = btn.getAttribute("data-edit") || btn.getAttribute("data-hapus") || btn.getAttribute("data-presensi") || btn.getAttribute("data-status");
@@ -208,11 +296,23 @@
       return;
     }
     if (await ui.confirmDelete(S.kelasVirtual, s.id, "Sesi \"" + s.judul + "\"")) table.refresh();
-  });
+  }
+  $("tabel-sesi").addEventListener("click", onAction);
+  $("kartu-sesi").addEventListener("click", onAction);
 
   $("btn-tambah").addEventListener("click", function () { openForm(null); });
   $("btn-reset").addEventListener("click", function () { table.reset(); });
 
+  ui.viewToggle($("view-toggle"), {
+    key: "kelas-virtual",
+    onChange: function (mode) {
+      $("kartu-sesi").classList.toggle("hidden", mode !== "kartu");
+      $("tabel-wrap").classList.toggle("hidden", mode !== "tabel");
+      table.setMode(mode);
+    },
+  });
   table.refresh();
+  // Perbarui hitung mundur setiap menit tanpa memuat ulang data.
+  setInterval(function () { table.render(); }, 60000);
   ui.onDataChange(["kelas_virtual", "presensi"], function (d) { if (d.action === "sync" || d.action === "reset") table.refresh(); });
 })();

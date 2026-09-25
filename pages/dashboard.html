@@ -19,6 +19,7 @@
   <script src="../assets/js/core/validators.js" defer></script>
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
+  <script src="../assets/js/components/cover.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
   <script src="../assets/vendor/chart.js/chart.umd.min.js" defer></script>
   <script src="../assets/js/pages/dashboard.js" defer></script>
@@ -30,14 +31,31 @@
     <header data-component="topbar" data-title="Dashboard"></header>
 
     <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
-      <!-- Sambutan -->
-      <section class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Ikhtisar · Periode <span id="periode-aktif">-</span></p>
-          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900"><span id="sapaan">Selamat datang</span>, <span id="nama-admin">Admin</span></h2>
-          <p class="mt-1 text-sm text-slate-500">Ringkasan kondisi pembelajaran berdasarkan data terbaru.</p>
+      <!-- Banner sapaan -->
+      <section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-600 p-6 text-white shadow-sm sm:p-8">
+        <svg class="pointer-events-none absolute -right-10 -top-10 h-64 w-64 text-white/10" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="100" fill="currentColor"/></svg>
+        <svg class="pointer-events-none absolute bottom-0 right-40 h-32 w-32 text-white/10" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="100" fill="currentColor"/></svg>
+        <div class="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div class="max-w-xl">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-100">Ikhtisar · Periode <span id="periode-aktif">-</span></p>
+            <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl"><span id="sapaan">Selamat datang</span>, <span id="nama-admin">Admin</span> 👋</h2>
+            <p class="mt-2 text-sm text-blue-100" id="ringkasan-hari">Memuat ringkasan hari ini…</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a href="mahasiswa.html#krs" class="inline-flex items-center gap-1.5 rounded-lg bg-white px-3.5 py-2 text-sm font-semibold text-blue-700 shadow-sm hover:bg-blue-50"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">pending_actions</span>Validasi KRS</a>
+              <a href="kelas-virtual.html" class="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3.5 py-2 text-sm font-semibold text-white ring-1 ring-white/30 hover:bg-white/25"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">video_camera_front</span>Kelas Virtual</a>
+            </div>
+            <p class="mt-3 text-xs text-blue-200" id="waktu-data"></p>
+          </div>
+          <!-- Ilustrasi: layar belajar daring -->
+          <svg class="hidden w-64 flex-shrink-0 md:block" viewBox="0 0 260 180" aria-hidden="true">
+            <rect x="20" y="20" width="200" height="130" rx="12" fill="#fff" fill-opacity=".95"/>
+            <rect x="20" y="20" width="200" height="22" rx="12" fill="#dbeafe"/><circle cx="36" cy="31" r="4" fill="#f87171"/><circle cx="50" cy="31" r="4" fill="#fbbf24"/><circle cx="64" cy="31" r="4" fill="#34d399"/>
+            <rect x="36" y="56" width="92" height="60" rx="8" fill="#2563eb"/><path d="M72 76 L92 86 L72 96 Z" fill="#fff"/>
+            <rect x="140" y="58" width="64" height="8" rx="4" fill="#bfdbfe"/><rect x="140" y="74" width="50" height="8" rx="4" fill="#dbeafe"/><rect x="140" y="90" width="58" height="8" rx="4" fill="#dbeafe"/>
+            <rect x="36" y="126" width="168" height="8" rx="4" fill="#e2e8f0"/><rect x="36" y="126" width="110" height="8" rx="4" fill="#10b981"/>
+            <g transform="translate(196 116)"><circle r="30" fill="#fbbf24"/><path d="M-16 -2 L0 -10 L16 -2 L0 6 Z" fill="#1e3a8a"/><path d="M-9 1 L-9 10 C-9 14 9 14 9 10 L9 1" fill="none" stroke="#1e3a8a" stroke-width="3"/></g>
+          </svg>
         </div>
-        <p class="text-xs text-slate-500" id="waktu-data"></p>
       </section>
 
       <!-- KPI -->
@@ -69,19 +87,31 @@
         </article>
       </section>
 
+      <!-- Sedang live -->
+      <section id="live-section" class="hidden" aria-labelledby="judul-live">
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <h3 id="judul-live" class="flex items-center gap-2 text-base font-semibold text-slate-900">
+            <span class="relative flex h-2.5 w-2.5" aria-hidden="true"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span></span>
+            Sedang Live Sekarang
+          </h3>
+          <a href="kelas-virtual.html" class="text-xs font-semibold text-blue-600 hover:underline">Semua sesi</a>
+        </div>
+        <div id="live-list" class="grid grid-cols-1 gap-4 lg:grid-cols-2"></div>
+      </section>
+
       <!-- Grafik baris 1 -->
       <section class="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <article class="min-w-0 rounded-xl border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2">
           <h3 class="text-base font-semibold text-slate-900">Tren Pengajuan KRS</h3>
           <p class="text-xs text-slate-500">Jumlah pengajuan per hari dan akumulasinya.</p>
           <div class="relative mt-4 h-72"><canvas id="chart-krs" role="img" aria-label="Grafik tren pengajuan KRS per hari"></canvas></div>
-          <table id="data-krs" class="sr-only"><caption>Data pengajuan KRS per hari</caption></table>
+          <div class="sr-only"><table id="data-krs"><caption>Data pengajuan KRS per hari</caption></table></div>
         </article>
         <article class="min-w-0 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 class="text-base font-semibold text-slate-900">Mahasiswa Aktif per Prodi</h3>
           <p class="text-xs text-slate-500">Sebaran mahasiswa berstatus aktif.</p>
           <div class="relative mx-auto mt-4 h-72 max-w-xs"><canvas id="chart-prodi" role="img" aria-label="Grafik distribusi mahasiswa aktif per program studi"></canvas></div>
-          <table id="data-prodi" class="sr-only"><caption>Data mahasiswa aktif per program studi</caption></table>
+          <div class="sr-only"><table id="data-prodi"><caption>Data mahasiswa aktif per program studi</caption></table></div>
         </article>
       </section>
 
@@ -96,7 +126,7 @@
             <a href="data-master.html" class="whitespace-nowrap text-xs font-semibold text-blue-600 hover:underline">Kelola kursus</a>
           </div>
           <div class="relative mt-4 h-80"><canvas id="chart-kursus" role="img" aria-label="Grafik keterisian kursus"></canvas></div>
-          <table id="data-kursus" class="sr-only"><caption>Data keterisian kursus</caption></table>
+          <div class="sr-only"><table id="data-kursus"><caption>Data keterisian kursus</caption></table></div>
         </article>
         <article class="min-w-0 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <div class="flex items-start justify-between gap-3">
@@ -111,25 +141,15 @@
       </section>
 
       <!-- Kursus teratas -->
-      <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="judul-top">
-        <div class="border-b border-slate-200 px-5 py-4">
-          <h3 id="judul-top" class="text-base font-semibold text-slate-900">Kursus dengan Peserta Terbanyak</h3>
-          <p class="text-xs text-slate-500">Berdasarkan KRS yang disetujui.</p>
+      <section aria-labelledby="judul-top">
+        <div class="mb-3 flex items-end justify-between gap-3">
+          <div>
+            <h3 id="judul-top" class="text-base font-semibold text-slate-900">Kursus dengan Peserta Terbanyak</h3>
+            <p class="text-xs text-slate-500">Berdasarkan KRS yang disetujui.</p>
+          </div>
+          <a href="data-master.html" class="text-xs font-semibold text-blue-600 hover:underline">Lihat katalog</a>
         </div>
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-slate-200 text-sm">
-            <thead class="bg-slate-50">
-              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                <th scope="col" class="px-5 py-3">Kursus</th>
-                <th scope="col" class="px-5 py-3">Dosen Pengampu</th>
-                <th scope="col" class="px-5 py-3 text-right">Peserta</th>
-                <th scope="col" class="px-5 py-3 text-right">Rata-rata Nilai</th>
-                <th scope="col" class="px-5 py-3">Status</th>
-              </tr>
-            </thead>
-            <tbody id="top-kursus" class="divide-y divide-slate-100"></tbody>
-          </table>
-        </div>
+        <div id="top-kursus" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5"></div>
       </section>
     </main>
 

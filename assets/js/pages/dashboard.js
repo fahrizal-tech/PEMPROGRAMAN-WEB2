@@ -81,7 +81,7 @@
 
     /* ---------- Grafik: tren KRS ---------- */
     var perHari = {};
-    krs.forEach(function (x) { var d = String(x.diajukan_pada || "").slice(0, 10); if (d) perHari[d] = (perHari[d] || 0) + 1; });
+    krs.forEach(function (x) { var d = x.diajukan_pada ? u.localDate(x.diajukan_pada) : ""; if (d) perHari[d] = (perHari[d] || 0) + 1; });
     var hari = Object.keys(perHari).sort();
     var kumulatif = 0;
     var dataKum = hari.map(function (d) { kumulatif += perHari[d]; return kumulatif; });
@@ -159,16 +159,59 @@
       var nilai = krs.filter(function (x) { return x.kursus_id === k.id && x.nilai_akhir != null; }).map(function (x) { return x.nilai_akhir; });
       return { k: k, t: terisiMap[k.id] || 0, avg: nilai.length ? nilai.reduce(function (a, b) { return a + b; }, 0) / nilai.length : null };
     }).sort(function (a, b) { return b.t - a.t; }).slice(0, 5);
-    $("top-kursus").innerHTML = top.map(function (x) {
+    $("top-kursus").innerHTML = top.map(function (x, i) {
       var d = dosenMap[x.k.instruktur_id];
-      return html`<tr class="hover:bg-slate-50">
-        <td class="px-5 py-3"><span class="font-mono text-xs text-slate-500">${x.k.kode_mk}</span><p class="font-medium text-slate-900">${x.k.nama}</p></td>
-        <td class="whitespace-nowrap px-5 py-3 text-slate-600">${d ? d.nama : "-"}</td>
-        <td class="whitespace-nowrap px-5 py-3 text-right tabular-nums text-slate-700">${x.t} / ${x.k.kuota}</td>
-        <td class="px-5 py-3 text-right tabular-nums text-slate-700">${x.avg == null ? "-" : u.formatNumber(x.avg, 1)}</td>
-        <td class="px-5 py-3">${ui.badge(x.k.status)}</td>
-      </tr>`.value;
+      var prodiK = prodiMap[x.k.prodi_id] ? prodiMap[x.k.prodi_id].kode : null;
+      return html`<a href="form.html?id=${encodeURIComponent(x.k.id)}" class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+        <div class="relative aspect-video overflow-hidden">
+          ${Nexus.cover.render(x.k, prodiK, "h-full w-full transition duration-300 group-hover:scale-[1.03]")}
+          <span class="absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-800 shadow" aria-label="Peringkat ${i + 1}">#${i + 1}</span>
+        </div>
+        <div class="flex flex-1 flex-col p-4">
+          <p class="font-mono text-[11px] text-slate-500">${x.k.kode_mk}</p>
+          <p class="mt-0.5 line-clamp-2 text-sm font-semibold leading-snug text-slate-900">${x.k.nama}</p>
+          <p class="mt-1 truncate text-xs text-slate-500">${d ? d.nama : "-"}</p>
+          <div class="mt-auto flex items-center justify-between pt-3 text-xs">
+            <span class="inline-flex items-center gap-1 text-slate-600"><span class="material-symbols-outlined text-[16px] text-slate-400" aria-hidden="true">groups</span>${x.t} / ${x.k.kuota}</span>
+            <span class="inline-flex items-center gap-1 font-semibold text-slate-800"><span class="material-symbols-outlined text-[16px] text-amber-500" aria-hidden="true">grade</span>${x.avg == null ? "-" : u.formatNumber(x.avg, 1)}</span>
+          </div>
+        </div>
+      </a>`.value;
     }).join("");
+
+    /* ---------- Sedang live & ringkasan banner ---------- */
+    var live = kelas.filter(function (k) { return k.status === "live"; });
+    var kursusMap = byId(kursus);
+    $("live-section").classList.toggle("hidden", !live.length);
+    $("live-list").innerHTML = live.slice(0, 4).map(function (s) {
+      var k = kursusMap[s.kursus_id] || {}, d = dosenMap[k.instruktur_id];
+      var pres = presensi.filter(function (p) { return p.kelas_virtual_id === s.id; });
+      var hadir = pres.filter(function (p) { return p.status === "hadir"; }).length;
+      var end = new Date(s.waktu_mulai).getTime() + s.durasi_menit * 60000;
+      var sisa = Math.round((end - Date.now()) / 60000);
+      return html`<article class="flex overflow-hidden rounded-2xl border border-red-200 bg-white shadow-sm ring-1 ring-red-100">
+        <div class="relative w-32 flex-shrink-0 overflow-hidden sm:w-40">${Nexus.cover.render(k, prodiMap[k.prodi_id] && prodiMap[k.prodi_id].kode, "h-full w-full")}
+          <span class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white shadow"><span class="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true"></span>Live</span></div>
+        <div class="flex min-w-0 flex-1 flex-col p-3">
+          <p class="font-mono text-[11px] text-slate-500">${k.kode_mk}</p>
+          <p class="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">${s.judul}</p>
+          <p class="mt-1 truncate text-xs text-slate-500">${d ? d.nama : "-"}</p>
+          <div class="mt-auto flex items-center justify-between gap-2 pt-2 text-xs">
+            <span class="${sisa > 0 ? "text-red-600" : "text-amber-700"} font-semibold">${sisa > 0 ? "Berakhir " + sisa + " menit lagi" : "Melewati jadwal"}</span>
+            <span class="text-slate-600">${hadir} hadir</span>
+          </div>
+          <a href="${s.tautan}" target="_blank" rel="noopener noreferrer" class="mt-2 rounded-lg bg-blue-600 px-3 py-1.5 text-center text-xs font-semibold text-white hover:bg-blue-700">Masuk ↗</a>
+        </div>
+      </article>`.value;
+    }).join("");
+
+    var koreksi = count(kumpul, function (p) { return p.nilai == null; });
+    var krsMenunggu = count(krs, function (x) { return x.status === "diajukan"; });
+    $("ringkasan-hari").textContent = [
+      live.length ? live.length + " sesi sedang live" : "Tidak ada sesi live",
+      krsMenunggu + " KRS menunggu validasi",
+      koreksi + " tugas menunggu koreksi",
+    ].join(" · ");
   }
 
   render().catch(function (e) {

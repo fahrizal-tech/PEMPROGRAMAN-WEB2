@@ -5,6 +5,29 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-09-25 · Penyegaran Visual
+
+### Tahap 4c — UI kartu bergambar
+
+#### Ditambahkan
+- Sampul kursus otomatis (SVG: warna per program studi, ikon per topik) dan **unggah sampul** di Form Kursus (dipotong 16:9, dikompres WebP; hanya gambar WebP/JPEG/PNG).
+- Tombol **Kartu ⇄ Tabel** (pilihan diingat per halaman) dan tampilan kosong berilustrasi.
+- **Kelas Virtual**: kartu per sesi dikelompokkan *Sedang Live · Akan Datang · Selesai*, badge LIVE, hitung mundur, platform, avatar dosen, bar kehadiran.
+- **Katalog Kursus** (Data Master): kartu bersampul dengan tingkat, SKS, status, dosen, dan kuota.
+- **Dashboard**: banner sapaan berilustrasi + ringkasan hari ini + tombol cepat, kartu *Sedang Live Sekarang*, kursus teratas bersampul.
+- Helper `u.localDate` (tanggal lokal).
+
+#### Diubah
+- Data contoh v2: jadwal, tenggat, pengajuan KRS, log, dan login **relatif terhadap hari ini** (selalu aktual saat demo). Data demo di browser direset otomatis satu kali.
+
+#### Diperbaiki
+- Tabel pembaca layar di Dashboard membuat halaman melebar di HP (dibungkus `div.sr-only`).
+- Urutan log & tanda "terlambat" konsisten lintas zona waktu (stempel waktu UTC, tampilan lokal).
+
+#### Pengujian
+- Uji HP (390px) dan tablet (768px) kini **login terlebih dahulu** di tab uji sehingga benar-benar memeriksa 12 halaman (sebelumnya tab baru tanpa sesi dialihkan ke halaman login).
+- 56 uji unit & 99 uji E2E.
+
 ## [1.0.0] — 2026-09-25 · Milestone 3 selesai
 
 ### Tahap 4 — Halaman & Interaktivitas (bagian 2)

@@ -486,7 +486,57 @@
   }
 
   /* =====================================================================
+   * Tampilan kosong berilustrasi & tombol Kartu ⇄ Tabel
+   * ===================================================================== */
+  function emptyState(title, text) {
+    return html`<div class="flex flex-col items-center px-6 py-12 text-center">
+      <svg viewBox="0 0 160 120" class="h-28 w-36" aria-hidden="true">
+        <rect x="20" y="28" width="120" height="78" rx="12" fill="#eff6ff"/>
+        <rect x="34" y="44" width="56" height="8" rx="4" fill="#bfdbfe"/><rect x="34" y="60" width="88" height="6" rx="3" fill="#dbeafe"/><rect x="34" y="72" width="72" height="6" rx="3" fill="#dbeafe"/>
+        <circle cx="118" cy="30" r="18" fill="#2563eb"/><path d="M111 30 h14 M118 23 v14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <p class="mt-3 text-sm font-semibold text-slate-800">${title}</p>
+      ${text ? html`<p class="mt-1 max-w-sm text-xs text-slate-500">${text}</p>` : ""}
+    </div>`;
+  }
+
+  /**
+   * Tombol Kartu ⇄ Tabel; pilihan diingat per halaman (localStorage, bila tersedia).
+   * @param {Element} el wadah tombol
+   * @param {object} o { key, onChange(mode), default: "kartu" }
+   */
+  function viewToggle(el, o) {
+    var storeKey = "nexus-lms:view:" + o.key;
+    var mode = null;
+    try { mode = global.localStorage.getItem(storeKey); } catch (e) { /* diblokir */ }
+    if (mode !== "kartu" && mode !== "tabel") mode = o.default || "kartu";
+    el.setAttribute("role", "group");
+    el.setAttribute("aria-label", "Pilih tampilan");
+    el.className = "inline-flex rounded-lg border border-slate-300 bg-white p-0.5";
+    function draw() {
+      el.innerHTML = [["kartu", "grid_view", "Kartu"], ["tabel", "table_rows", "Tabel"]].map(function (v) {
+        var on = mode === v[0];
+        return html`<button type="button" data-view="${v[0]}" aria-pressed="${on ? "true" : "false"}"
+          class="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${on ? "bg-blue-600 text-white" : "text-slate-600 hover:bg-slate-100"}">
+          <span class="material-symbols-outlined text-[16px]" aria-hidden="true">${v[1]}</span>${v[2]}</button>`.value;
+      }).join("");
+    }
+    el.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-view]");
+      if (!b || b.getAttribute("data-view") === mode) return;
+      mode = b.getAttribute("data-view");
+      try { global.localStorage.setItem(storeKey, mode); } catch (err) { /* diblokir */ }
+      draw();
+      o.onChange(mode);
+    });
+    draw();
+    o.onChange(mode);
+    return { get: function () { return mode; } };
+  }
+
+  /* =====================================================================
    * Tabel data: cari, filter, urut, halaman, tampilan kosong
+   * (opsional: mode kartu → o.cards { container, render, emptyTitle })
    * ===================================================================== */
   /**
    * @param {object} o {
@@ -502,6 +552,8 @@
     var page = 1;
     var sortKey = o.defaultSort || null;
     var pageSize = o.pageSize || 10;
+    var mode = o.cards ? "kartu" : "tabel";
+    var loaded = false; // sebelum data pertama termuat, tampilkan status memuat (bukan "kosong")
 
     function searchable(row) {
       if (!o.search) return "";
@@ -552,10 +604,19 @@
     }
 
     function render() {
+      if (!loaded) return loading();
       var list = visible();
       var pages = Math.max(1, Math.ceil(list.length / pageSize));
       if (page > pages) page = pages;
       var slice = list.slice((page - 1) * pageSize, page * pageSize);
+      if (o.cards && mode === "kartu") {
+        o.cards.container.innerHTML = slice.length
+          ? (o.cards.renderAll ? o.cards.renderAll(slice, list).value : slice.map(function (r) { return o.cards.render(r).value; }).join(""))
+          : html`<div class="col-span-full">${emptyState(rows.length ? "Tidak ada data yang cocok" : (o.cards.emptyTitle || "Belum ada data"), rows.length ? "Ubah kata kunci pencarian atau filter." : o.emptyText)}</div>`.value;
+        renderPager(list.length, pages);
+        if (o.onRender) o.onRender(list, slice);
+        return;
+      }
       if (!slice.length) {
         o.tbody.innerHTML = html`<tr><td colspan="${o.colspan}" class="px-4 py-12 text-center">
           <span class="material-symbols-outlined text-[36px] text-slate-300" aria-hidden="true">inbox</span>
@@ -569,6 +630,10 @@
     }
 
     function loading() {
+      if (o.cards && mode === "kartu") {
+        o.cards.container.innerHTML = html`<div class="col-span-full py-10 text-center text-sm text-slate-500"><span class="material-symbols-outlined animate-spin text-[22px] text-blue-500" aria-hidden="true">progress_activity</span><p class="mt-1">Memuat data…</p></div>`.value;
+        return;
+      }
       o.tbody.innerHTML = html`<tr><td colspan="${o.colspan}" class="px-4 py-10 text-center text-sm text-slate-500">
         <span class="material-symbols-outlined animate-spin text-[22px] text-blue-500" aria-hidden="true">progress_activity</span>
         <p class="mt-1">Memuat data…</p></td></tr>`.value;
@@ -578,6 +643,7 @@
       loading();
       try {
         rows = await o.load();
+        loaded = true;
         render();
       } catch (e) {
         o.tbody.innerHTML = html`<tr><td colspan="${o.colspan}" class="px-4 py-10 text-center text-sm text-red-600">Gagal memuat data: ${e.message}</td></tr>`.value;
@@ -596,6 +662,13 @@
       rows: function () { return rows; },
       visible: visible,
       setSort: function (k) { sortKey = k; render(); },
+      /** Ganti tampilan "kartu" / "tabel" (bila o.cards tersedia). */
+      setMode: function (m) {
+        mode = m;
+        // Kosongkan tampilan yang tidak aktif agar tidak ada tombol tersembunyi yang tertinggal.
+        if (o.cards) { if (m === "kartu") o.tbody.innerHTML = ""; else o.cards.container.innerHTML = ""; }
+        render();
+      },
       /** Ubah jumlah baris per halaman (mis. 100000 saat mencetak semua baris). */
       setPageSize: function (n) { pageSize = n; page = 1; render(); },
       reset: function () {
@@ -650,6 +723,8 @@
     fillForm: fillForm,
     bindForm: bindForm,
     field: field,
+    emptyState: emptyState,
+    viewToggle: viewToggle,
     formModal: formModal,
     setFieldError: setFieldError,
     dataTable: dataTable,

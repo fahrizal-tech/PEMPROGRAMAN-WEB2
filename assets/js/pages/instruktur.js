@@ -157,7 +157,7 @@
   $("btn-ekspor").addEventListener("click", function () {
     var rows = table.visible();
     if (!rows.length) return ui.toast("Tidak ada data untuk diekspor.", "warning");
-    u.download("data-dosen-" + new Date().toISOString().slice(0, 10) + ".csv", u.toCSV(rows, [
+    u.download("data-dosen-" + u.localDate() + ".csv", u.toCSV(rows, [
       { label: "NIDN", value: "nidn" }, { label: "Nama", value: "nama" }, { label: "Email", value: "email" }, { label: "Program Studi", value: "prodi" },
       { label: "Jabatan", value: "jabatan_akademik" }, { label: "Bidang Keahlian", value: "bidang_keahlian" },
       { label: "Kursus Diampu", value: function (d) { return d.diampu.map(function (k) { return k.kode_mk; }).join(" "); } },

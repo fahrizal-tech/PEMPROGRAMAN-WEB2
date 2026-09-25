@@ -19,6 +19,7 @@
   <script src="../assets/js/core/validators.js" defer></script>
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
+  <script src="../assets/js/components/cover.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
   <script src="../assets/js/pages/kelas-virtual.js" defer></script>
 </head>
@@ -35,9 +36,12 @@
           <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Jadwal &amp; Sesi Kelas Virtual</h2>
           <p class="mt-1 max-w-2xl text-sm text-slate-500">Jadwalkan sesi daring, kelola status sesi, dan catat presensi mahasiswa.</p>
         </div>
+        <div class="flex flex-wrap items-center gap-2 self-start lg:self-auto">
+          <div id="view-toggle"></div>
         <button type="button" id="btn-tambah" class="inline-flex items-center gap-2 self-start rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 lg:self-auto">
           <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>Jadwalkan Sesi
         </button>
+        </div>
       </section>
 
       <section aria-label="Ringkasan sesi" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -80,7 +84,10 @@
         </div>
       </section>
 
-      <section aria-label="Daftar sesi kelas virtual" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <!-- Tampilan kartu (dikelompokkan: Sedang Live · Akan Datang · Selesai) -->
+      <div id="kartu-sesi" class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3" aria-label="Kartu sesi kelas virtual"></div>
+
+      <section id="tabel-wrap" aria-label="Daftar sesi kelas virtual" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-slate-200 text-sm">
             <caption class="sr-only">Daftar sesi kelas virtual</caption>
@@ -98,11 +105,12 @@
             <tbody id="tabel-sesi" class="divide-y divide-slate-100"></tbody>
           </table>
         </div>
-        <div class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p id="tabel-counter"></p>
-          <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel sesi"></nav>
-        </div>
       </section>
+
+      <div class="flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <p id="tabel-counter"></p>
+        <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman daftar sesi"></nav>
+      </div>
     </main>
 
     <footer data-component="footer"></footer>

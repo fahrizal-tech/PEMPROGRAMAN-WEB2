@@ -288,7 +288,7 @@
   $("btn-ekspor").addEventListener("click", function () {
     var rows = table.visible();
     if (!rows.length) return ui.toast("Tidak ada data untuk diekspor.", "warning");
-    u.download("data-mahasiswa-" + new Date().toISOString().slice(0, 10) + ".csv", u.toCSV(rows, [
+    u.download("data-mahasiswa-" + u.localDate() + ".csv", u.toCSV(rows, [
       { label: "NIM", value: "nim" }, { label: "Nama", value: "nama" }, { label: "Email", value: "email" }, { label: "Program Studi", value: "prodi" },
       { label: "Angkatan", value: "angkatan" }, { label: "Semester", value: "semester" }, { label: "IPK", value: function (m) { return m.ipk ? m.ipk.toFixed(2) : ""; } },
       { label: "Kehadiran (%)", value: function (m) { return m.kehadiran == null ? "" : m.kehadiran.toFixed(1); } },

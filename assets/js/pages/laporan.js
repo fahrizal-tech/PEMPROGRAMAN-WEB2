@@ -115,7 +115,7 @@
   function logRows() {
     return db.log.map(function (l) {
       var a = db.adminMap[l.admin_id];
-      return Object.assign({}, l, { admin: a ? a.nama : "Sistem", tanggal: String(l.waktu).slice(0, 10) });
+      return Object.assign({}, l, { admin: a ? a.nama : "Sistem", tanggal: u.localDate(l.waktu) });
     });
   }
 
@@ -146,7 +146,7 @@
   });
 
   /* ---------- Ekspor CSV ---------- */
-  function stamp() { return new Date().toISOString().slice(0, 10); }
+  function stamp() { return u.localDate(); }
 
   $("btn-csv-rekap").addEventListener("click", function () {
     var rows = rekap.visible();

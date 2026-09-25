@@ -260,3 +260,14 @@ test("sertifikat: yang sudah terbit tidak bisa dihapus (harus dicabut); menunggu
   await S.sertifikat.remove(menunggu.id);
   assert.equal(await S.sertifikat.get(menunggu.id), null);
 });
+
+test("kursus: sampul opsional hanya menerima data URL gambar (tolak HTML/script)", async () => {
+  const { S } = fresh();
+  const png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+  const k = await S.kursus.create(kursusBaru({ cover: png }));
+  assert.equal(k.cover, png);
+  for (const bad of ["data:text/html;base64,PHNjcmlwdD4=", "javascript:alert(1)", "https://contoh.com/a.png", "data:image/svg+xml;base64,PHN2Zz4="]) {
+    await assert.rejects(S.kursus.update(k.id, { cover: bad }), (e) => /gambar WebP, JPEG, atau PNG/.test(e.errors.cover), bad);
+  }
+  assert.equal((await S.kursus.update(k.id, { cover: "" })).cover, null, "sampul bisa dihapus (kembali ke otomatis)");
+});

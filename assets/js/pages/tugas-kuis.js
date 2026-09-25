@@ -23,7 +23,7 @@
     return [hari + " hari lagi", hari <= 3 ? "font-semibold text-amber-700" : "text-slate-600"];
   }
 
-  function terlambat(p, t) { return p.dikumpulkan_pada && p.dikumpulkan_pada > t.deadline; }
+  function terlambat(p, t) { return !!p.dikumpulkan_pada && new Date(p.dikumpulkan_pada) > new Date(t.deadline); }
 
   async function loadAll() {
     var r = await Promise.all([S.tugasKuis.list(), S.kursus.list(), S.krs.list(), S.pengumpulan.list(), S.mahasiswa.list()]);
@@ -211,7 +211,7 @@
       return { kode: t.kode, judul: t.judul, jenis: JENIS[t.jenis], nim: m.nim, nama: m.nama, waktu: u.formatDate(p.dikumpulkan_pada, true), terlambat: terlambat(p, t) ? "Ya" : "Tidak", plagiat: p.skor_plagiarisme, nilai: p.nilai == null ? "" : p.nilai };
     });
     if (!rows.length) return ui.toast("Tidak ada pengumpulan untuk diekspor.", "warning");
-    u.download("nilai-asesmen-" + new Date().toISOString().slice(0, 10) + ".csv", u.toCSV(rows, [
+    u.download("nilai-asesmen-" + u.localDate() + ".csv", u.toCSV(rows, [
       { label: "Kode MK", value: "kode" }, { label: "Asesmen", value: "judul" }, { label: "Jenis", value: "jenis" }, { label: "NIM", value: "nim" },
       { label: "Nama", value: "nama" }, { label: "Dikumpulkan", value: "waktu" }, { label: "Terlambat", value: "terlambat" },
       { label: "Plagiarisme (%)", value: "plagiat" }, { label: "Nilai", value: "nilai" },

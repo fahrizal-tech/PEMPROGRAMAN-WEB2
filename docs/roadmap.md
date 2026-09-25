@@ -151,6 +151,14 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `pengaturan.html` — profil institusi, akademik, keamanan sesi (tervalidasi, hanya kolom berubah disimpan), daftar akun admin & peran, unduh/pulihkan cadangan JSON (tervalidasi), reset data (konfirmasi ketik RESET)
 - [x] Rilis tag `v1.0.0` (seluruh halaman berfungsi)
 
+### Tahap 4c — Penyegaran Visual (UI kartu bergambar) ✅
+Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa mengubah logika/data**; semua uji lama harus tetap lulus. Dikerjakan sebelum QA agar QA menilai tampilan final.
+- [x] 4c.1 Fondasi: sampul kursus otomatis (SVG: warna per prodi, ikon per topik), unggah sampul di Form Kursus (dikompres 16:9 WebP, hanya gambar), tombol Kartu ⇄ Tabel & mode kartu di `ui.dataTable`, ilustrasi tampilan kosong
+- [x] 4c.2 Kelas Virtual: kartu per sesi (Sedang Live · Akan Datang · Selesai) dengan sampul, badge LIVE, hitung mundur (diperbarui tiap menit), platform, avatar dosen, bar kehadiran, aksi; tombol Kartu ⇄ Tabel
+- [x] Data contoh v2: tanggal relatif terhadap hari ini (jadwal, tenggat, log selalu aktual saat demo); stempel waktu kejadian UTC, tanggal tampilan lokal (`u.localDate`)
+- [x] 4c.3 Katalog Kursus (kartu bersampul: tingkat, SKS, status, dosen, kuota, modul/tugas) & Dashboard visual (banner sapaan berilustrasi + ringkasan hari ini + tombol cepat, kartu Sedang Live, kursus teratas bersampul)
+- [x] 4c.4 Uji HP 390px & tablet 768px dalam mode kartu (12 halaman, setelah login), tampilan kosong berilustrasi, perbaikan tabel pembaca layar yang melebarkan Dashboard di HP, rilis tag `v1.1.0`
+
 ### Tahap 5 — QA & Polesan
 - [ ] Validasi HTML W3C tanpa error
 - [ ] Lighthouse: Performance, Accessibility, Best Practices ≥ 90
