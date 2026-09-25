@@ -9,8 +9,8 @@
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const http = require("node:http");
 const puppeteer = require("puppeteer-core");
+const { serve } = require("../helpers/server");
 
 const ROOT = path.resolve(__dirname, "../..");
 const PORT = 4173;
@@ -19,21 +19,6 @@ const MIN = 90;
 const DESKTOP = process.argv.includes("--desktop");
 const DETAIL = process.argv.includes("--detail");
 const PAGES = ["index.html", ...fs.readdirSync(path.join(ROOT, "pages")).filter((f) => f.endsWith(".html") && f !== "layout.html").map((f) => "pages/" + f)];
-const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".ico": "image/x-icon", ".json": "application/json" };
-
-function serve() {
-  const server = http.createServer((req, res) => {
-    const url = decodeURIComponent(new URL(req.url, "http://x").pathname);
-    const file = path.join(ROOT, url === "/" ? "index.html" : url);
-    if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
-      res.writeHead(404).end("Not found");
-      return;
-    }
-    res.writeHead(200, { "Content-Type": TYPES[path.extname(file)] || "application/octet-stream", "Cache-Control": "max-age=3600" });
-    fs.createReadStream(file).pipe(res);
-  });
-  return new Promise((r) => server.listen(PORT, () => r(server)));
-}
 
 function findBrowser() {
   return [process.env.BROWSER_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
@@ -43,7 +28,7 @@ function findBrowser() {
 (async () => {
   const { default: lighthouse } = await import("lighthouse");
   const desktopConfig = DESKTOP ? (await import("lighthouse/core/config/desktop-config.js")).default : undefined;
-  const server = await serve();
+  const server = await serve(PORT);
   const base = `http://localhost:${PORT}/`;
   const browser = await puppeteer.launch({ executablePath: findBrowser(), headless: true, args: [`--remote-debugging-port=${DEBUG_PORT}`] });
 
