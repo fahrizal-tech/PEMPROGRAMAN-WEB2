@@ -230,3 +230,24 @@ test("modul: error per baris & modul yang dipakai kelas virtual tidak bisa dihap
   // krs_101 punya kelas virtual yang memakai modul pertemuan 4 → menghapus semua modul ditolak.
   await assert.rejects(S.modul.saveForKursus("krs_101", [{ judul: "Satu-satunya", tipe_materi: "video" }]), (e) => /kelas virtual/.test(e.errors.modul));
 });
+
+/* ---------- Presensi kelas virtual ---------- */
+
+test("presensi: hanya untuk sesi live/selesai & peserta KRS disetujui; entri diperbarui", async () => {
+  const { S, db } = fresh();
+  const terjadwal = (await db.query("kelas_virtual", (k) => k.status === "terjadwal"))[0];
+  await assert.rejects(S.kelasVirtual.savePresensi(terjadwal.id, []), { code: "BELUM_MULAI" });
+
+  const kv = "kv_0002"; // live, kursus krs_101
+  const peserta = await S.kelasVirtual.peserta(kv);
+  assert.ok(peserta.length > 1);
+  await assert.rejects(S.kelasVirtual.savePresensi(kv, [{ mahasiswa_id: "mhs_9999", status: "hadir" }]), { code: "BUKAN_PESERTA" });
+  await assert.rejects(S.kelasVirtual.savePresensi(kv, [{ mahasiswa_id: peserta[0].id, status: "bolos" }]), { code: "VALIDATION" });
+
+  const entries = peserta.map((m, i) => ({ mahasiswa_id: m.id, status: i === 0 ? "alpa" : "hadir" }));
+  const rows = await S.kelasVirtual.savePresensi(kv, entries);
+  assert.equal(rows.length, peserta.length, "satu catatan per peserta, tanpa duplikat");
+  assert.equal(rows.find((p) => p.mahasiswa_id === peserta[0].id).status, "alpa");
+  const [log] = await S.logAktivitas.recent(1);
+  assert.match(log.deskripsi, new RegExp(`\(${peserta.length - 1}/${peserta.length} hadir\)`));
+});

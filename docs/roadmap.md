@@ -144,8 +144,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 
 **Halaman pendukung:**
 - [x] `mahasiswa.html` — KPI (termasuk "perlu perhatian"), antrean validasi KRS (setujui/tolak beralasan/setujui semua dengan laporan), tabel + filter + ekspor CSV, tambah/edit di modal, detail KRS per mahasiswa, hapus berpenjelasan
-- [ ] `instruktur.html` — CRUD dosen + beban mengajar
-- [ ] `kelas-virtual.html` — jadwal sesi, status live/selesai (kartu "Live Sekarang" tidak terpotong di HP)
+- [x] `instruktur.html` — KPI (Serdos, EDOM, beban), tabel dengan beban mengajar BKD (di bawah 12 / optimal 12–16 / lebih dari 16 SKS), filter & ekspor CSV, tambah/edit di modal, detail kursus diampu, hapus berpenjelasan
+- [x] `kelas-virtual.html` — KPI sesi, jadwal (live di atas), status terjadwal → live → selesai, presensi per sesi (hadir/izin/alpa, tandai semua), jadwalkan/edit sesi (modul menyesuaikan kursus, tautan wajib https), hapus
 - [ ] `tugas-kuis.html` — CRUD tugas + penilaian rubrik
 - [ ] `sertifikasi.html` — terbitkan / cabut sertifikat, verifikasi kode
 - [ ] `pengaturan.html` — profil institusi, preferensi, reset/ekspor/impor data

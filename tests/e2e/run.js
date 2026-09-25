@@ -251,6 +251,78 @@ function findBrowser() {
     check(/KRS — Ahmad Danial Pratama/.test(await page.$eval('[role="dialog"]', (d) => d.textContent)), "detail KRS mahasiswa tampil di modal");
     await page.keyboard.press("Escape");
 
+    /* ---------- Instruktur / Dosen ---------- */
+    await page.goto(ROOT + "pages/instruktur.html", NAV);
+    await page.waitForFunction(() => /dari 12 data/.test(document.getElementById("tabel-counter").textContent));
+    check(true, "dosen: 12 dosen tampil dengan beban mengajar");
+    await page.click('[data-hapus="dsn_001"]');
+    await page.waitForSelector('[role="dialog"]');
+    check(/mengampu/.test(await page.$eval('[role="dialog"]', (d) => d.textContent)), "hapus dosen yang mengampu kursus → ditolak dengan alasan");
+    await page.keyboard.press("Escape");
+    await page.click("#btn-tambah");
+    await page.waitForSelector("#fld-nidn");
+    await page.type("#fld-nidn", "0099887766");
+    await page.type("#fld-nama", "Dosen Uji E2E, M.T.");
+    await page.type("#fld-email", "dosen.uji@nexus.ac.id");
+    await page.select("#fld-prodi_id", "prd_tif");
+    await page.select("#fld-jabatan_akademik", "Lektor");
+    await page.click("#fld-serdos");
+    await clickDialog("Simpan");
+    await toastHas(/Dosen Uji E2E, M.T. berhasil ditambahkan/);
+    await page.waitForFunction(() => /dari 13 data/.test(document.getElementById("tabel-counter").textContent));
+    await page.type("#f-cari", "0099887766");
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-dosen [data-hapus]").length === 1);
+    check(/Serdos/.test(await page.$eval("#tabel-dosen", (t) => t.textContent)), "tambah dosen (Serdos) via modal → tampil");
+    await page.click("#tabel-dosen [data-hapus]");
+    await page.waitForSelector('[role="dialog"]');
+    await clickDialog("Ya, hapus");
+    await toastHas(/Dosen Uji E2E, M.T. berhasil dihapus/);
+    check(true, "hapus dosen tanpa kursus → berhasil");
+
+    /* ---------- Kelas Virtual ---------- */
+    await page.goto(ROOT + "pages/kelas-virtual.html", NAV);
+    await page.waitForFunction(() => /dari 8 data/.test(document.getElementById("tabel-counter").textContent));
+    check(/Live/.test(await page.$eval("#tabel-sesi tr", (t) => t.textContent)), "kelas virtual: 8 sesi, sesi live di urutan teratas");
+    const kvTerjadwal = await page.$eval('[data-to="live"]', (b) => b.getAttribute("data-status"));
+    await page.click(`[data-status="${kvTerjadwal}"]`);
+    await toastHas(/Sesi dimulai/);
+    await page.waitForSelector(`[data-status="${kvTerjadwal}"][data-to="selesai"]`);
+    await page.click(`[data-status="${kvTerjadwal}"][data-to="selesai"]`);
+    await toastHas(/Sesi diselesaikan/);
+    check((await page.evaluate(async (id) => (await Nexus.services.kelasVirtual.get(id)).status, kvTerjadwal)) === "selesai", "status sesi: terjadwal → live → selesai");
+    // Tunggu tabel selesai digambar ulang setelah perubahan status sebelum mengklik.
+    await page.waitForFunction((id) => !document.querySelector(`[data-status="${id}"]`), {}, kvTerjadwal);
+    await sleep(300);
+    await page.click('[data-presensi="kv_0002"]');
+    await page.waitForSelector("#semua-hadir");
+    await page.click("#semua-hadir");
+    await clickDialog("Simpan Presensi");
+    await toastHas(/Presensi disimpan/);
+    const presInfo = await page.evaluate(async () => {
+      const S = Nexus.services;
+      const peserta = (await S.kelasVirtual.peserta("kv_0002")).map((m) => m.id);
+      const rows = await S.presensi.query((p) => p.kelas_virtual_id === "kv_0002");
+      return { peserta: peserta.length, rows: rows.length, bukanHadir: rows.filter((p) => p.status !== "hadir").map((p) => `${p.mahasiswa_id}:${p.status}:${peserta.includes(p.mahasiswa_id) ? "peserta" : "BUKAN-peserta"}`) };
+    });
+    check(presInfo.rows === presInfo.peserta && presInfo.bukanHadir.length === 0, `presensi: tandai semua hadir → ${JSON.stringify(presInfo)}`);
+    await page.click("#btn-tambah");
+    await page.waitForSelector("#fld-kursus_id");
+    await page.select("#fld-kursus_id", "krs_101");
+    const nModul = await page.$eval("#fld-modul_id", (s) => s.options.length - 1);
+    check(nModul === 6, `form sesi: pilihan modul menyesuaikan kursus (${nModul} modul CS-301)`);
+    await page.type("#fld-judul", "Sesi Tambahan Uji E2E");
+    await page.$eval("#fld-waktu_mulai", (e) => { e.value = "2026-10-01T09:00"; });
+    await page.type("#fld-tautan", "http://zoom.us/j/123");
+    await clickDialog("Simpan");
+    await page.waitForSelector("#fld-tautan-error");
+    check(/https/.test(await page.$eval("#fld-tautan-error", (e) => e.textContent)), "form sesi: tautan non-https ditolak");
+    await page.$eval("#fld-tautan", (e) => { e.value = ""; });
+    await page.type("#fld-tautan", "https://zoom.us/j/123");
+    await clickDialog("Simpan");
+    await toastHas(/Sesi Tambahan Uji E2E.*berhasil dijadwalkan/);
+    await page.waitForFunction(() => /dari 9 data/.test(document.getElementById("tabel-counter").textContent));
+    check(true, "jadwalkan sesi baru → total 9 sesi");
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
 
@@ -373,6 +445,13 @@ function findBrowser() {
   } catch (e) {
     fail++;
     console.log(`GAGAL error tak terduga: ${e.message}`);
+    const diag = await page.evaluate(() => ({
+      url: location.pathname.split("/").pop() + location.search,
+      dialog: [...document.querySelectorAll('[role="dialog"]')].map((d) => d.textContent.replace(/\s+/g, " ").slice(0, 120)),
+      toast: ((document.getElementById("toast-region") || {}).textContent || "").replace(/\s+/g, " ").slice(0, 200),
+    })).catch(() => ({}));
+    console.log("      diagnostik:", JSON.stringify(diag));
+    console.log("      " + String(e.stack).split("\n").find((l) => /run\.js:\d+/.test(l)));
   } finally {
     await browser.close();
   }

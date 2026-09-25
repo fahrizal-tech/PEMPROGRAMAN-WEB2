@@ -101,11 +101,13 @@
     var region = toastRegion();
     while (region.children.length >= 4) region.firstChild.remove();
     var el = document.createElement("div");
-    el.className = "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 text-sm shadow-lg transition-all duration-200 " + t[1];
+    // Badan toast tembus-klik agar tidak menghalangi tombol di bawahnya (mis. di dalam modal);
+    // hanya tombol tutup yang dapat diklik.
+    el.className = "pointer-events-none flex w-full max-w-sm items-start gap-3 rounded-lg border px-4 py-3 text-sm shadow-lg transition-all duration-200 " + t[1];
     el.appendChild(toNode(html`
       <span class="material-symbols-outlined text-[20px] ${t[2]}" aria-hidden="true">${t[0]}</span>
       <p class="flex-1 leading-snug">${message}</p>
-      <button type="button" class="-mr-1 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Tutup notifikasi">
+      <button type="button" class="pointer-events-auto -mr-1 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Tutup notifikasi">
         <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
       </button>`));
     var remove = function () { el.classList.add("opacity-0"); setTimeout(function () { el.remove(); }, 200); };
@@ -449,7 +451,8 @@
 
   /**
    * Buka form dalam modal yang terhubung ke service.
-   * @param {object} o { title, fields (ui.html), service, initial, save: async (data) → row, success: (row) → pesan, size }
+   * @param {object} o { title, fields (ui.html), service, initial, save: async (data) → row, success: (row) → pesan, size,
+   *                     onOpen: (form) → void untuk kolom yang saling bergantung }
    * @returns Promise<row|null>
    */
   function formModal(o) {
@@ -476,6 +479,7 @@
           m.close(row);
         },
       });
+      if (o.onOpen) o.onOpen(form);
       var first = form.querySelector("input:not([type=hidden]):not([type=checkbox]), select, textarea");
       if (first) first.focus();
     });
