@@ -44,8 +44,13 @@
 
   var uid = 0;
 
-  /** Ilustrasi SVG 16:9 untuk kursus tanpa sampul unggahan. */
-  function svg(kursus, prodiKode, cls) {
+  /**
+   * Ilustrasi SVG 16:9 untuk kursus tanpa sampul unggahan.
+   * opts.compact: untuk wadah sempit/tegak (gambar terpotong kiri-kanan) — label kode
+   * disembunyikan dan ikon dipusatkan agar tidak terpotong.
+   */
+  function svg(kursus, prodiKode, cls, opts) {
+    var compact = !!(opts && opts.compact);
     var html = Nexus.ui.html;
     var t = THEMES[prodiKode] || DEFAULT;
     var h = hash(kursus.kode_mk || kursus.id || "x");
@@ -59,19 +64,19 @@
       <circle cx="${c1x}" cy="${c1y}" r="${r1}" fill="#fff" fill-opacity=".10"/>
       <circle cx="${c2x}" cy="${c2y}" r="${r2}" fill="#fff" fill-opacity=".08"/>
       <path d="M0 ${wave} C160 ${wave - 40} 320 ${wave + 50} 640 ${wave - 10} L640 360 L0 360 Z" fill="#000" fill-opacity=".10"/>
-      <g transform="translate(430 110) scale(1.35)" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".9"><path d="${iconFor(kursus, t)}"/></g>
-      <rect x="32" y="30" rx="10" width="${36 + String(kursus.kode_mk || "").length * 15}" height="40" fill="#fff" fill-opacity=".18"/>
-      <text x="50" y="58" fill="#fff" font-family="JetBrains Mono, ui-monospace, monospace" font-size="22" font-weight="700">${kursus.kode_mk || ""}</text>
+      <g transform="translate(${compact ? 252 : 430} 110) scale(1.35)" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".9"><path d="${iconFor(kursus, t)}"/></g>
+      ${compact ? "" : html`<rect x="32" y="30" rx="10" width="${36 + String(kursus.kode_mk || "").length * 15}" height="40" fill="#fff" fill-opacity=".18"/>
+      <text x="50" y="58" fill="#fff" font-family="JetBrains Mono, ui-monospace, monospace" font-size="22" font-weight="700">${kursus.kode_mk || ""}</text>`}
     </svg>`;
   }
 
   /** Sampul kursus: gambar unggahan bila ada, selain itu ilustrasi otomatis. */
-  function render(kursus, prodiKode, cls) {
+  function render(kursus, prodiKode, cls, opts) {
     var html = Nexus.ui.html;
     if (kursus.cover && /^data:image\/(webp|jpeg|png);base64,/.test(kursus.cover)) {
       return html`<img src="${kursus.cover}" alt="Sampul kursus ${kursus.kode_mk} ${kursus.nama || ""}" class="${cls || "h-full w-full"} object-cover" loading="lazy">`;
     }
-    return svg(kursus, prodiKode, cls);
+    return svg(kursus, prodiKode, cls, opts);
   }
 
   /**

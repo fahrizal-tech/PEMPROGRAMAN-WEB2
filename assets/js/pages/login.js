@@ -201,4 +201,14 @@
       }
     }
   });
+
+  /* ---------- Periode aktif dari Pengaturan (fallback: teks statis di HTML) ---------- */
+  Nexus.storage.list("pengaturan").then(function (rows) {
+    var row = rows.filter(function (r) { return r.kunci === "periode_aktif"; })[0];
+    var m = row && /^(\d{4}\/\d{4})-(\w+)$/.exec(row.nilai);
+    if (!m) return;
+    document.querySelectorAll("[data-periode]").forEach(function (el) {
+      el.textContent = "TA " + m[1] + (el.getAttribute("data-periode") === "lengkap" ? " " + m[2] : "");
+    });
+  }).catch(function () { /* tetap tampilkan teks statis */ });
 })();
