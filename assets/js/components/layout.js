@@ -187,7 +187,17 @@
       return toggle.getAttribute("aria-expanded") === "true";
     }
 
+    // Konten di belakang drawer dibuat inert agar fokus Tab tidak keluar dari menu.
+    function setBackgroundInert(on) {
+      var main = document.querySelector("main");
+      var wrap = main && main.closest("body > *");
+      if (wrap && wrap !== sidebar) wrap.inert = on;
+      var skip = document.getElementById("skip-link");
+      if (skip) skip.inert = on;
+    }
+
     function open() {
+      setBackgroundInert(true);
       sidebar.classList.remove("-translate-x-full");
       overlay.classList.remove("hidden");
       document.body.classList.add("overflow-hidden");
@@ -198,6 +208,7 @@
 
     function close(returnFocus) {
       if (!isOpen()) return;
+      setBackgroundInert(false);
       sidebar.classList.add("-translate-x-full");
       overlay.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");
@@ -224,6 +235,7 @@
     if (!main) return;
     if (!main.id) main.id = "konten-utama";
     var link = document.createElement("a");
+    link.id = "skip-link";
     link.href = "#" + main.id;
     link.textContent = "Lewati ke konten utama";
     link.className =

@@ -163,7 +163,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] Validasi HTML tanpa error — `npm run test:html` (html-validate: 12 file mentah + 11 DOM hasil render setelah login), masuk CI
 - [x] Lighthouse ≥ 90 — `npm run test:lighthouse` (HP & `-- --desktop`, 11 halaman setelah login): HP 98–100, desktop 99–100 di Performance/Accessibility/Best Practices/SEO; perbaikan CLS (tinggi topbar, penahan `<main>` sampai skrip siap, font `display=optional`) & kontras warna
 - [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
-- [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
+- [x] Aksesibilitas — `npm run test:a11y` (axe-core WCAG 2.1 AA, 23 kondisi: halaman, modal, error form, drawer HP → 0 pelanggaran) + uji keyboard (skip link, cincin fokus, fokus terkunci di modal & drawer HP dengan `inert`, Escape mengembalikan fokus), masuk CI
 - [ ] Hapus kode mati & data dummy yang tidak terpakai
 - [x] *Content-Security-Policy* via `<meta>` di 12 halaman (E2E gagal bila ada pelanggaran), `rel="noopener noreferrer"` pada link eksternal; SRI tidak diperlukan (tidak ada skrip CDN, Chart.js lokal)
 - [x] Dependabot (npm & GitHub Actions, mingguan) + `npm audit` di CI; puppeteer-core 25 → 0 kerentanan

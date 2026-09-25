@@ -31,6 +31,10 @@ jobs:
         run: npm run test:html
         env:
           BROWSER_PATH: /usr/bin/google-chrome
+      - name: Audit aksesibilitas (axe-core + keyboard)
+        run: npm run test:a11y
+        env:
+          BROWSER_PATH: /usr/bin/google-chrome
       - name: Uji E2E (Chrome)
         run: npm run test:e2e
         env:

@@ -11,11 +11,13 @@
     "test:e2e": "node tests/e2e/run.js",
     "test:all": "npm test && npm run test:e2e",
     "test:html": "node tests/quality/html.js",
-    "test:lighthouse": "node tests/quality/lighthouse.js"
+    "test:lighthouse": "node tests/quality/lighthouse.js",
+    "test:a11y": "node tests/quality/a11y.js"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
+    "axe-core": "^4.13.0",
     "html-validate": "^9.7.1",
     "lighthouse": "^13.5.0",
     "puppeteer-core": "^25.12.0",
