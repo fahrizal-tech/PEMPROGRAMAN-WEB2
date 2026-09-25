@@ -509,6 +509,11 @@
         throw new ValidationError({ mahasiswa_id: m.nama + " belum lulus " + k.kode_mk + " (nilai akhir di bawah passing grade " + k.passing_grade + " atau belum dinilai)." });
       }
     },
+    impact: async function (id) {
+      var srt = await db.get("sertifikat", id);
+      // Sertifikat terbit/dicabut adalah dokumen resmi: gunakan Cabut, bukan hapus (jejak verifikasi tetap ada).
+      return { blockers: srt && srt.status !== "menunggu_tte" ? ["sertifikat berstatus " + (srt.status === "terbit" ? "terbit" : "dicabut") + " merupakan dokumen resmi — gunakan aksi Cabut"] : [], cascades: [] };
+    },
   });
 
   async function nextNomorRegistrasi(kursusId, tanggal) {

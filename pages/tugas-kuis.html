@@ -20,6 +20,7 @@
   <script src="../assets/js/core/services.js" defer></script>
   <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/tugas-kuis.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <aside data-component="sidebar"></aside>
@@ -27,735 +28,87 @@
   <div class="flex min-h-screen flex-col lg:pl-64">
     <header data-component="topbar" data-title="Tugas &amp; Kuis"></header>
 
-    <main class="flex-1 min-w-0 px-space-xl py-space-xl"><div class="flex flex-col w-full">
-<!-- Breadcrumb & Top Bar -->
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-xl">
-<div class="flex flex-col gap-space-xs">
-<div class="flex items-center gap-space-xs text-secondary font-label-xs text-label-xs uppercase tracking-wider">
-<span>Akademik &amp; Kursus</span>
-<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
-<span>Manajemen Asesmen</span>
-<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
-<span class="text-primary font-semibold">Tugas &amp; Kuis</span>
-</div>
-<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">
-        Pusat Manajemen Tugas, Kuis &amp; Evaluasi Hasil Belajar
-      </h1>
-<p class="font-body-md text-body-md text-secondary max-w-4xl">
-        Monitoring status pengumpulan mahasiswa, grading rubrik terstandarisasi, serta integritas plagiarisme kuis dan tugas semester aktif.
-      </p>
-</div>
-<!-- Action Buttons -->
-<div class="flex items-center gap-space-sm self-start lg:self-center flex-shrink-0">
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors shadow-sm font-label-md text-label-md" type="button">
-<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
-<span>Ekspor Rekap Nilai (CSV/XLSX)</span>
-</button>
-<button class="inline-flex items-center gap-space-xs px-space-md py-2 bg-primary-container text-on-primary hover:bg-primary transition-colors shadow-sm font-label-md text-label-md font-medium" type="button">
-<span class="material-symbols-outlined text-[18px]">add_circle</span>
-<span>+ Buat Asesmen Baru</span>
-</button>
-</div>
-</div>
-<!-- Top 4 Metric Cards Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
-<!-- Card 1 -->
-<div class="bg-surface-container-lowest p-space-lg shadow-sm flex flex-col justify-between">
-<div class="flex items-start justify-between">
-<div>
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider block">Total Asesmen Aktif</span>
-<div class="flex items-baseline gap-space-xs mt-space-xs">
-<span class="font-headline-lg text-headline-lg text-on-surface font-semibold">48</span>
-<span class="font-body-sm text-body-sm text-secondary">Penugasan</span>
-</div>
-</div>
-<span class="p-space-xs bg-surface-container-low text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">assignment</span>
-</span>
-</div>
-<div class="mt-space-md pt-space-sm bg-surface-container-low/40 p-space-xs flex items-center justify-between">
-<span class="font-body-xs text-body-xs text-secondary">18 Tugas Proyek, 30 Kuis Formatif</span>
-<span class="font-label-xs text-label-xs text-primary font-medium">+6 minggu ini</span>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface-container-lowest p-space-lg shadow-sm flex flex-col justify-between">
-<div class="flex items-start justify-between">
-<div>
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider block">Menunggu Koreksi (Pending)</span>
-<div class="flex items-baseline gap-space-xs mt-space-xs">
-<span class="font-headline-lg text-headline-lg text-error font-semibold">142</span>
-<span class="font-body-sm text-body-sm text-secondary">Berkas</span>
-</div>
-</div>
-<span class="p-space-xs bg-error-container text-on-error-container flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">pending_actions</span>
-</span>
-</div>
-<div class="mt-space-md pt-space-sm bg-error-container/20 p-space-xs flex items-center justify-between">
-<span class="font-body-xs text-body-xs text-on-surface-variant">Rata-rata antrean: 1.8 hari</span>
-<span class="font-label-xs text-label-xs text-error font-semibold uppercase px-1.5 py-0.5 bg-error-container text-on-error-container">Perlu Tindakan</span>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface-container-lowest p-space-lg shadow-sm flex flex-col justify-between">
-<div class="flex items-start justify-between">
-<div>
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider block">Tingkat Kepatuhan Pengumpulan</span>
-<div class="flex items-baseline gap-space-xs mt-space-xs">
-<span class="font-headline-lg text-headline-lg text-on-surface font-semibold">94.6%</span>
-</div>
-</div>
-<span class="p-space-xs bg-surface-container-low text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">task_alt</span>
-</span>
-</div>
-<div class="mt-space-md pt-space-sm bg-surface-container-low/40 p-space-xs flex items-center justify-between">
-<span class="font-body-xs text-body-xs text-secondary truncate">Dari 3,420 total mahasiswa</span>
-<span class="font-label-xs text-label-xs text-primary font-semibold px-1.5 py-0.5 bg-surface-container-high text-on-surface">+3.1% YoY</span>
-</div>
-</div>
-<!-- Card 4 -->
-<div class="bg-surface-container-lowest p-space-lg shadow-sm flex flex-col justify-between">
-<div class="flex items-start justify-between">
-<div>
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider block">Rata-rata Skor Plagiarisme</span>
-<div class="flex items-baseline gap-space-xs mt-space-xs">
-<span class="font-headline-lg text-headline-lg text-on-surface font-semibold">4.2%</span>
-</div>
-</div>
-<span class="p-space-xs bg-surface-container text-secondary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">verified_user</span>
-</span>
-</div>
-<div class="mt-space-md pt-space-sm bg-surface-container-low/40 p-space-xs flex items-center justify-between">
-<span class="font-body-xs text-body-xs text-secondary truncate">Turnitin &amp; AST Analysis</span>
-<span class="font-label-xs text-label-xs text-primary bg-surface-container-high font-medium px-1.5 py-0.5">Aman / DIKTI</span>
-</div>
-</div>
-</div>
-<!-- Filter & Search Toolbar -->
-<div class="bg-surface-container-lowest p-space-md shadow-sm mb-space-md flex flex-col xl:flex-row gap-space-md justify-between items-stretch xl:items-center">
-<div class="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-space-sm">
-<!-- Search Input -->
-<div class="relative flex-1 min-w-[260px]">
-<span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
-<input class="w-full pl-9 pr-space-md py-1.5 bg-surface-container-low text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest" placeholder="Cari nama tugas, kuis, kode mata kuliah, atau dosen..." type="text">
-</div>
-<!-- Dropdown 1: Jenis -->
-<div class="relative">
-<select class="appearance-none w-full sm:w-auto pl-space-md pr-8 py-1.5 bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none cursor-pointer">
-<option>Semua Jenis (Tugas, Kuis, UTS, UAS)</option>
-<option>Tugas Mandiri / Proyek</option>
-<option>Kuis Otomatis</option>
-<option>UTS / UAS</option>
-</select>
-<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] text-outline pointer-events-none">arrow_drop_down</span>
-</div>
-<!-- Dropdown 2: MK -->
-<div class="relative">
-<select class="appearance-none w-full sm:w-auto pl-space-md pr-8 py-1.5 bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none cursor-pointer">
-<option>Semua Mata Kuliah</option>
-<option>CS-301 Arsitektur Cloud &amp; Web</option>
-<option>CS-102 Algoritma &amp; Struktur Data</option>
-<option>CS-4021 Sistem Terdistribusi</option>
-<option>CY-409 Keamanan Siber</option>
-<option>UX-101 Human-Computer Interaction</option>
-</select>
-<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] text-outline pointer-events-none">arrow_drop_down</span>
-</div>
-<!-- Dropdown 3: Status Koreksi -->
-<div class="relative">
-<select class="appearance-none w-full sm:w-auto pl-space-md pr-8 py-1.5 bg-surface-container-low text-body-sm font-body-sm text-on-surface focus:outline-none cursor-pointer">
-<option>Semua Status Evaluasi</option>
-<option>Menunggu Koreksi</option>
-<option>Selesai Dinilai</option>
-<option>Sedang Berlangsung</option>
-</select>
-<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[18px] text-outline pointer-events-none">arrow_drop_down</span>
-</div>
-</div>
-<!-- Right-side View Mode Toggle & Semester Pill -->
-<div class="flex items-center gap-space-md self-end xl:self-auto">
-<div class="flex items-center bg-surface-container-low p-0.5">
-<button class="px-space-sm py-1 bg-surface-container-lowest shadow-sm font-label-xs text-label-xs font-semibold text-primary flex items-center gap-1" type="button">
-<span class="material-symbols-outlined text-[16px]">view_list</span>
-<span>Tabel</span>
-</button>
-<button class="px-space-sm py-1 hover:bg-surface-container text-secondary font-label-xs text-label-xs flex items-center gap-1 transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">view_kanban</span>
-<span>Kanban</span>
-</button>
-</div>
-<div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container text-on-surface font-mono text-[11px]">
-<span class="material-symbols-outlined text-[14px] text-secondary">date_range</span>
-<span>GENAP 2024/2025</span>
-</div>
-</div>
-</div>
-<!-- Main Comprehensive Data Table of Assessments -->
-<div class="bg-surface-container-lowest shadow-sm overflow-hidden mb-space-xl">
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low text-secondary font-label-xs text-label-xs uppercase tracking-wider">
-<th class="p-space-md w-10 text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</th>
-<th class="py-space-md px-space-md min-w-[280px]">Nama Tugas / Kuis &amp; Kode MK</th>
-<th class="py-space-md px-space-md min-w-[170px]">Jenis &amp; Bobot</th>
-<th class="py-space-md px-space-md min-w-[180px]">Batas Pengumpulan (Deadline)</th>
-<th class="py-space-md px-space-md min-w-[210px]">Progres Submission</th>
-<th class="py-space-md px-space-md min-w-[220px]">Status Koreksi &amp; Plagiarisme</th>
-<th class="py-space-md px-space-md text-right min-w-[130px]">Aksi</th>
-</tr>
-</thead>
-<tbody class="divide-y-0 text-body-sm font-body-sm text-on-surface">
-<!-- Row 1 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-lowest">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Tugas 03: Implementasi Single Page App dengan State Management
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">CS-301</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Arsitektur Cloud &amp; Web</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Dr. Eko Prasetyo</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">Tugas Mandiri</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">15%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-on-surface">24 Okt 2024, 23:59 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-error mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
-                  2 Hari Tersisa
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-on-surface font-medium">138 / 145 Mhs</span>
-<span class="font-semibold text-primary">95%</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 overflow-hidden">
-<div class="bg-primary-container h-full" style="width: 95%"></div>
-</div>
-<span class="text-[11px] text-secondary">7 belum mengunggah</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container-highest text-on-surface-variant px-2 py-0.5 font-medium">
-                  32 Menunggu Koreksi
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-high text-on-surface px-2 py-0.5 font-medium">
-                  Plagiarisme: 2.1%
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-xs text-label-xs font-medium transition-colors" type="button">
-                  Koreksi &amp; Nilai
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-low/20">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Kuis Formatif 02: Algoritma Greedy &amp; Dynamic Programming
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">CS-102</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Algoritma &amp; Struktur Data</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Siti Rahmawati, M.Sc</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">Kuis Otomatis (CBT)</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">10%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-secondary">20 Okt 2024, 18:00 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-secondary mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                  Ditutup (Selesai)
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-on-surface font-medium">180 / 180 Mhs</span>
-<span class="font-semibold text-secondary">100%</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 overflow-hidden">
-<div class="bg-primary h-full" style="width: 100%"></div>
-</div>
-<span class="text-[11px] text-secondary">Partisipasi penuh</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container-high text-on-surface px-2 py-0.5 font-medium">
-                  Selesai Terkoreksi (Auto)
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-lowest text-secondary px-2 py-0.5 font-medium shadow-sm">
-                  Rata-rata: 84.5
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-xs text-label-xs font-medium shadow-sm transition-colors" type="button">
-                  Lihat Analisis Soal
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-lowest">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Ujian Tengah Semester: Perancangan Arsitektur Microservices
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">CS-4021</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Sistem Terdistribusi</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Prof. Dr. Irwan Setiawan</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">UTS Capstone</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">25%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-on-surface">15 Nov 2024, 23:59 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                  Mendatang (Jadwal Terkunci)
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-secondary font-medium">0 / 428 Mhs</span>
-<span class="text-secondary">0%</span>
-</div>
-<div class="w-full bg-surface-container h-2 overflow-hidden">
-<div class="bg-outline h-full" style="width: 0%"></div>
-</div>
-<span class="text-[11px] text-secondary">Belum Dibuka untuk Mahasiswa</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container text-secondary px-2 py-0.5 font-medium">
-                  Draf Soal Diverifikasi
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-high text-primary px-2 py-0.5 font-medium">
-                  Rubrik OBE Siap
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-xs text-label-xs font-medium shadow-sm transition-colors" type="button">
-                  Pratinjau Soal &amp; Rubrik
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-low/20">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Tugas Praktik 01: Audit Kerentanan Web OWASP Top 10
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">CY-409</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Keamanan Siber</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Ahmad Fauzi, M.T</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">Praktikum Lab Sandbox</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">20%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-secondary">18 Okt 2024, 23:59 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-secondary mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                  Ditutup
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-on-surface font-medium">44 / 45 Mhs</span>
-<span class="font-semibold text-primary">98%</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 overflow-hidden">
-<div class="bg-primary-container h-full" style="width: 98%"></div>
-</div>
-<span class="text-[11px] text-secondary">1 berkas terlambat</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container-highest text-on-surface-variant px-2 py-0.5 font-medium">
-                  12 Menunggu Review
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-high text-on-surface px-2 py-0.5 font-medium">
-                  Plagiarisme: 5.8%
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-xs text-label-xs font-medium transition-colors" type="button">
-                  Koreksi &amp; Nilai
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 5 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-lowest">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Kuis Singkat 04: Pengujian Heuristic Usability &amp; Persona
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">UX-101</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Human-Computer Interaction</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Nadia Maharani, M.Ds</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">Kuis Formatif Cepat</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">5%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-on-surface">26 Okt 2024, 17:00 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                  Berjalan (Live)
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-on-surface font-medium">52 / 60 Mhs</span>
-<span class="font-semibold text-primary">86%</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 overflow-hidden">
-<div class="bg-primary-container h-full" style="width: 86%"></div>
-</div>
-<span class="text-[11px] text-secondary">8 mahasiswa aktif di layar</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container-high text-primary px-2 py-0.5 font-medium">
-                  Kuis Sedang Berlangsung
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-lowest text-secondary px-2 py-0.5 font-medium shadow-sm">
-                  Lockdown Browser Aktif
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary font-label-xs text-label-xs font-medium transition-colors" type="button">
-                  Monitor Real-time
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-<!-- Row 6 -->
-<tr class="hover:bg-surface-container-low/50 transition-colors bg-surface-container-low/20">
-<td class="p-space-md text-center">
-<input class="h-4 w-4 bg-surface-container-lowest text-primary cursor-pointer" type="checkbox">
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm font-semibold text-on-surface hover:text-primary cursor-pointer transition-colors leading-snug">
-                  Studi Kasus 02: Valuasi Saham &amp; Algoritma FinTech
-                </span>
-<div class="flex items-center gap-space-xs mt-1">
-<span class="font-code-sm text-code-sm bg-surface-container-high px-1 py-0.5 font-medium text-on-surface">BF-210</span>
-<span class="text-secondary text-body-xs font-body-xs truncate">Corporate Governance</span>
-<span class="text-outline text-[10px]">•</span>
-<span class="text-secondary text-body-xs font-body-xs">Dr. Hendra Saputra, MBA</span>
-</div>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="text-on-surface font-medium">Tugas Kelompok (Team Case)</span>
-<span class="text-secondary text-body-xs font-body-xs">Bobot Nilai: <strong class="text-on-surface">15%</strong></span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col">
-<span class="font-code-sm text-code-sm text-on-surface">28 Okt 2024, 23:59 WIB</span>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                  6 Hari Tersisa
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex justify-between items-center text-body-xs font-body-xs">
-<span class="font-code-sm text-on-surface font-medium">18 / 20 Kelompok</span>
-<span class="font-semibold text-primary">90%</span>
-</div>
-<div class="w-full bg-surface-container-high h-2 overflow-hidden">
-<div class="bg-primary-container h-full" style="width: 90%"></div>
-</div>
-<span class="text-[11px] text-secondary">2 kelompok draf aktif</span>
-</div>
-</td>
-<td class="py-space-md px-space-md">
-<div class="flex flex-wrap gap-1 items-center">
-<span class="font-label-xs text-label-xs bg-surface-container-highest text-on-surface-variant px-2 py-0.5 font-medium">
-                  8 Kelompok Dinilai
-                </span>
-<span class="font-label-xs text-label-xs bg-surface-container-high text-on-surface px-2 py-0.5 font-medium">
-                  Peer Review Selesai
-                </span>
-</div>
-</td>
-<td class="py-space-md px-space-md text-right">
-<div class="inline-flex items-center gap-space-xs">
-<button class="px-space-sm py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-xs text-label-xs font-medium transition-colors" type="button">
-                  Koreksi &amp; Nilai
-                </button>
-<button class="p-1 text-secondary hover:bg-surface-container-low transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px]">more_vert</span>
-</button>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Pagination Footer -->
-<div class="p-space-md bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-space-sm">
-<div class="font-body-sm text-body-sm text-secondary">
-        Menampilkan <strong class="text-on-surface">1 - 6</strong> dari <strong class="text-on-surface">48</strong> Asesmen Aktif
-      </div>
-<div class="flex items-center gap-1">
-<button class="w-8 h-8 flex items-center justify-center bg-surface-container-low text-secondary hover:bg-surface-container transition-colors disabled:opacity-40" disabled="" type="button">
-<span class="material-symbols-outlined text-[16px]">chevron_left</span>
-</button>
-<button class="w-8 h-8 flex items-center justify-center bg-primary-container text-on-primary font-code-sm text-code-sm font-semibold" type="button">1</button>
-<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-code-sm text-code-sm transition-colors" type="button">2</button>
-<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-code-sm text-code-sm transition-colors" type="button">3</button>
-<span class="w-8 h-8 flex items-center justify-center text-secondary text-body-xs font-body-xs">...</span>
-<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-code-sm text-code-sm transition-colors" type="button">8</button>
-<button class="w-8 h-8 flex items-center justify-center bg-surface-container-lowest hover:bg-surface-container-low text-secondary transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Bottom Informational & Audit Verification Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl mb-space-lg">
-<!-- Left Card: OBE Curriculum & Rubrics Alignment -->
-<div class="bg-surface-container-lowest p-space-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="p-space-xs bg-surface-container text-primary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">fact_check</span>
-</span>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">
-                Integrasi Rubrik Penilaian Outcome-Based Education (OBE)
-              </h2>
-<p class="font-body-xs text-body-xs text-secondary">
-                Validasi capaian CPL (Capaian Pembelajaran Lulusan) &amp; CPMK Mata Kuliah
-              </p>
-</div>
-</div>
-<span class="font-label-xs text-label-xs uppercase px-2 py-0.5 bg-surface-container-high text-primary font-semibold">
-            Standar IABEE / BAN-PT
-          </span>
-</div>
-<div class="space-y-space-sm mt-space-md">
-<div class="p-space-md bg-surface-container-low flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-<div class="flex-1">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Pemetaan CPMK Otomatis</span>
-<p class="font-body-xs text-body-xs text-secondary mt-0.5">
-                48 dari 48 instrumen penilaian telah terikat pada indikator kinerja CPMK dengan total alokasi bobot 100% per silabus akademik.
-              </p>
-</div>
-</div>
-<div class="p-space-md bg-surface-container-low flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-<div class="flex-1">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Rubrik Analitik 4-Tingkat (Exemplary to Unsatisfactory)</span>
-<p class="font-body-xs text-body-xs text-secondary mt-0.5">
-                Kriteria penilaian deskriptif aktif pada seluruh tugas esai dan praktikum untuk meminimalisir deviasi penilaian antar dosen paralel.
-              </p>
-</div>
-</div>
-<div class="p-space-md bg-surface-container-low flex items-start gap-space-sm">
-<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">sync_alt</span>
-<div class="flex-1">
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Sinkronisasi PDDikti &amp; Transkrip Akademik</span>
-<p class="font-body-xs text-body-xs text-secondary mt-0.5">
-                Nilai akhir otomatis diagregasikan ke SIMAK setiap hari Minggu pukul 23:59 WIB dengan tanda tangan digital Kaprodi.
-              </p>
-</div>
-</div>
-</div>
-</div>
-<div class="mt-space-lg pt-space-md bg-surface-container-low/50 p-space-sm flex items-center justify-between">
-<span class="font-label-xs text-label-xs text-secondary font-mono">STATUS AUDIT OBE: 100% TERVERIFIKASI</span>
-<button class="font-label-xs text-label-xs font-semibold text-primary hover:underline flex items-center gap-1" type="button">
-<span>Kelola Matriks Rubrik</span>
-<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-</button>
-</div>
-</div>
-<!-- Right Card: Integrity & Anti-Cheating Logs -->
-<div class="bg-surface-container-lowest p-space-xl shadow-sm flex flex-col justify-between">
-<div>
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-sm">
-<span class="p-space-xs bg-surface-container text-secondary flex items-center justify-center">
-<span class="material-symbols-outlined text-[20px]">security</span>
-</span>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">
-                Protokol Integritas &amp; Anti-Cheating
-              </h2>
-<p class="font-body-xs text-body-xs text-secondary">
-                Turnitin Similarity, Browser Lockdown, &amp; AST Code Plagiarism Check
-              </p>
-</div>
-</div>
-<span class="inline-flex items-center gap-1 text-[11px] font-medium text-primary">
-<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            Real-time Daemon
-          </span>
-</div>
-<div class="space-y-space-sm mt-space-md">
-<div class="p-space-md bg-surface-container-low flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-secondary text-[20px]">policy</span>
-<div>
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Turnitin API Gateway v3</span>
-<span class="font-body-xs text-body-xs text-secondary">Pemeriksaan teks esai, PDF referensi, dan repositori internal</span>
-</div>
-</div>
-<span class="font-label-xs text-label-xs font-mono bg-surface-container-high px-2 py-0.5 text-on-surface">Connected</span>
-</div>
-<div class="p-space-md bg-surface-container-low flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-secondary text-[20px]">terminal</span>
-<div>
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Code Similarity Sandbox (Moss / AST Parser)</span>
-<span class="font-body-xs text-body-xs text-secondary">Analisis kesamaan sintaks kode Python, C++, Java, &amp; Golang</span>
-</div>
-</div>
-<span class="font-label-xs text-label-xs font-mono bg-surface-container-high px-2 py-0.5 text-on-surface">Active (0.2s)</span>
-</div>
-<div class="p-space-md bg-surface-container-low flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-secondary text-[20px]">screen_lock_rotation</span>
-<div>
-<span class="font-label-sm text-label-sm font-semibold text-on-surface block">Nexus Secure Exam Browser (SEB)</span>
-<span class="font-body-xs text-body-xs text-secondary">Pencegahan multi-tab, screen recording, dan remote virtual machine</span>
-</div>
-</div>
-<span class="font-label-xs text-label-xs font-mono bg-surface-container-high px-2 py-0.5 text-on-surface">Enforced</span>
-</div>
-</div>
-</div>
-<div class="mt-space-lg pt-space-md bg-surface-container-low/50 p-space-sm flex items-center justify-between">
-<span class="font-label-xs text-label-xs text-secondary font-mono">LOG TERAKHIR: 4 DOKUMEN DIPERIKSA (0 DETIK LALU)</span>
-<button class="font-label-xs text-label-xs font-semibold text-primary hover:underline flex items-center gap-1" type="button">
-<span>Buka Konsol Integritas</span>
-<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</div>
-</div></main>
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Akademik &amp; Kursus · Asesmen</p>
+          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Manajemen Tugas, Kuis &amp; Penilaian</h2>
+          <p class="mt-1 max-w-2xl text-sm text-slate-500">Buat asesmen per kursus, pantau pengumpulan mahasiswa, dan beri nilai.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="btn-ekspor" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">download</span>Ekspor Nilai (CSV)
+          </button>
+          <button type="button" id="btn-tambah" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>Buat Asesmen
+          </button>
+        </div>
+      </section>
+
+      <section aria-label="Ringkasan asesmen" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Asesmen Aktif</p><span class="material-symbols-outlined rounded-lg bg-blue-50 p-2 text-[20px] text-blue-600" aria-hidden="true">assignment</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-aktif">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-aktif-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-amber-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Menunggu Koreksi</p><span class="material-symbols-outlined rounded-lg bg-amber-50 p-2 text-[20px] text-amber-600" aria-hidden="true">rate_review</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-koreksi">-</p>
+          <p class="mt-1 text-xs text-slate-500">Pengumpulan belum dinilai</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tingkat Pengumpulan</p><span class="material-symbols-outlined rounded-lg bg-emerald-50 p-2 text-[20px] text-emerald-600" aria-hidden="true">upload_file</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-kumpul">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-kumpul-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Rata-rata Plagiarisme</p><span class="material-symbols-outlined rounded-lg bg-red-50 p-2 text-[20px] text-red-600" aria-hidden="true">content_copy</span></div>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-plagiat">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-plagiat-sub">&nbsp;</p>
+        </article>
+      </section>
+
+      <section aria-label="Pencarian dan filter asesmen" class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="flex flex-wrap gap-3">
+          <div class="relative min-w-[16rem] flex-1">
+            <label for="f-cari" class="sr-only">Cari asesmen</label>
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400" aria-hidden="true">search</span>
+            <input id="f-cari" type="search" placeholder="Cari judul, kode MK, atau nama kursus…" class="block w-full rounded-lg border-slate-300 pl-9 text-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="w-full sm:w-auto"><label for="f-kursus" class="sr-only">Kursus</label><select id="f-kursus" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua kursus</option></select></div>
+          <div class="w-full sm:w-auto"><label for="f-jenis" class="sr-only">Jenis</label>
+            <select id="f-jenis" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua jenis</option><option value="tugas">Tugas</option><option value="kuis">Kuis</option><option value="uts">UTS</option><option value="uas">UAS</option></select></div>
+          <div class="flex w-full gap-2 sm:w-auto"><label for="f-status" class="sr-only">Status</label>
+            <select id="f-status" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"><option value="">Semua status</option><option value="aktif">Aktif</option><option value="draft">Draft</option><option value="ditutup">Ditutup</option></select>
+            <button type="button" id="btn-reset" class="rounded-lg border border-slate-300 bg-white px-3 text-slate-600 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Reset pencarian dan filter" title="Reset filter"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">filter_alt_off</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Daftar asesmen" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <caption class="sr-only">Daftar tugas dan kuis</caption>
+            <thead class="bg-slate-50">
+              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <th scope="col" class="px-4 py-3">Asesmen</th>
+                <th scope="col" class="px-4 py-3">Jenis &amp; Bobot</th>
+                <th scope="col" class="px-4 py-3">Tenggat</th>
+                <th scope="col" class="px-4 py-3">Pengumpulan</th>
+                <th scope="col" class="px-4 py-3">Koreksi</th>
+                <th scope="col" class="px-4 py-3">Status</th>
+                <th scope="col" class="px-4 py-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-tugas" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p id="tabel-counter"></p>
+          <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel asesmen"></nav>
+        </div>
+      </section>
+    </main>
 
     <footer data-component="footer"></footer>
   </div>

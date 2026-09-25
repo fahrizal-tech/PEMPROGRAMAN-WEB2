@@ -323,6 +323,78 @@ function findBrowser() {
     await page.waitForFunction(() => /dari 9 data/.test(document.getElementById("tabel-counter").textContent));
     check(true, "jadwalkan sesi baru → total 9 sesi");
 
+    /* ---------- Tugas & Kuis ---------- */
+    await page.goto(ROOT + "pages/tugas-kuis.html", NAV);
+    await page.waitForFunction(() => /dari 8 data/.test(document.getElementById("tabel-counter").textContent));
+    check(true, "tugas & kuis: 8 asesmen tampil");
+    await page.click("#btn-tambah");
+    await page.waitForSelector("#fld-kursus_id");
+    await page.select("#fld-kursus_id", "krs_110");
+    const help = await page.$eval("#fld-bobot_persen", (i) => i.parentNode.querySelector("p").textContent);
+    check(/Sisa bobot kursus ini: 90%/.test(help), `form asesmen: ${help}`);
+    await page.type("#fld-judul", "Tugas Uji E2E Statistika");
+    await page.type("#fld-bobot_persen", "95");
+    await page.$eval("#fld-deadline", (e) => { e.value = "2026-10-15T23:59"; });
+    await clickDialog("Simpan");
+    await page.waitForSelector("#fld-bobot_persen-error");
+    check(/maksimal 100%/.test(await page.$eval("#fld-bobot_persen-error", (e) => e.textContent)), "bobot melebihi sisa → ditolak dengan pesan sisa bobot");
+    await page.$eval("#fld-bobot_persen", (e) => { e.value = ""; });
+    await page.type("#fld-bobot_persen", "20");
+    await clickDialog("Simpan");
+    await toastHas(/Tugas Uji E2E Statistika.*berhasil dibuat/);
+    await page.waitForFunction(() => /dari 9 data/.test(document.getElementById("tabel-counter").textContent));
+    check(true, "buat asesmen → total 9");
+    await sleep(300);
+    await page.click('button[data-nilai="tgs_0001"].bg-blue-600');
+    await page.waitForSelector("[data-kumpul]");
+    const kumpulId = await page.$eval("[data-kumpul]", (i) => i.getAttribute("data-kumpul"));
+    await page.$eval("[data-kumpul]", (i) => { i.value = "150"; });
+    await clickDialog("Simpan Nilai");
+    await toastHas(/di luar rentang/);
+    await page.$eval("[data-kumpul]", (i) => { i.value = "85"; });
+    await clickDialog("Simpan Nilai");
+    await toastHas(/nilai disimpan/);
+    const nilai = await page.evaluate(async (id) => (await Nexus.services.pengumpulan.get(id)), kumpulId);
+    check(nilai.nilai === 85 && nilai.status === "dinilai", "penilaian: nilai > 100 ditolak, nilai 85 tersimpan (dinilai)");
+
+    /* ---------- Sertifikasi ---------- */
+    await page.goto(ROOT + "pages/sertifikasi.html", NAV);
+    await page.waitForFunction(() => /dari 7 data/.test(document.getElementById("tabel-counter").textContent));
+    const verif = async (nomor) => {
+      await page.$eval("#nomor-verif", (e) => { e.value = ""; });
+      await page.type("#nomor-verif", nomor);
+      await page.click('#form-verif button[type="submit"]');
+      await page.waitForFunction((n) => (document.getElementById("hasil-verif").textContent || "").length > 0 && !document.getElementById("hasil-verif").dataset.prev?.includes(n), {}, nomor);
+      await sleep(200);
+      return page.$eval("#hasil-verif", (e) => e.textContent.replace(/\s+/g, " "));
+    };
+    check(/sah dan aktif/.test(await verif("NXS/TIF/2026/00041")), "verifikasi nomor terbit → sah");
+    check(/DICABUT/.test(await verif("nxs/sif/2026/00046")), "verifikasi nomor dicabut (huruf kecil) → DICABUT");
+    check(/tidak ditemukan/.test(await verif("NXS/XXX/0000/00000")), "verifikasi nomor tidak ada → tidak ditemukan");
+    const tte = await page.$eval("[data-tte]", (b) => b.getAttribute("data-tte"));
+    await page.click(`[data-tte="${tte}"]`);
+    await toastHas(/ditandatangani dan terbit/);
+    await page.waitForFunction((id) => !document.querySelector(`[data-tte="${id}"]`), {}, tte);
+    await sleep(300);
+    await page.click(`[data-cabut="${tte}"]`);
+    await page.waitForSelector('[role="dialog"]');
+    await clickDialog("Ya, cabut");
+    await toastHas(/dicabut/);
+    check((await page.evaluate(async (id) => (await Nexus.services.sertifikat.get(id)).status, tte)) === "dicabut", "sertifikat: TTE → terbit → cabut");
+    await page.click("#btn-tambah");
+    await page.waitForSelector("#fld-mahasiswa_id");
+    await page.$eval("#fld-mahasiswa_id", (s) => { s.selectedIndex = 1; s.dispatchEvent(new Event("change")); });
+    await page.$eval("#fld-kursus_id", (s) => { if (!s.value) { s.selectedIndex = 1; s.dispatchEvent(new Event("change")); } });
+    check((await page.$eval("#fld-penandatangan", (i) => i.value)).length > 3, "form sertifikat: penandatangan otomatis = dosen pengampu");
+    await clickDialog("Terbitkan");
+    await toastHas(/dibuat \(menunggu TTE\)/);
+    await page.waitForFunction(() => /dari 8 data/.test(document.getElementById("tabel-counter").textContent));
+    check(true, "terbitkan sertifikat untuk mahasiswa lulus → nomor otomatis, menunggu TTE");
+    await page.click("[data-lihat]");
+    await page.waitForSelector("#sertifikat-cetak");
+    check(/Diberikan kepada/.test(await page.$eval("#sertifikat-cetak", (e) => e.textContent)), "pratinjau sertifikat tampil (siap cetak)");
+    await page.keyboard.press("Escape");
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
 

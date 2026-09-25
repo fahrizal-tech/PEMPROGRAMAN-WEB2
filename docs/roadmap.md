@@ -146,8 +146,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `mahasiswa.html` — KPI (termasuk "perlu perhatian"), antrean validasi KRS (setujui/tolak beralasan/setujui semua dengan laporan), tabel + filter + ekspor CSV, tambah/edit di modal, detail KRS per mahasiswa, hapus berpenjelasan
 - [x] `instruktur.html` — KPI (Serdos, EDOM, beban), tabel dengan beban mengajar BKD (di bawah 12 / optimal 12–16 / lebih dari 16 SKS), filter & ekspor CSV, tambah/edit di modal, detail kursus diampu, hapus berpenjelasan
 - [x] `kelas-virtual.html` — KPI sesi, jadwal (live di atas), status terjadwal → live → selesai, presensi per sesi (hadir/izin/alpa, tandai semua), jadwalkan/edit sesi (modul menyesuaikan kursus, tautan wajib https), hapus
-- [ ] `tugas-kuis.html` — CRUD tugas + penilaian rubrik
-- [ ] `sertifikasi.html` — terbitkan / cabut sertifikat, verifikasi kode
+- [x] `tugas-kuis.html` — KPI (koreksi, pengumpulan, plagiarisme), tabel dengan tenggat & progres, buat/edit (sisa bobot kursus), penilaian per pengumpulan (terlambat, plagiarisme > 20%), ekspor nilai CSV
+- [x] `sertifikasi.html` — KPI, verifikasi nomor registrasi, terbitkan hanya untuk yang lulus (nomor otomatis, penandatangan = dosen), TTE satuan/semua, cabut dengan konfirmasi, draf dapat dihapus (terbit tidak), pratinjau & cetak sertifikat
 - [ ] `pengaturan.html` — profil institusi, preferensi, reset/ekspor/impor data
 
 ### Tahap 5 — QA & Polesan

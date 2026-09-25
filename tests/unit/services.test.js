@@ -251,3 +251,12 @@ test("presensi: hanya untuk sesi live/selesai & peserta KRS disetujui; entri dip
   const [log] = await S.logAktivitas.recent(1);
   assert.match(log.deskripsi, new RegExp(`\(${peserta.length - 1}/${peserta.length} hadir\)`));
 });
+
+test("sertifikat: yang sudah terbit tidak bisa dihapus (harus dicabut); menunggu TTE bisa", async () => {
+  const { S, db } = fresh();
+  const terbit = (await db.query("sertifikat", (s) => s.status === "terbit"))[0];
+  await assert.rejects(S.sertifikat.remove(terbit.id), (e) => e.code === "HAS_RELATIONS" && /Cabut/.test(e.message));
+  const menunggu = (await db.query("sertifikat", (s) => s.status === "menunggu_tte"))[0];
+  await S.sertifikat.remove(menunggu.id);
+  assert.equal(await S.sertifikat.get(menunggu.id), null);
+});
