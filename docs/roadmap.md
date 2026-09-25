@@ -156,7 +156,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] 4c.1 Fondasi: sampul kursus otomatis (SVG: warna per prodi, ikon per topik), unggah sampul di Form Kursus (dikompres 16:9 WebP, hanya gambar), tombol Kartu ⇄ Tabel & mode kartu di `ui.dataTable`, ilustrasi tampilan kosong
 - [x] 4c.2 Kelas Virtual: kartu per sesi (Sedang Live · Akan Datang · Selesai) dengan sampul, badge LIVE, hitung mundur (diperbarui tiap menit), platform, avatar dosen, bar kehadiran, aksi; tombol Kartu ⇄ Tabel
 - [x] Data contoh v2: tanggal relatif terhadap hari ini (jadwal, tenggat, log selalu aktual saat demo); stempel waktu kejadian UTC, tanggal tampilan lokal (`u.localDate`)
-- [ ] 4c.3 Katalog Kursus (Data Master) & Dashboard visual (banner sapaan, kartu sesi live, kursus teratas bergambar)
+- [x] 4c.3 Katalog Kursus (kartu bersampul: tingkat, SKS, status, dosen, kuota, modul/tugas) & Dashboard visual (banner sapaan berilustrasi + ringkasan hari ini + tombol cepat, kartu Sedang Live, kursus teratas bersampul)
 - [ ] 4c.4 Konsistensi, uji, screenshot review, rilis tag `v1.1.0`
 
 ### Tahap 5 — QA & Polesan

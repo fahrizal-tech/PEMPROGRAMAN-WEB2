@@ -37,7 +37,8 @@
           <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Katalog &amp; Master Kursus</h2>
           <p class="mt-1 max-w-2xl text-sm text-slate-500">Kelola kursus institusi: dosen pengampu, kuota kelas, struktur modul, dan status publikasi.</p>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          <div id="view-toggle"></div>
           <button type="button" id="btn-ekspor" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
             <span class="material-symbols-outlined text-[18px]" aria-hidden="true">download</span>Ekspor CSV
           </button>
@@ -123,7 +124,10 @@
       </section>
 
       <!-- Tabel -->
-      <section aria-label="Daftar kursus" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <!-- Tampilan kartu (katalog) -->
+      <div id="kartu-kursus" class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" aria-label="Katalog kursus"></div>
+
+      <section id="tabel-wrap" aria-label="Daftar kursus" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-slate-200 text-sm">
             <caption class="sr-only">Daftar kursus</caption>
@@ -141,11 +145,12 @@
             <tbody id="tabel-kursus" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
-        <div class="flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p id="tabel-counter"></p>
-          <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel kursus"></nav>
-        </div>
       </section>
+
+      <div class="flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <p id="tabel-counter"></p>
+        <nav id="tabel-pager" class="flex flex-wrap gap-1" aria-label="Halaman daftar kursus"></nav>
+      </div>
     </main>
 
     <footer data-component="footer"></footer>

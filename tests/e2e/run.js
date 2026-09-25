@@ -148,13 +148,17 @@ function findBrowser() {
       const charts = ["chart-krs", "chart-prodi", "chart-kursus"].map((id) => !!(window.Chart && Chart.getChart(document.getElementById(id))));
       return {
         krsOk: document.getElementById("kpi-krs").textContent === String(krs.filter((x) => x.status === "diajukan").length),
-        charts, logs: document.querySelectorAll("#log-list li").length, top: document.querySelectorAll("#top-kursus tr").length,
+        charts, logs: document.querySelectorAll("#log-list li").length, top: document.querySelectorAll("#top-kursus a").length, topCover: document.querySelectorAll("#top-kursus svg, #top-kursus img").length,
+        live: document.querySelectorAll("#live-list article").length, liveHidden: document.getElementById("live-section").classList.contains("hidden"),
+        ringkasan: document.getElementById("ringkasan-hari").textContent,
         srRows: document.querySelectorAll("#data-kursus tbody tr").length,
       };
     });
     check(dash.krsOk, "dashboard: KPI KRS menunggu sesuai data");
     check(dash.charts.every(Boolean), `dashboard: 3 grafik Chart.js tampil (${dash.charts.join(",")})`);
-    check(dash.logs === 6 && dash.top === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kursus teratas`);
+    check(dash.logs === 6 && dash.top === 5 && dash.topCover === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kartu kursus teratas bersampul`);
+    check(!dash.liveHidden && dash.live === 2, `dashboard: bagian Sedang Live menampilkan ${dash.live} sesi`);
+    check(/2 sesi sedang live · \d+ KRS menunggu validasi · \d+ tugas menunggu koreksi/.test(dash.ringkasan), `banner: ${dash.ringkasan}`);
     check(dash.srRows > 0, "dashboard: data grafik tersedia untuk pembaca layar");
 
     /* ---------- Laporan ---------- */
@@ -457,6 +461,11 @@ function findBrowser() {
     await page.goto(ROOT + "pages/data-master.html", NAV);
     await page.waitForFunction(() => /dari 12/.test(document.getElementById("tabel-counter").textContent));
     check((await page.$eval("#kpi-total", (e) => e.textContent)) === "12", "data master: 12 kursus + KPI dari data");
+    const katalog = await page.evaluate(() => ({ n: document.querySelectorAll("#kartu-kursus article").length, sampul: document.querySelectorAll("#kartu-kursus article svg, #kartu-kursus article img").length }));
+    check(katalog.n === 12 && katalog.sampul === 12, `katalog (kartu): ${katalog.n} kartu kursus bersampul`);
+    await page.click('[data-view="tabel"]');
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-kursus tr").length > 0 && document.getElementById("kartu-kursus").classList.contains("hidden"));
+    check(true, "tombol Tabel → tabel kursus tampil");
     await page.select("#f-status", "draft");
     await page.waitForFunction(() => /dari 2 data/.test(document.getElementById("tabel-counter").textContent));
     check((await rowsIn("#tabel-kursus")) === 2, "data master: filter status draft → 2");
@@ -498,7 +507,8 @@ function findBrowser() {
     check(await page.evaluate(async () => /^data:image\//.test(((await Nexus.services.kursus.query((k) => k.kode_mk === "TS-201"))[0] || {}).cover || "")), "sampul unggahan tersimpan bersama kursus");
 
     await page.type("#f-cari", "TS-201");
-    await page.waitForFunction(() => /2 modul/.test(document.getElementById("tabel-kursus").textContent));
+    // Tunggu pencarian diterapkan (tinggal 1 baris) sebelum mengklik Edit.
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-kursus [data-hapus]").length === 1 && /2 modul/.test(document.getElementById("tabel-kursus").textContent));
     await nav(() => page.click('a[href^="form.html?id="]'));
     await page.waitForFunction(() => document.getElementById("nama").value === "Kursus Uji Otomatis");
     check(/Edit Kursus TS-201/.test(await page.$eval("#judul-form", (e) => e.textContent)), "edit: data & 2 modul dimuat");
