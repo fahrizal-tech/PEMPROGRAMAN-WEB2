@@ -521,6 +521,8 @@
       rows: function () { return rows; },
       visible: visible,
       setSort: function (k) { sortKey = k; render(); },
+      /** Ubah jumlah baris per halaman (mis. 100000 saat mencetak semua baris). */
+      setPageSize: function (n) { pageSize = n; page = 1; render(); },
       reset: function () {
         if (o.search && o.search.input) o.search.input.value = "";
         (o.filters || []).forEach(function (f) { f.el.value = ""; });

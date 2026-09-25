@@ -155,6 +155,36 @@ function findBrowser() {
     check(dash.logs === 6 && dash.top === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kursus teratas`);
     check(dash.srRows > 0, "dashboard: data grafik tersedia untuk pembaca layar");
 
+    /* ---------- Laporan ---------- */
+    await page.goto(ROOT + "pages/laporan.html", NAV);
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-rekap tr").length === 12 && document.getElementById("kpi-lulus").textContent !== "-");
+    check(true, `laporan: rekap 12 mata kuliah, kelulusan ${await page.$eval("#kpi-lulus", (e) => e.textContent)}`);
+    const nSda = await page.evaluate(async () => (await Nexus.services.kursus.query((k) => k.prodi_id === "prd_sda")).length);
+    await page.select("#f-prodi", "prd_sda");
+    await page.waitForFunction((n) => document.querySelectorAll("#tabel-rekap tr").length === n, {}, nSda);
+    check(true, `laporan: filter prodi Sains Data → ${nSda} mata kuliah & KPI ikut berubah`);
+    await page.select("#f-prodi", "");
+    await page.select("#log-aksi", "login");
+    await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log tr")].every((tr) => /Login/.test(tr.textContent)));
+    check(true, "laporan: filter log aksi Login");
+    await page.select("#log-aksi", "");
+    await page.$eval("#log-dari", (e) => { e.value = "2026-09-22"; e.dispatchEvent(new Event("change")); });
+    await page.waitForFunction(() => [...document.querySelectorAll("#tabel-log time")].every((t) => t.getAttribute("datetime") >= "2026-09-22"));
+    check(true, "laporan: filter log dari tanggal");
+    await page.$eval("#log-dari", (e) => { e.value = ""; e.dispatchEvent(new Event("change")); });
+    await page.emulateMediaType("print");
+    await page.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
+    const pr = await page.evaluate(() => ({
+      sidebar: getComputedStyle(document.getElementById("sidebar")).display,
+      kop: getComputedStyle(document.getElementById("kop-institusi").parentElement).display,
+      kopText: document.getElementById("kop-detail").textContent,
+      rows: document.querySelectorAll("#tabel-log tr").length,
+    }));
+    const totalLog = await page.evaluate(async () => (await Nexus.services.logAktivitas.list()).length);
+    check(pr.sidebar === "none" && pr.kop !== "none" && /Dicetak/.test(pr.kopText) && pr.rows === totalLog, `cetak: sidebar disembunyikan, kop tampil, semua ${pr.rows} log tercetak`);
+    await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
+    await page.emulateMediaType(null);
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
     const toastHas = (re) => page.waitForFunction((src) => new RegExp(src).test((document.getElementById("toast-region") || {}).textContent || ""), {}, re.source);

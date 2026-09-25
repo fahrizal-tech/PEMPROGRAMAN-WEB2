@@ -139,7 +139,8 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] `dashboard.html` — 5 KPI dari data (KRS menunggu dapat diklik), 3 grafik Chart.js lokal (tren KRS, mahasiswa per prodi, keterisian kursus) + tabel data untuk pembaca layar, aktivitas terbaru, kursus teratas
 - [x] `data-master.html` — KPI dari data, tabel kursus (kuota vs terisi, modul, tugas), cari/filter/urut/halaman, Edit/Hapus dengan konfirmasi berpenjelasan, ekspor CSV sesuai filter
 - [x] `form.html` — form kursus mode tambah/edit (`?id=`), validasi per kolom, cek duplikat kode, struktur modul (tambah/urutkan/hapus), publikasi butuh modul, peringatan perubahan belum disimpan
-- [ ] `laporan.html` — rekap & log aktivitas, filter periode, cetak (`@media print`), ekspor CSV
+- [x] `laporan.html` — KPI akademik (IPK, nilai, kelulusan, kehadiran) & rekap per mata kuliah dengan filter prodi; log aktivitas dengan cari/filter aksi/rentang tanggal; ekspor CSV; cetak A4 (`@media print`: kop laporan, semua baris log, tabel pas lebar kertas) / simpan PDF
+- [x] Rilis tag `v0.4.0` (4 halaman wajib selesai)
 
 **Halaman pendukung:**
 - [ ] `mahasiswa.html` — CRUD + modal edit + validasi KRS (setujui/tolak)

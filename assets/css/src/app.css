@@ -41,3 +41,24 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── Cetak laporan ─────────────────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  #sidebar, #sidebar-overlay, [data-component="topbar"], [data-component="footer"],
+  #toast-region, .no-print, a[href="#konten-utama"] {
+    display: none !important;
+  }
+  body { background: #fff !important; font-size: 11px; }
+  .lg\:pl-64 { padding-left: 0 !important; }
+  main { padding: 0 !important; }
+  .shadow-sm, .shadow { box-shadow: none !important; }
+  .overflow-x-auto, .overflow-hidden { overflow: visible !important; }
+  table { width: 100% !important; font-size: 10px; }
+  th, td { padding: 4px 6px !important; white-space: normal !important; }
+  thead tr { white-space: normal !important; }
+  td.font-mono { white-space: nowrap !important; }
+  tr, article, .print-keep { break-inside: avoid; }
+  thead { display: table-header-group; }
+  a { color: inherit !important; text-decoration: none !important; }
+}
