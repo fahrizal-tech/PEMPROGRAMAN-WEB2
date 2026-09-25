@@ -126,7 +126,7 @@
       '<span class="text-base font-bold tracking-tight text-slate-900">' + APP.name + "</span></a>" +
       '<span class="ml-auto rounded border border-blue-100 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700">v' +
       APP.version + "</span></div>" +
-      '<nav class="flex-1 space-y-5 overflow-y-auto px-3 py-4">' + groups.join("") + "</nav>" +
+      '<nav aria-label="Menu utama" class="flex-1 space-y-5 overflow-y-auto px-3 py-4">' + groups.join("") + "</nav>" +
       '<div class="border-t border-slate-200 p-3">' +
       '<a href="../index.html" data-action="logout" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-red-50 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500">' +
       '<span class="material-symbols-outlined text-[20px]" aria-hidden="true">logout</span><span>Keluar</span></a></div>';

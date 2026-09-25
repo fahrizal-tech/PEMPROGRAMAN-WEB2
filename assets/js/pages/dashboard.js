@@ -165,7 +165,7 @@
       return html`<a href="form.html?id=${encodeURIComponent(x.k.id)}" class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
         <div class="relative aspect-video overflow-hidden">
           ${Nexus.cover.render(x.k, prodiK, "h-full w-full transition duration-300 group-hover:scale-[1.03]")}
-          <span class="absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-800 shadow" aria-label="Peringkat ${i + 1}">#${i + 1}</span>
+          <span class="absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-slate-800 shadow"><span class="sr-only">Peringkat </span>#${i + 1}</span>
         </div>
         <div class="flex flex-1 flex-col p-4">
           <p class="font-mono text-[11px] text-slate-500">${x.k.kode_mk}</p>

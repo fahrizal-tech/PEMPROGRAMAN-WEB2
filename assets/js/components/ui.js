@@ -433,14 +433,14 @@
         ${(o.options || []).map(function (op) { return html`<option value="${op[0]}">${op[1]}</option>`; })}
       </select>`;
     } else if (o.type === "textarea") {
-      control = html`<textarea id="${id}" name="${o.name}" rows="${o.rows || 3}" placeholder="${o.placeholder || ""}" class="${INPUT}" ${attrs}></textarea>`;
+      control = html`<textarea id="${id}" name="${o.name}" rows="${o.rows || 3}"${o.placeholder ? html` placeholder="${o.placeholder}"` : ""} class="${INPUT}" ${attrs}></textarea>`;
     } else if (o.type === "checkbox") {
       return html`<div class="${o.span || ""}">
         <label class="flex items-center gap-2 text-sm text-slate-700"><input id="${id}" name="${o.name}" type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" ${attrs}>${o.label}</label>
         ${o.help ? html`<p class="mt-1 text-xs text-slate-500">${o.help}</p>` : ""}
       </div>`;
     } else {
-      control = html`<input id="${id}" name="${o.name}" type="${o.type || "text"}" placeholder="${o.placeholder || ""}" class="${INPUT}" ${attrs}>`;
+      control = html`<input id="${id}" name="${o.name}" type="${o.type || "text"}"${o.placeholder ? html` placeholder="${o.placeholder}"` : ""} class="${INPUT}" ${attrs}>`;
     }
     return html`<div class="${o.span || ""}">
       <label for="${id}" class="mb-1 block text-sm font-medium text-slate-700">${o.label}${star}</label>

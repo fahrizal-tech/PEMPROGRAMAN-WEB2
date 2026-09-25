@@ -25,6 +25,10 @@ jobs:
           git diff --exit-code -- assets/css/app.css || (echo "::error::assets/css/app.css belum di-build ulang. Jalankan: npm run build:css" && exit 1)
       - name: Uji unit
         run: npm test
+      - name: Validasi HTML (file mentah + DOM hasil render)
+        run: npm run test:html
+        env:
+          BROWSER_PATH: /usr/bin/google-chrome
       - name: Uji E2E (Chrome)
         run: npm run test:e2e
         env:

@@ -160,7 +160,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] 4c.4 Uji HP 390px & tablet 768px dalam mode kartu (12 halaman, setelah login), tampilan kosong berilustrasi, perbaikan tabel pembaca layar yang melebarkan Dashboard di HP, rilis tag `v1.1.0`
 
 ### Tahap 5 — QA & Polesan
-- [ ] Validasi HTML W3C tanpa error
+- [x] Validasi HTML tanpa error — `npm run test:html` (html-validate: 12 file mentah + 11 DOM hasil render setelah login), masuk CI
 - [ ] Lighthouse: Performance, Accessibility, Best Practices ≥ 90
 - [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
 - [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
