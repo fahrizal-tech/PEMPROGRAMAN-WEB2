@@ -138,6 +138,23 @@ function findBrowser() {
     await page.waitForFunction(() => /Valid: AB-123/.test(document.getElementById("toast-region").textContent));
     check((await page.$$eval("#demo-form [aria-invalid=true]", (els) => els.length)) === 0, "form valid → error hilang, kode dinormalisasi (AB-123)");
 
+    /* ---------- Dashboard ---------- */
+    await page.goto(ROOT + "pages/dashboard.html", NAV);
+    await page.waitForFunction(() => document.getElementById("kpi-krs").textContent !== "-" && document.querySelectorAll("#log-list li").length > 0);
+    const dash = await page.evaluate(async () => {
+      const krs = await Nexus.services.krs.list();
+      const charts = ["chart-krs", "chart-prodi", "chart-kursus"].map((id) => !!(window.Chart && Chart.getChart(document.getElementById(id))));
+      return {
+        krsOk: document.getElementById("kpi-krs").textContent === String(krs.filter((x) => x.status === "diajukan").length),
+        charts, logs: document.querySelectorAll("#log-list li").length, top: document.querySelectorAll("#top-kursus tr").length,
+        srRows: document.querySelectorAll("#data-kursus tbody tr").length,
+      };
+    });
+    check(dash.krsOk, "dashboard: KPI KRS menunggu sesuai data");
+    check(dash.charts.every(Boolean), `dashboard: 3 grafik Chart.js tampil (${dash.charts.join(",")})`);
+    check(dash.logs === 6 && dash.top === 5, `dashboard: ${dash.logs} aktivitas terbaru & ${dash.top} kursus teratas`);
+    check(dash.srRows > 0, "dashboard: data grafik tersedia untuk pembaca layar");
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
     const toastHas = (re) => page.waitForFunction((src) => new RegExp(src).test((document.getElementById("toast-region") || {}).textContent || ""), {}, re.source);
