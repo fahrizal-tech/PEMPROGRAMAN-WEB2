@@ -228,6 +228,46 @@
     },
   });
 
+  /**
+   * Validasi struktur modul (urutan array = nomor pertemuan).
+   * Kunci error: "modul_<index>_<kolom>" atau "modul" untuk kesalahan umum.
+   */
+  modul.validateStructure = function (items) {
+    var errors = {};
+    if (items.length > 16) errors.modul = "Maksimal 16 modul (satu per pertemuan).";
+    items.forEach(function (it, i) {
+      var res = validate(modul.schema, { kursus_id: "x", pertemuan_ke: i + 1, judul: it.judul, tipe_materi: it.tipe_materi }, { only: ["judul", "tipe_materi"] });
+      Object.keys(res.errors).forEach(function (k) { errors["modul_" + i + "_" + k] = "Modul " + (i + 1) + ": " + res.errors[k]; });
+    });
+    return { valid: Object.keys(errors).length === 0, errors: errors };
+  };
+
+  /** Simpan seluruh struktur modul kursus sekaligus (tambah, ubah, urutkan ulang, hapus). */
+  modul.saveForKursus = async function (kursusId, items) {
+    if (!(await db.get("kursus", kursusId))) throw new BusinessError("NOT_FOUND", "Kursus tidak ditemukan.");
+    var check = modul.validateStructure(items);
+    if (!check.valid) throw new ValidationError(check.errors);
+
+    var existing = await db.query("modul", function (m) { return m.kursus_id === kursusId; });
+    var keepIds = items.map(function (it) { return it.id; }).filter(Boolean);
+    var removed = existing.filter(function (m) { return keepIds.indexOf(m.id) === -1; });
+    for (var r = 0; r < removed.length; r++) {
+      var dipakai = await count("kelas_virtual", function (k) { return k.modul_id === removed[r].id; });
+      if (dipakai) {
+        throw new ValidationError({ modul: "Modul \"" + removed[r].judul + "\" tidak dapat dihapus karena dipakai oleh " + dipakai + " sesi kelas virtual." });
+      }
+    }
+    for (var d = 0; d < removed.length; d++) await db.remove("modul", removed[d].id);
+    for (var i = 0; i < items.length; i++) {
+      var data = { kursus_id: kursusId, pertemuan_ke: i + 1, judul: String(items[i].judul).trim(), tipe_materi: items[i].tipe_materi };
+      if (items[i].id && existing.some(function (m) { return m.id === items[i].id; })) await db.update("modul", items[i].id, data);
+      else await db.insert("modul", data);
+    }
+    var k = await db.get("kursus", kursusId);
+    await log("update", "modul", kursusId, "Memperbarui struktur modul " + k.kode_mk + " (" + items.length + " modul)");
+    return db.query("modul", function (m) { return m.kursus_id === kursusId; });
+  };
+
   /* ==================== MAHASISWA ==================== */
   var mahasiswa = createService({
     table: "mahasiswa",

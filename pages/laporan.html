@@ -18,7 +18,9 @@
   <script src="../assets/js/core/utils.js" defer></script>
   <script src="../assets/js/core/validators.js" defer></script>
   <script src="../assets/js/core/services.js" defer></script>
+  <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/laporan.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <aside data-component="sidebar"></aside>
@@ -26,668 +28,154 @@
   <div class="flex min-h-screen flex-col lg:pl-64">
     <header data-component="topbar" data-title="Laporan &amp; Analitik"></header>
 
-    <main class="flex-1 min-w-0">
-<div class="p-6 max-w-[1720px] mx-auto flex flex-col gap-6">
-<!-- 1. Header Toolbar & Formal Academic Filters (Looker/Tableau Style) -->
-<section class="bg-white rounded-md border border-slate-200 shadow-xs p-5">
-<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Modul Akreditasi &amp; QA</span>
-<span class="text-slate-300">•</span>
-<span class="text-[12px] text-slate-500 font-medium flex items-center gap-1">
-<span class="material-symbols-outlined text-sm text-emerald-600">verified</span>
-                  Integritas Data Terverifikasi ISO/IEC 27001
-                </span>
-</div>
-<h1 class="text-xl font-bold text-slate-900 tracking-tight">Laporan Komprehensif &amp; Analitik Pembelajaran</h1>
-<p class="text-xs text-slate-500 max-w-3xl">
-                Metrik agregat penilaian, tingkat retensi mahasiswa, analisis ketercapaian capaian pembelajaran (CPL), serta catatan audit akreditasi kurikulum multidisiplin.
-              </p>
-</div>
-<!-- Export Buttons (Enterprise Flat / Solid) -->
-<div class="flex flex-wrap items-center gap-2">
-<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
-<span class="material-symbols-outlined text-sm text-slate-600">print</span>
-<span class="">Cetak Ringkasan Eksekutif</span>
-</button>
-<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
-<span class="material-symbols-outlined text-sm text-emerald-700">table_chart</span>
-<span class="">Unduh Dataset Lengkap (XLSX)</span>
-</button>
-<button class="h-8 px-3 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
-<span class="material-symbols-outlined text-sm text-white">picture_as_pdf</span>
-<span class="">Ekspor PDF Resmi Institusi</span>
-</button>
-</div>
-</div>
-<!-- Filter Controls Strip -->
-<div class="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
-<div class="flex w-full min-w-0 flex-wrap items-center gap-2.5 sm:w-auto">
-<!-- Date Range Selector -->
-<div class="flex min-w-0 max-w-full items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded text-slate-700">
-<span class="material-symbols-outlined text-slate-400 text-sm">date_range</span>
-<span class="font-semibold text-slate-500 uppercase text-[10px] tracking-wider">Periode:</span>
-<span class="min-w-0 truncate font-medium text-slate-800">1 Jan 2024 - 31 Des 2024 (TA 2024/2025)</span>
-<span class="material-symbols-outlined text-slate-400 text-sm">arrow_drop_down</span>
-</div>
-<!-- Fakultas / Jurusan Dropdown -->
-<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
-<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Fakultas:</span>
-<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
-<option value="all">Semua Fakultas &amp; Sekolah Pascasarjana</option>
-<option value="fasilkom">Ilmu Komputer &amp; Informatika</option>
-<option value="ft">Teknik &amp; Rekayasa Terapan</option>
-<option value="feb">Ekonomi &amp; Bisnis Digital</option>
-</select>
-</div>
-<!-- Status Kelulusan Dropdown -->
-<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
-<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Kelulusan:</span>
-<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
-<option value="all">Semua Status Hasil</option>
-<option value="pass">Lulus Capaian (IPK &gt;= 3.00)</option>
-<option value="remedial">Memerlukan Remediasi</option>
-<option value="incomplete">Inkomplit / Cuti Terverifikasi</option>
-</select>
-</div>
-<!-- Metode Pembelajaran Dropdown -->
-<div class="flex min-w-0 max-w-full items-center bg-slate-50 border border-slate-200 rounded px-2.5 py-1">
-<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mr-2">Metode:</span>
-<select class="min-w-0 max-w-full truncate bg-transparent text-slate-800 text-xs border-0 py-0.5 pl-0 pr-6 focus:ring-0 cursor-pointer font-medium">
-<option value="all">Semua Modalitas (Hybrid &amp; Daring)</option>
-<option value="hybrid">Blended / Hybrid Synchronous</option>
-<option value="online">100% Fully Online Asynchronous</option>
-</select>
-</div>
-</div>
-<div class="flex items-center gap-1.5 text-slate-500 text-[11px]">
-<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-<span class="">Sinkronisasi Terakhir: 14:02:18 WIB (Otomatis)</span>
-</div>
-</div>
-</section>
-<!-- 2. Academic Metric Cards (Clean Slate Numbers + Clean Sparklines) -->
-<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-<!-- Metric 1: Indeks Kepuasan -->
-<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-<span class="material-symbols-outlined text-base">star_rate</span>
-</div>
-<span class="text-xs font-semibold text-slate-600">Kepuasan Pembelajaran</span>
-</div>
-<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+4.2% YoY</span>
-</div>
-<div class="mt-3">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">4.84</span>
-<span class="text-xs text-slate-400">/ 5.00</span>
-</div>
-<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
-<span class="">Berdasarkan 12,410 ulasan terverifikasi</span>
-<span class="font-semibold text-emerald-700">96.8% Puas</span>
-</div>
-</div>
-<!-- Clean SVG Sparkline -->
-<div class="mt-2 pt-2 border-t border-slate-100">
-<svg class="w-full h-8 text-blue-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
-<path d="M0 18 Q 15 14, 30 16 T 60 8 T 85 10 T 100 3" stroke="#2563eb" stroke-linecap="round" stroke-width="1.75"></path>
-<path d="M0 18 Q 15 14, 30 16 T 60 8 T 85 10 T 100 3 L 100 24 L 0 24 Z" fill="#2563eb" fill-opacity="0.06"></path>
-</svg>
-</div>
-</div>
-<!-- Metric 2: Rata-rata IPK Mahasiswa Aktif -->
-<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-<span class="material-symbols-outlined text-base">school</span>
-</div>
-<span class="text-xs font-semibold text-slate-600">Rata-rata IPK Aktif</span>
-</div>
-<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+0.14 Sem.</span>
-</div>
-<div class="mt-3">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">3.62</span>
-<span class="text-xs text-slate-400">Skala 4.00</span>
-</div>
-<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
-<span class="">Median institusi: 3.58</span>
-<span class="font-semibold text-blue-700">Distribusi Normal</span>
-</div>
-</div>
-<div class="mt-2 pt-2 border-t border-slate-100">
-<svg class="w-full h-8 text-blue-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
-<path d="M0 20 Q 20 22, 40 12 T 70 9 T 85 6 T 100 4" stroke="#2563eb" stroke-linecap="round" stroke-width="1.75"></path>
-<path d="M0 20 Q 20 22, 40 12 T 70 9 T 85 6 T 100 4 L 100 24 L 0 24 Z" fill="#2563eb" fill-opacity="0.06"></path>
-</svg>
-</div>
-</div>
-<!-- Metric 3: Tingkat Retensi Kursus -->
-<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-<span class="material-symbols-outlined text-base">trending_up</span>
-</div>
-<span class="text-xs font-semibold text-slate-600">Tingkat Retensi Kursus</span>
-</div>
-<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">&gt; Bench 82%</span>
-</div>
-<div class="mt-3">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">94.2%</span>
-<span class="text-xs text-emerald-700 font-semibold">+12.2% vs BM</span>
-</div>
-<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
-<span class="">Atribusi keaktifan daring harian</span>
-<span class="font-semibold text-emerald-700">Tinggi</span>
-</div>
-</div>
-<div class="mt-2 pt-2 border-t border-slate-100">
-<svg class="w-full h-8 text-emerald-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
-<path d="M0 16 Q 25 18, 50 10 T 80 6 T 100 2" stroke="#059669" stroke-linecap="round" stroke-width="1.75"></path>
-<path d="M0 16 Q 25 18, 50 10 T 80 6 T 100 2 L 100 24 L 0 24 Z" fill="#059669" fill-opacity="0.06"></path>
-</svg>
-</div>
-</div>
-<!-- Metric 4: Sertifikat Diterbitkan -->
-<div class="bg-white p-4 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition-colors">
-<div class="flex items-start justify-between">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-<span class="material-symbols-outlined text-base">check_circle</span>
-</div>
-<span class="text-xs font-semibold text-slate-600">Kelulusan MK (Passing Rate)</span>
-</div>
-<span class="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">+2.4% vs Sem. Lalu</span>
-</div>
-<div class="mt-3">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold tracking-tight text-slate-900 font-mono">91.8%</span>
-<span class="text-xs text-slate-400">Target: &gt;= 88%</span>
-</div>
-<div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
-<span class="">Kriteria minimal kelulusan nilai C (&gt;=60)</span>
-<span class="font-semibold text-rose-600">8.2% Remedi</span>
-</div>
-</div>
-<div class="mt-2 pt-2 border-t border-slate-100">
-<svg class="w-full h-8 text-emerald-600" fill="none" preserveAspectRatio="none" viewBox="0 0 100 24">
-<path d="M0 20 Q 20 18, 45 14 T 75 9 T 100 4" stroke="#059669" stroke-linecap="round" stroke-width="1.75"></path>
-<path d="M0 20 Q 20 18, 45 14 T 75 9 T 100 4 L 100 24 L 0 24 Z" fill="#059669" fill-opacity="0.06"></path>
-</svg>
-</div>
-</div>
-</section>
-<!-- 3. Analytical Charts Grid (Tableau / PowerBI Style) -->
-<section class="grid grid-cols-1 xl:grid-cols-2 gap-5">
-<!-- Chart A: Distribusi Nilai Akhir & Kurva Kompetensi -->
-<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
-<div class="flex items-start justify-between mb-4">
-<div>
-<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Capaian Pembelajaran Lulusan</span>
-<h2 class="text-sm font-bold text-slate-900 mt-0.5">Distribusi Nilai Akhir &amp; Kurva Kompetensi Mahasiswa</h2>
-</div>
-<div class="flex items-center gap-3 text-xs">
-<div class="flex items-center gap-1.5">
-<span class="w-2.5 h-2.5 rounded-xs bg-blue-600"></span>
-<span class="text-slate-600">Peserta</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="w-4 h-0.5 border-t border-dashed border-rose-500"></span>
-<span class="text-slate-500">Batas Minimal (C+)</span>
-</div>
-</div>
-</div>
-<!-- Clean Bar Chart with Reference Line -->
-<div class="relative w-full h-64 flex items-end justify-between pt-6 pb-2 border-b border-slate-200">
-<!-- Academic Benchmark Dashed Line -->
-<div class="absolute w-full top-28 border-b border-dashed border-rose-500 z-10 flex justify-end pr-2 pointer-events-none">
-<span class="font-mono text-[10px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded -translate-y-2.5">Ambang Kelulusan CPL: 68%</span>
-</div>
-<!-- Bar 1: Nilai A -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">4,812</span>
-<div class="w-full max-w-[42px] bg-blue-700 hover:bg-blue-800 rounded-t transition-colors" style="height: 78%;"></div>
-<span class="text-xs font-bold text-slate-800 mt-2">A</span>
-<span class="font-mono text-[10px] text-slate-400">(&gt;=85)</span>
-</div>
-<!-- Bar 2: Nilai B+ -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">6,140</span>
-<div class="w-full max-w-[42px] bg-blue-600 hover:bg-blue-700 rounded-t transition-colors" style="height: 94%;"></div>
-<span class="text-xs font-bold text-slate-800 mt-2">B+</span>
-<span class="font-mono text-[10px] text-slate-400">(80-84)</span>
-</div>
-<!-- Bar 3: Nilai B -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">3,890</span>
-<div class="w-full max-w-[42px] bg-blue-500 hover:bg-blue-600 rounded-t transition-colors" style="height: 64%;"></div>
-<span class="text-xs font-bold text-slate-800 mt-2">B</span>
-<span class="font-mono text-[10px] text-slate-400">(75-79)</span>
-</div>
-<!-- Bar 4: Nilai C+ -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">1,410</span>
-<div class="w-full max-w-[42px] bg-slate-400 hover:bg-slate-500 rounded-t transition-colors" style="height: 32%;"></div>
-<span class="text-xs font-bold text-slate-800 mt-2">C+</span>
-<span class="font-mono text-[10px] text-slate-400">(70-74)</span>
-</div>
-<!-- Bar 5: Nilai C -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-slate-600 font-medium mb-1.5">720</span>
-<div class="w-full max-w-[42px] bg-slate-300 hover:bg-slate-400 rounded-t transition-colors" style="height: 18%;"></div>
-<span class="text-xs font-bold text-slate-800 mt-2">C</span>
-<span class="font-mono text-[10px] text-slate-400">(65-69)</span>
-</div>
-<!-- Bar 6: Nilai D -->
-<div class="flex-1 flex flex-col items-center h-full justify-end px-1">
-<span class="font-mono text-xs text-rose-700 font-semibold mb-1.5">280</span>
-<div class="w-full max-w-[42px] bg-rose-500 hover:bg-rose-600 rounded-t transition-colors" style="height: 9%;"></div>
-<span class="text-xs font-bold text-rose-700 mt-2">D</span>
-<span class="font-mono text-[10px] text-rose-600">(&lt;65)</span>
-</div>
-</div>
-<div class="flex items-center justify-between pt-3 text-xs text-slate-500">
-<span class="">94.8% Mahasiswa memenuhi kualifikasi kompetensi unggul</span>
-<span class="text-slate-700 font-medium font-mono">Deviasi Standar: 1.04</span>
-</div>
-</div>
-<!-- Chart B: Realistic Activity Matrix (GitHub / PowerBI Style) -->
-<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
-<div class="flex items-start justify-between mb-4">
-<div>
-<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pola Aktivitas Interaktif</span>
-<h2 class="text-sm font-bold text-slate-900 mt-0.5">Intensitas Beban &amp; Akses Platform Per Jam</h2>
-</div>
-<div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded text-xs">
-<span class="w-2 h-2 rounded-full bg-blue-600"></span>
-<span class="font-mono text-slate-700 font-medium">Peak: 19:00-21:30</span>
-</div>
-</div>
-<!-- Heatmap Grid -->
-<div class="grid grid-cols-7 gap-2.5 my-auto py-2">
-<!-- Monday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Sen</span>
-<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06: Rendah"></div>
-<div class="h-7 rounded-sm bg-blue-200" title="06-12: Sedang"></div>
-<div class="h-7 rounded-sm bg-blue-600" title="12-18: Tinggi"></div>
-<div class="h-7 rounded-sm bg-blue-800" title="18-24: Puncak"></div>
-</div>
-<!-- Tuesday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Sel</span>
-<div class="h-7 rounded-sm bg-blue-100" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-400" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-600" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-800" title="18-24"></div>
-</div>
-<!-- Wednesday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Rab</span>
-<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-300" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-600" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-700" title="18-24"></div>
-</div>
-<!-- Thursday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Kam</span>
-<div class="h-7 rounded-sm bg-blue-100" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-400" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-700" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-800" title="18-24"></div>
-</div>
-<!-- Friday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Jum</span>
-<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-200" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-300" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-600" title="18-24"></div>
-</div>
-<!-- Saturday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Sab</span>
-<div class="h-7 rounded-sm bg-slate-100 border border-slate-200" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-100" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-200" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-300" title="18-24"></div>
-</div>
-<!-- Sunday -->
-<div class="flex flex-col gap-1.5 text-center">
-<span class="text-[11px] font-semibold text-slate-500">Min</span>
-<div class="h-7 rounded-sm bg-blue-50 border border-slate-200" title="00-06"></div>
-<div class="h-7 rounded-sm bg-blue-200" title="06-12"></div>
-<div class="h-7 rounded-sm bg-blue-400" title="12-18"></div>
-<div class="h-7 rounded-sm bg-blue-500" title="18-24"></div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs">
-<div class="flex items-center gap-1.5 text-slate-500">
-<span class="">Rendah</span>
-<span class="w-3 h-3 rounded-xs bg-blue-50 border border-slate-200"></span>
-<span class="w-3 h-3 rounded-xs bg-blue-200"></span>
-<span class="w-3 h-3 rounded-xs bg-blue-400"></span>
-<span class="w-3 h-3 rounded-xs bg-blue-600"></span>
-<span class="w-3 h-3 rounded-xs bg-blue-800"></span>
-<span class="">Puncak Akses</span>
-</div>
-<span class="text-slate-500 font-mono">Total Sesi Server: 142.8k/minggu</span>
-</div>
-</div>
-<!-- Chart C: Efektivitas Modul Pembelajaran Berdasarkan Tingkat Kesulitan -->
-<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
-<div class="flex items-start justify-between mb-4">
-<div>
-<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Korelasi Materi vs Kuis</span>
-<h2 class="text-sm font-bold text-slate-900 mt-0.5">Efektivitas Modul &amp; Beban Kesulitan Tugas</h2>
-</div>
-<span class="font-mono text-[11px] font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">Optimal Balanced</span>
-</div>
-<!-- Horizontal Progress Bars -->
-<div class="flex flex-col gap-3.5 my-auto">
-<!-- Row 1 -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="font-semibold text-slate-800">Modul Arsitektur Cloud Terdistribusi</span>
-<span class="font-mono text-emerald-700 font-semibold">91.4% Ketercapaian • Kesulitan: Tinggi</span>
-</div>
-<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
-<div class="h-full bg-emerald-600 rounded" style="width: 91.4%;"></div>
-</div>
-</div>
-<!-- Row 2 -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="font-semibold text-slate-800">Algoritma &amp; Rekayasa Data Lanjut</span>
-<span class="font-mono text-blue-700 font-semibold">86.8% Ketercapaian • Kesulitan: Sangat Tinggi</span>
-</div>
-<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
-<div class="h-full bg-blue-600 rounded" style="width: 86.8%;"></div>
-</div>
-</div>
-<!-- Row 3 -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="font-semibold text-slate-800">Kecerdasan Buatan &amp; Pemodelan NLP</span>
-<span class="font-mono text-blue-800 font-semibold">88.2% Ketercapaian • Kesulitan: Tinggi</span>
-</div>
-<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
-<div class="h-full bg-blue-700 rounded" style="width: 88.2%;"></div>
-</div>
-</div>
-<!-- Row 4 -->
-<div class="flex flex-col gap-1">
-<div class="flex items-center justify-between text-xs">
-<span class="font-semibold text-slate-800">Etika Rekayasa Perangkat Lunak &amp; Regulasi</span>
-<span class="font-mono text-emerald-700 font-semibold">98.5% Ketercapaian • Kesulitan: Moderat</span>
-</div>
-<div class="w-full h-2 rounded bg-slate-100 overflow-hidden border border-slate-200">
-<div class="h-full bg-emerald-600 rounded" style="width: 98.5%;"></div>
-</div>
-</div>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-500">
-<span class="">Nilai rata-rata submission tugas pertama: 82.4/100</span>
-<a class="text-blue-700 hover:text-blue-800 font-medium flex items-center gap-0.5" href="#">
-<span class="">Audit Rubrik Penilaian</span>
-<span class="material-symbols-outlined text-sm">chevron_right</span>
-</a>
-</div>
-</div>
-<!-- Chart D: Clean Trend Multi-Line Chart (Light Theme) -->
-<div class="bg-white p-5 rounded-md border border-slate-200 shadow-xs flex flex-col justify-between">
-<div class="flex items-start justify-between mb-4">
-<div>
-<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Analisis Longitudinal</span>
-<h2 class="text-sm font-bold text-slate-900 mt-0.5">Tren Pendaftaran vs Retensi Dropout</h2>
-</div>
-<div class="flex items-center gap-3 text-xs">
-<div class="flex items-center gap-1.5">
-<span class="w-3 h-0.5 bg-blue-600"></span>
-<span class="text-slate-600">Registrasi Baru</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="w-3 h-0.5 border-t border-dashed border-rose-500"></span>
-<span class="text-slate-500">Drop-out</span>
-</div>
-</div>
-</div>
-<!-- SVG Multi-Line Chart -->
-<div class="w-full h-48 py-2 relative flex items-center">
-<svg class="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 400 120">
-<!-- Light Grid Lines -->
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="20" y2="20"></line>
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="60" y2="60"></line>
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="400" y1="100" y2="100"></line>
-<!-- Registration Line (Solid Blue) -->
-<path d="M10 90 L 80 75 L 160 55 L 240 60 L 320 30 L 390 20" stroke="#2563eb" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-<circle cx="10" cy="90" fill="#2563eb" r="3"></circle>
-<circle cx="80" cy="75" fill="#2563eb" r="3"></circle>
-<circle cx="160" cy="55" fill="#2563eb" r="3"></circle>
-<circle cx="240" cy="60" fill="#2563eb" r="3"></circle>
-<circle cx="320" cy="30" fill="#2563eb" r="3"></circle>
-<circle cx="390" cy="20" fill="#2563eb" r="3"></circle>
-<!-- Dropout Line (Dashed Rose) -->
-<path d="M10 105 L 80 102 L 160 108 L 240 106 L 320 112 L 390 114" stroke="#e11d48" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="1.75"></path>
-<circle cx="390" cy="114" fill="#e11d48" r="2.5"></circle>
-</svg>
-</div>
-<div class="flex items-center justify-between text-slate-500 font-mono text-[11px] pt-1 border-t border-slate-100">
-<span class="">Ganjil 22</span>
-<span class="">Genap 22</span>
-<span class="">Ganjil 23</span>
-<span class="">Genap 23</span>
-<span class="">Ganjil 24</span>
-<span class="text-blue-700 font-bold">Genap 24 (Aktif)</span>
-</div>
-<div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs mt-2">
-<span class="text-emerald-700 font-medium">Rasio Drop-out terendah dalam 5 semester terakhir (1.2%)</span>
-<span class="text-slate-600 font-medium">Enrollment: +18.4%</span>
-</div>
-</div>
-</section>
-<!-- 4. Data Table: Laporan Kelulusan & Nilai Per Mata Kuliah (OBE Table) -->
-<section class="bg-white rounded-md border border-slate-200 shadow-xs overflow-hidden flex flex-col">
-<!-- Table Header & Controls -->
-<div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-200 bg-slate-50/50">
-<div>
-<h3 class="text-sm font-bold text-slate-900">Data Evaluasi Kurikulum &amp; Nilai Per Mata Kuliah</h3>
-<p class="text-xs text-slate-500 mt-0.5">Laporan agregat semester genap berjalan terintegrasi silabus OBE (Outcome-Based Education).</p>
-</div>
-<div class="flex items-center gap-2">
-<div class="relative flex items-center">
-<span class="material-symbols-outlined text-slate-400 absolute left-2.5 text-base">filter_alt</span>
-<input class="h-8 pl-8 pr-3 bg-white text-slate-900 rounded border border-slate-300 text-xs placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="Saring kode MK atau dosen..." type="text">
-</div>
-<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium flex items-center gap-1 transition-colors">
-<span class="material-symbols-outlined text-sm">tune</span>
-<span class="">Konfigurasi Kolom</span>
-</button>
-</div>
-</div>
-<!-- Responsive Table Container -->
-<div class="w-full overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-slate-50 text-slate-500 text-[11px] font-semibold uppercase tracking-wider border-b border-slate-200">
-<th class="py-2.5 px-4">Kode MK</th>
-<th class="py-2.5 px-4">Nama Mata Kuliah</th>
-<th class="py-2.5 px-4">Dosen Pengampu</th>
-<th class="py-2.5 px-4 text-right">Peserta</th>
-<th class="py-2.5 px-4 text-right">Rata-rata</th>
-<th class="py-2.5 px-4">Tingkat Kelulusan</th>
-<th class="py-2.5 px-4">Status Akreditasi</th>
-<th class="py-2.5 px-4 text-center">Dokumen Evaluasi</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-200 text-xs text-slate-700">
-<!-- Row 1 -->
-<tr class="hover:bg-slate-50/75 transition-colors">
-<td class="py-3 px-4 font-mono font-medium text-blue-700">CS4021</td>
-<td class="py-3 px-4">
-<span class="font-semibold text-slate-900 block">Sistem Terdistribusi &amp; Cloud Native Architecture</span>
-<span class="text-[11px] text-slate-500">SKS: 4 • Semester 7</span>
-</td>
-<td class="py-3 px-4 text-slate-600">Prof. Dr. Ir. Budi Rahardjo, M.Sc</td>
-<td class="py-3 px-4 text-right font-mono text-slate-700">428 Mhs</td>
-<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.74</td>
-<td class="py-3 px-4">
-<div class="flex items-center gap-2">
-<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
-<div class="h-full bg-emerald-600 rounded-full" style="width: 96.2%;"></div>
-</div>
-<span class="font-mono text-emerald-700 font-semibold">96.2%</span>
-</div>
-</td>
-<td class="py-3 px-4">
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">ASIIN Certified</span>
-</td>
-<td class="py-3 px-4 text-center">
-<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
-<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
-<span class="">PDF QA</span>
-</a>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-slate-50/75 transition-colors">
-<td class="py-3 px-4 font-mono font-medium text-blue-700">DS3015</td>
-<td class="py-3 px-4">
-<span class="font-semibold text-slate-900 block">Pembelajaran Mesin &amp; Analisis Prediktif</span>
-<span class="text-[11px] text-slate-500">SKS: 3 • Semester 5</span>
-</td>
-<td class="py-3 px-4 text-slate-600">Dr. Ratna Susanti, S.Kom., M.T.</td>
-<td class="py-3 px-4 text-right font-mono text-slate-700">512 Mhs</td>
-<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.58</td>
-<td class="py-3 px-4">
-<div class="flex items-center gap-2">
-<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
-<div class="h-full bg-emerald-600 rounded-full" style="width: 93.8%;"></div>
-</div>
-<span class="font-mono text-emerald-700 font-semibold">93.8%</span>
-</div>
-</td>
-<td class="py-3 px-4">
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">ABET Aligned</span>
-</td>
-<td class="py-3 px-4 text-center">
-<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
-<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
-<span class="">PDF QA</span>
-</a>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-slate-50/75 transition-colors">
-<td class="py-3 px-4 font-mono font-medium text-blue-700">SE2004</td>
-<td class="py-3 px-4">
-<span class="font-semibold text-slate-900 block">Rekayasa Perangkat Lunak Skala Korporasi</span>
-<span class="text-[11px] text-slate-500">SKS: 4 • Semester 4</span>
-</td>
-<td class="py-3 px-4 text-slate-600">Hendrawan Pratama, Ph.D</td>
-<td class="py-3 px-4 text-right font-mono text-slate-700">630 Mhs</td>
-<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.69</td>
-<td class="py-3 px-4">
-<div class="flex items-center gap-2">
-<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
-<div class="h-full bg-emerald-600 rounded-full" style="width: 95.1%;"></div>
-</div>
-<span class="font-mono text-emerald-700 font-semibold">95.1%</span>
-</div>
-</td>
-<td class="py-3 px-4">
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">Unggul - BAN-PT</span>
-</td>
-<td class="py-3 px-4 text-center">
-<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
-<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
-<span class="">PDF QA</span>
-</a>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-slate-50/75 transition-colors">
-<td class="py-3 px-4 font-mono font-medium text-blue-700">CY5020</td>
-<td class="py-3 px-4">
-<span class="font-semibold text-slate-900 block">Keamanan Jaringan Lanjut &amp; Kriptografi</span>
-<span class="text-[11px] text-slate-500">SKS: 3 • Semester 6</span>
-</td>
-<td class="py-3 px-4 text-slate-600">Dr. Anton Subekti, S.T., M.Eng</td>
-<td class="py-3 px-4 text-right font-mono text-slate-700">310 Mhs</td>
-<td class="py-3 px-4 text-right font-mono font-bold text-slate-900">3.41</td>
-<td class="py-3 px-4">
-<div class="flex items-center gap-2">
-<div class="w-24 h-1.5 rounded-full bg-slate-200 overflow-hidden">
-<div class="h-full bg-blue-600 rounded-full" style="width: 88.4%;"></div>
-</div>
-<span class="font-mono text-blue-700 font-semibold">88.4%</span>
-</div>
-</td>
-<td class="py-3 px-4">
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">Audit Review</span>
-</td>
-<td class="py-3 px-4 text-center">
-<a class="inline-flex items-center justify-center h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors text-[11px] font-medium" href="#">
-<span class="material-symbols-outlined text-sm mr-1 text-slate-500">download</span>
-<span class="">PDF QA</span>
-</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Pagination Footer -->
-<div class="p-3 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 border-t border-slate-200 text-xs text-slate-500">
-<span class="">Menampilkan 1-4 dari 128 Mata Kuliah Terjadwal</span>
-<div class="flex items-center gap-1 font-mono">
-<button class="h-7 w-7 rounded border border-slate-300 bg-white flex items-center justify-center hover:bg-slate-100 text-slate-700 disabled:opacity-40">
-<span class="material-symbols-outlined text-sm">chevron_left</span>
-</button>
-<button class="h-7 px-2.5 rounded bg-blue-700 text-white font-semibold">1</button>
-<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">2</button>
-<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">3</button>
-<span class="px-1 text-slate-400">...</span>
-<button class="h-7 px-2.5 rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">32</button>
-<button class="h-7 w-7 rounded border border-slate-300 bg-white flex items-center justify-center hover:bg-slate-100 text-slate-700">
-<span class="material-symbols-outlined text-sm">chevron_right</span>
-</button>
-</div>
-</div>
-</section>
-<!-- 5. Audit & Compliance Formal Institutional Footer -->
-<footer class="p-4 rounded-md bg-white border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0">
-<span class="material-symbols-outlined text-xl">fact_check</span>
-</div>
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="font-bold text-slate-900 text-sm">Status Validasi &amp; Pelaporan BAN-PT / LAM-INFOKOM</span>
-<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Tervalidasi LPMI</span>
-</div>
-<p class="text-slate-600 mt-0.5 text-xs">Data instrumen akreditasi 9 kriteria telah disinkronisasi dan disetujui Tim Penjaminan Mutu Internal. Siap diekspor ke format LKPS dan LED.</p>
-</div>
-</div>
-<div class="flex items-center gap-2 shrink-0">
-<button class="h-8 px-3 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
-<span class="material-symbols-outlined text-sm text-emerald-700">table_chart</span>
-<span class="">Unduh Rekap Akreditasi (LKPS.xlsx)</span>
-</button>
-<button class="h-8 px-3 rounded bg-blue-700 hover:bg-blue-800 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-2xs">
-<span class="material-symbols-outlined text-sm text-white">visibility</span>
-<span class="">Pratinjau Dokumen LED (PDF)</span>
-</button>
-</div>
-</footer>
-</div>
-</main>
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <!-- Kop laporan (hanya saat dicetak) -->
+      <section class="hidden border-b-2 border-slate-800 pb-3 print:block">
+        <p class="text-lg font-bold text-slate-900" id="kop-institusi">Nexus LMS</p>
+        <p class="text-sm font-semibold text-slate-800">Laporan Akademik &amp; Aktivitas Sistem</p>
+        <p class="mt-1 text-xs text-slate-600" id="kop-detail"></p>
+      </section>
+
+      <!-- Judul & aksi -->
+      <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Laporan · Periode <span id="periode-aktif">-</span></p>
+          <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Laporan Akademik &amp; Analitik</h2>
+          <p class="mt-1 max-w-2xl text-sm text-slate-500">Rekap kinerja mata kuliah dan riwayat aktivitas admin. Gunakan filter untuk mempersempit laporan, lalu cetak atau ekspor.</p>
+        </div>
+        <div class="no-print flex flex-wrap gap-2">
+          <button type="button" id="btn-cetak" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">print</span>Cetak / Simpan PDF
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter akademik -->
+      <section class="no-print flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center" aria-label="Filter laporan akademik">
+        <label for="f-prodi" class="text-sm font-medium text-slate-700">Program studi</label>
+        <select id="f-prodi" class="rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500 sm:w-72"><option value="">Semua program studi</option></select>
+        <p class="text-xs text-slate-500 sm:ml-auto">Ringkasan dan rekap mata kuliah mengikuti filter ini.</p>
+      </section>
+
+      <!-- KPI -->
+      <section aria-label="Ringkasan akademik" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Rata-rata IPK</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900" id="kpi-ipk">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-ipk-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Rata-rata Nilai Akhir</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900" id="kpi-nilai">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-nilai-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tingkat Kelulusan</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900" id="kpi-lulus">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-lulus-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tingkat Kehadiran</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900" id="kpi-hadir">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-hadir-sub">&nbsp;</p>
+        </article>
+      </section>
+
+      <!-- Rekap mata kuliah -->
+      <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="judul-rekap">
+        <div class="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 id="judul-rekap" class="text-base font-semibold text-slate-900">Rekap Kinerja Mata Kuliah</h3>
+            <p class="text-xs text-slate-500">Peserta = KRS disetujui · Lulus = nilai akhir ≥ passing grade · Hadir = presensi kelas virtual.</p>
+          </div>
+          <div class="no-print flex gap-2">
+            <label for="f-urut" class="sr-only">Urutkan rekap</label>
+            <select id="f-urut" class="rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              <option value="kode">Urut: Kode</option>
+              <option value="peserta">Urut: Peserta terbanyak</option>
+              <option value="nilai">Urut: Nilai tertinggi</option>
+              <option value="lulus">Urut: Kelulusan tertinggi</option>
+            </select>
+            <button type="button" id="btn-csv-rekap" class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">download</span>CSV
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <caption class="sr-only">Rekap kinerja mata kuliah</caption>
+            <thead class="bg-slate-50">
+              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <th scope="col" class="px-4 py-3">Kode</th>
+                <th scope="col" class="px-4 py-3">Mata Kuliah</th>
+                <th scope="col" class="px-4 py-3">Dosen</th>
+                <th scope="col" class="px-4 py-3 text-right">Peserta</th>
+                <th scope="col" class="px-4 py-3 text-right">Rata-rata</th>
+                <th scope="col" class="px-4 py-3 text-right">Lulus</th>
+                <th scope="col" class="px-4 py-3 text-right">Hadir</th>
+                <th scope="col" class="px-4 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-rekap" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Log aktivitas -->
+      <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="judul-log">
+        <div class="border-b border-slate-200 px-5 py-4">
+          <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 id="judul-log" class="text-base font-semibold text-slate-900">Log Aktivitas Sistem</h3>
+              <p class="text-xs text-slate-500">Jejak audit setiap penambahan, perubahan, penghapusan data, dan login admin.</p>
+            </div>
+            <button type="button" id="btn-csv-log" class="no-print inline-flex items-center gap-1.5 self-start whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">download</span>CSV
+            </button>
+          </div>
+          <div class="no-print mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+            <div class="relative xl:col-span-2">
+              <label for="log-cari" class="sr-only">Cari log</label>
+              <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400" aria-hidden="true">search</span>
+              <input id="log-cari" type="search" placeholder="Cari deskripsi atau nama admin…" class="block w-full rounded-lg border-slate-300 pl-9 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label for="log-aksi" class="sr-only">Jenis aksi</label>
+              <select id="log-aksi" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">Semua aksi</option><option value="create">Tambah</option><option value="update">Ubah</option><option value="delete">Hapus</option><option value="login">Login</option>
+              </select>
+            </div>
+            <div>
+              <label for="log-dari" class="sr-only">Dari tanggal</label>
+              <input id="log-dari" type="date" title="Dari tanggal" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label for="log-sampai" class="sr-only">Sampai tanggal</label>
+              <input id="log-sampai" type="date" title="Sampai tanggal" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <caption class="sr-only">Log aktivitas sistem</caption>
+            <thead class="bg-slate-50">
+              <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                <th scope="col" class="px-4 py-3">Waktu</th>
+                <th scope="col" class="px-4 py-3">Admin</th>
+                <th scope="col" class="px-4 py-3">Aksi</th>
+                <th scope="col" class="px-4 py-3">Data</th>
+                <th scope="col" class="px-4 py-3">Deskripsi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-log" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div class="no-print flex flex-col gap-2 border-t border-slate-200 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p id="log-counter"></p>
+          <nav id="log-pager" class="flex flex-wrap gap-1" aria-label="Halaman log aktivitas"></nav>
+        </div>
+      </section>
+    </main>
 
     <footer data-component="footer"></footer>
   </div>

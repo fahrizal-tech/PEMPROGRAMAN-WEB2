@@ -18,7 +18,9 @@
   <script src="../assets/js/core/utils.js" defer></script>
   <script src="../assets/js/core/validators.js" defer></script>
   <script src="../assets/js/core/services.js" defer></script>
+  <script src="../assets/js/components/ui.js" defer></script>
   <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pages/layout-demo.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-800">
   <!--
@@ -92,82 +94,79 @@
       <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <!-- Komponen form -->
         <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="judul-form">
-          <h2 id="judul-form" class="text-base font-semibold text-slate-900">Form Input</h2>
-          <form class="mt-4 space-y-4" novalidate>
+          <h2 id="judul-form" class="text-base font-semibold text-slate-900">Form &amp; Validasi</h2>
+          <p class="mt-1 text-xs text-slate-500">Pesan muncul saat kolom ditinggalkan dan diperbarui saat diperbaiki.</p>
+          <form id="demo-form" class="mt-4 space-y-4" novalidate>
             <div>
-              <label for="contoh-kode" class="mb-1 block text-sm font-medium text-slate-700">Kode Mata Kuliah</label>
-              <input id="contoh-kode" type="text" placeholder="TIF-302" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              <label for="demo-kode" class="mb-1 block text-sm font-medium text-slate-700">Kode Mata Kuliah <span class="text-red-500" aria-hidden="true">*</span></label>
+              <input id="demo-kode" name="kode_mk" type="text" placeholder="CS-301" autocomplete="off" class="block w-full rounded-lg border-slate-300 text-sm uppercase focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-              <label for="contoh-nama" class="mb-1 block text-sm font-medium text-slate-700">Nama Kursus</label>
-              <input id="contoh-nama" type="text" value="PW" aria-invalid="true" aria-describedby="contoh-nama-error" class="block w-full rounded-lg border-red-400 text-sm focus:border-red-500 focus:ring-red-500">
-              <p id="contoh-nama-error" class="mt-1 flex items-center gap-1 text-xs text-red-600">
-                <span class="material-symbols-outlined text-[14px]" aria-hidden="true">error</span>Minimal 5 karakter.
-              </p>
+              <label for="demo-nama" class="mb-1 block text-sm font-medium text-slate-700">Nama Kursus <span class="text-red-500" aria-hidden="true">*</span></label>
+              <input id="demo-nama" name="nama" type="text" placeholder="Minimal 5 karakter" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-              <label for="contoh-tingkat" class="mb-1 block text-sm font-medium text-slate-700">Tingkat</label>
-              <select id="contoh-tingkat" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
-                <option>Dasar</option>
-                <option selected>Menengah</option>
-                <option>Lanjut</option>
+              <label for="demo-tingkat" class="mb-1 block text-sm font-medium text-slate-700">Tingkat <span class="text-red-500" aria-hidden="true">*</span></label>
+              <select id="demo-tingkat" name="tingkat" class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">Pilih tingkat…</option>
+                <option value="dasar">Dasar</option>
+                <option value="menengah">Menengah</option>
+                <option value="lanjut">Lanjut</option>
               </select>
             </div>
+            <button type="submit" class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Validasi</button>
           </form>
         </section>
 
-        <!-- Tombol, badge, dan tabel -->
-        <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2" aria-labelledby="judul-tombol">
-          <h2 id="judul-tombol" class="text-base font-semibold text-slate-900">Tombol, Status &amp; Tabel</h2>
+        <!-- Komponen interaktif & tabel data -->
+        <section class="min-w-0 rounded-xl border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2" aria-labelledby="judul-tombol">
+          <h2 id="judul-tombol" class="text-base font-semibold text-slate-900">Komponen Interaktif</h2>
           <div class="mt-4 flex flex-wrap gap-3">
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Primary</button>
-            <button type="button" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Secondary</button>
-            <button type="button" class="rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Ghost</button>
-            <button type="button" class="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">Hapus</button>
+            <button type="button" data-demo="toast" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Tampilkan Toast</button>
+            <button type="button" data-demo="modal" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">Buka Modal</button>
+            <button type="button" data-demo="confirm" class="rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">Konfirmasi</button>
+            <button type="button" data-demo="delete" class="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">Hapus (Contoh)</button>
           </div>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Aktif</span>
-            <span class="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700">Menunggu</span>
-            <span class="rounded-full border border-red-200 bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700">Ditolak</span>
-            <span class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">Draft</span>
-          </div>
+          <div id="demo-badges" class="mt-5 flex flex-wrap gap-2"></div>
 
-          <!-- Tabel data: bisa digeser horizontal di layar kecil -->
-          <div class="mt-6 overflow-x-auto rounded-lg border border-slate-200">
+          <!-- Tabel data dinamis: cari, filter, urut, halaman -->
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <label for="demo-cari" class="sr-only">Cari kursus</label>
+            <div class="relative flex-1">
+              <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400" aria-hidden="true">search</span>
+              <input id="demo-cari" type="search" placeholder="Cari kode atau nama kursus…" class="block w-full rounded-lg border-slate-300 pl-9 text-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <label for="demo-status" class="sr-only">Filter status</label>
+            <select id="demo-status" class="rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              <option value="">Semua status</option>
+              <option value="publikasi">Publikasi</option>
+              <option value="draft">Draft</option>
+              <option value="arsip">Arsip</option>
+            </select>
+            <label for="demo-urut" class="sr-only">Urutkan</label>
+            <select id="demo-urut" class="rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+              <option value="kode">Urut: Kode MK</option>
+              <option value="nama">Urut: Nama</option>
+              <option value="kuota">Urut: Kuota terbesar</option>
+            </select>
+          </div>
+          <div class="mt-3 overflow-x-auto rounded-lg border border-slate-200">
             <table class="min-w-full divide-y divide-slate-200 text-sm">
               <caption class="sr-only">Contoh tabel data kursus</caption>
               <thead class="bg-slate-50">
                 <tr class="whitespace-nowrap text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   <th scope="col" class="px-4 py-3">Kode MK</th>
                   <th scope="col" class="px-4 py-3">Nama Kursus</th>
-                  <th scope="col" class="px-4 py-3">Dosen</th>
+                  <th scope="col" class="px-4 py-3 text-right">Kuota</th>
                   <th scope="col" class="px-4 py-3">Status</th>
-                  <th scope="col" class="px-4 py-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-100 bg-white">
-                <tr class="hover:bg-slate-50">
-                  <td class="whitespace-nowrap px-4 py-3 font-mono text-xs text-slate-600">TIF-302</td>
-                  <td class="px-4 py-3 font-medium text-slate-900">Pemrograman Web Lanjut</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-slate-600">Dr. Rina Kusuma</td>
-                  <td class="px-4 py-3"><span class="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">Publikasi</span></td>
-                  <td class="whitespace-nowrap px-4 py-3 text-right">
-                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Edit TIF-302"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">edit</span></button>
-                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600" aria-label="Hapus TIF-302"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>
-                  </td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="whitespace-nowrap px-4 py-3 font-mono text-xs text-slate-600">SIF-210</td>
-                  <td class="px-4 py-3 font-medium text-slate-900">Basis Data</td>
-                  <td class="whitespace-nowrap px-4 py-3 text-slate-600">Budi Santoso, M.T.</td>
-                  <td class="px-4 py-3"><span class="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">Draft</span></td>
-                  <td class="whitespace-nowrap px-4 py-3 text-right">
-                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600" aria-label="Edit SIF-210"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">edit</span></button>
-                    <button type="button" class="rounded p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600" aria-label="Hapus SIF-210"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="demo-tbody" class="divide-y divide-slate-100 bg-white"></tbody>
             </table>
+          </div>
+          <div class="mt-3 flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p id="demo-counter"></p>
+            <nav id="demo-pager" class="flex flex-wrap gap-1" aria-label="Halaman tabel"></nav>
           </div>
         </section>
       </div>

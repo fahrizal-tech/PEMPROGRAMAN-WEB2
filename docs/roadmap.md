@@ -132,14 +132,15 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Validasi & sanitasi data di service layer (`validators.js`, skema yang sama dipakai form) — uji unit total 41 lulus
 
 ### Tahap 4 — Milestone 3: Halaman & Interaktivitas (target: pekan 7)
-**Komponen bersama:** modal, dialog konfirmasi, toast, validator form, helper tabel (search, filter, sort, pagination).
+- [x] **Komponen bersama** (`assets/js/components/ui.js`): template HTML anti-XSS, badge status, toast, modal aksesibel (fokus terkunci, Esc), konfirmasi, hapus dengan penjelasan dampak/penghalang, form tervalidasi per kolom, tabel (cari, filter, urut, halaman, kosong/memuat). Etalase interaktif di `layout.html`.
 
 **Halaman wajib:**
 - [ ] `index.html` — Login: validasi, tampil/sembunyikan password, redirect ke dashboard; tab default Admin/BAAK, tab Dosen/Mahasiswa → pemberitahuan "di luar lingkup"
-- [ ] `dashboard.html` — kartu statistik + Chart.js (tren pendaftaran, distribusi nilai, aktivitas) dari data lokal
-- [ ] `data-master.html` — tabel kursus: cari, filter, urut, paginasi, tombol Tambah/Edit/Hapus + modal konfirmasi (kode MK tidak terpotong baris)
-- [ ] `form.html` — form kursus mode tambah/edit (`?id=`), validasi real-time, cek duplikat kode
-- [ ] `laporan.html` — rekap & log aktivitas, filter periode, cetak (`@media print`), ekspor CSV
+- [x] `dashboard.html` — 5 KPI dari data (KRS menunggu dapat diklik), 3 grafik Chart.js lokal (tren KRS, mahasiswa per prodi, keterisian kursus) + tabel data untuk pembaca layar, aktivitas terbaru, kursus teratas
+- [x] `data-master.html` — KPI dari data, tabel kursus (kuota vs terisi, modul, tugas), cari/filter/urut/halaman, Edit/Hapus dengan konfirmasi berpenjelasan, ekspor CSV sesuai filter
+- [x] `form.html` — form kursus mode tambah/edit (`?id=`), validasi per kolom, cek duplikat kode, struktur modul (tambah/urutkan/hapus), publikasi butuh modul, peringatan perubahan belum disimpan
+- [x] `laporan.html` — KPI akademik (IPK, nilai, kelulusan, kehadiran) & rekap per mata kuliah dengan filter prodi; log aktivitas dengan cari/filter aksi/rentang tanggal; ekspor CSV; cetak A4 (`@media print`: kop laporan, semua baris log, tabel pas lebar kertas) / simpan PDF
+- [x] Rilis tag `v0.4.0` (4 halaman wajib selesai)
 
 **Halaman pendukung:**
 - [ ] `mahasiswa.html` — CRUD + modal edit + validasi KRS (setujui/tolak)

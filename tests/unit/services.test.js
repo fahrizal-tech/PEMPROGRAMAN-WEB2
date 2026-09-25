@@ -198,3 +198,35 @@ test("setiap perubahan tercatat di log aktivitas (terbaru di atas)", async () =>
   assert.equal(first.aksi, "create");
   assert.match(first.deskripsi, /TS-101 Kursus Pengujian/);
 });
+
+/* ---------- Struktur modul ---------- */
+
+test("modul: simpan struktur sekaligus (tukar urutan, ubah, tambah, hapus)", async () => {
+  const { S } = fresh();
+  const k = await S.kursus.create(kursusBaru());
+  let list = await S.modul.saveForKursus(k.id, [
+    { judul: "Pengantar", tipe_materi: "video" },
+    { judul: "Lanjutan", tipe_materi: "dokumen" },
+  ]);
+  const [a, b] = list.sort((x, y) => x.pertemuan_ke - y.pertemuan_ke);
+  list = await S.modul.saveForKursus(k.id, [
+    { id: b.id, judul: "Lanjutan (revisi)", tipe_materi: "dokumen" },
+    { id: a.id, judul: "Pengantar", tipe_materi: "video" },
+    { judul: "Kuis Akhir", tipe_materi: "kuis" },
+  ]);
+  const byOrder = list.sort((x, y) => x.pertemuan_ke - y.pertemuan_ke).map((m) => m.judul);
+  assert.deepEqual(byOrder, ["Lanjutan (revisi)", "Pengantar", "Kuis Akhir"]);
+  list = await S.modul.saveForKursus(k.id, [{ id: a.id, judul: "Pengantar", tipe_materi: "video" }]);
+  assert.equal(list.length, 1);
+  assert.equal(list[0].pertemuan_ke, 1);
+});
+
+test("modul: error per baris & modul yang dipakai kelas virtual tidak bisa dihapus", async () => {
+  const { S } = fresh();
+  const v = S.modul.validateStructure([{ judul: "OK judul", tipe_materi: "video" }, { judul: "x", tipe_materi: "audio" }]);
+  assert.equal(v.valid, false);
+  assert.match(v.errors.modul_1_judul, /^Modul 2: .*minimal 3/);
+  assert.ok(v.errors.modul_1_tipe_materi);
+  // krs_101 punya kelas virtual yang memakai modul pertemuan 4 → menghapus semua modul ditolak.
+  await assert.rejects(S.modul.saveForKursus("krs_101", [{ judul: "Satu-satunya", tipe_materi: "video" }]), (e) => /kelas virtual/.test(e.errors.modul));
+});
