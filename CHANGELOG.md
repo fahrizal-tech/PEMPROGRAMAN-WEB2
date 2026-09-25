@@ -5,6 +5,29 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-09-25 · Milestone 3 (halaman wajib)
+
+### Tahap 4 — Halaman & Interaktivitas (bagian 1)
+
+#### Ditambahkan
+- Komponen UI bersama (`assets/js/components/ui.js`): template anti-XSS, badge status, toast, modal aksesibel, konfirmasi, hapus berpenjelasan (dampak/penghalang), form tervalidasi per kolom, tabel (cari/filter/urut/halaman), pesan kilat setelah redirect. Etalase interaktif di `layout.html`.
+- **Data Master Kursus**: KPI dari data, tabel dengan kuota vs terisi, filter, Edit/Hapus, ekspor CSV.
+- **Form Kursus**: tambah/edit, validasi per kolom, struktur modul (tambah/urutkan/hapus) disimpan sekaligus, peringatan perubahan belum disimpan.
+- **Dashboard**: 5 KPI, 3 grafik Chart.js (disimpan lokal di `assets/vendor`), aktivitas terbaru, kursus teratas.
+- **Laporan & Analitik**: KPI akademik, rekap per mata kuliah, log aktivitas dengan filter, ekspor CSV, cetak A4 / simpan PDF.
+- Service `modul.saveForKursus` & `modul.validateStructure`.
+
+#### Diubah
+- Kontrol Stitch yang tidak fungsional diganti atau dihapus (import Excel, grid, centang massal, wizard, upload banner, ekspor XLSX/PDF resmi → ekspor CSV & cetak/PDF).
+
+#### Diperbaiki
+- Tombol simpan tidak lagi bergeser saat diklik (error form dibersihkan saat diperbaiki, bukan saat blur).
+- Toast di HP dipindah ke bawah agar tidak menutupi tombol menu.
+- Label grafik tidak terpotong (grafik digambar ulang setelah font termuat).
+
+#### Pengujian
+- Uji unit 52, uji E2E 51 (CRUD kursus lengkap, anti-XSS, modal, grafik, filter laporan, mode cetak).
+
 ## [0.3.0] — 2026-09-24
 
 ### Tahap 3 — Data Layer Lokal

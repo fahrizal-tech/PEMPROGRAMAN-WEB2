@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** layout, navigasi, data lokal, dan login demo sudah berjalan. Fitur CRUD & grafik sedang dikembangkan (Milestone 3). Lihat [Roadmap](docs/roadmap.md) dan [Changelog](CHANGELOG.md).
+> **Status:** 4 halaman wajib (Dashboard, Data Master, Form, Laporan) berfungsi penuh dengan data. Halaman pendukung sedang dikembangkan.
 
 ## Fitur Utama
 
