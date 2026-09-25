@@ -5,6 +5,30 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-09-25 · QA & Polesan
+
+### Tahap 5 — Kualitas, keamanan, aksesibilitas
+
+#### Ditambahkan
+- **Content-Security-Policy** (`<meta>`) di 12 halaman: skrip hanya dari situs sendiri (tanpa inline/`eval`), font dari Google Fonts, gambar self/`data:`/`blob:`, `object-src 'none'`.
+- **Dependabot** (npm & GitHub Actions, mingguan) dan `npm audit` di CI.
+- Alat QA: `npm run test:html` (html-validate, file mentah + DOM hasil render), `npm run test:a11y` (axe-core + uji keyboard), `npm run test:lighthouse` (HP & desktop). HTML & a11y masuk CI.
+- E2E mendukung **Firefox** (WebDriver BiDi) dan mode `--http`; E2E gagal bila ada pelanggaran CSP.
+
+#### Diubah
+- Kontras warna memenuhi WCAG AA: teks abu kecil, judul grup menu, lencana tingkat, tombol hijau berteks putih.
+- Font Inter `display=optional` (tanpa lompatan teks saat font termuat).
+- puppeteer-core 25 (menutup celah `extract-zip` → 0 kerentanan).
+
+#### Diperbaiki
+- **Konten bergeser saat dimuat (CLS)**: tinggi topbar disediakan dan `<main>` ditahan sampai skrip halaman siap → Performance Pengaturan 76 → 100.
+- Drawer menu HP: fokus Tab tidak lagi bocor ke konten di belakang overlay (`inert`).
+- Validasi HTML: `&` di judul, BOM, atribut boolean, `for` berlebih, landmark tanpa nama unik, `aria-label` pada elemen yang tidak mendukung, `placeholder` pada input tanggal.
+- Skrip screenshot sementara yang ikut ter-commit dihapus dan dicegah lewat `.gitignore`.
+
+#### Hasil
+- Lighthouse HP 98–100 & desktop 99–100 (Performance/Accessibility/Best Practices/SEO), axe-core 0 pelanggaran di 23 kondisi, HTML 0 masalah, E2E 99/99 di Edge, Chrome, dan Firefox.
+
 ## [1.1.0] — 2026-09-25 · Penyegaran Visual
 
 ### Tahap 4c — UI kartu bergambar

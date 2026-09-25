@@ -87,7 +87,7 @@
         <td class="whitespace-nowrap px-4 py-3 text-right tabular-nums ${full ? "font-semibold text-red-600" : "text-slate-700"}">${t} / ${k.kuota}${full ? " (penuh)" : ""}</td>
         <td class="whitespace-nowrap px-4 py-3 text-xs text-slate-600">${u.formatDate(x.diajukan_pada, true)}</td>
         <td class="whitespace-nowrap px-4 py-3 text-right">
-          <button type="button" data-approve="${x.id}" class="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Setujui</button>
+          <button type="button" data-approve="${x.id}" class="rounded-lg bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">Setujui</button>
           <button type="button" data-reject="${x.id}" class="rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500">Tolak</button>
         </td>
       </tr>`.value;
@@ -252,7 +252,7 @@
               <div><span class="font-mono text-xs text-slate-500">${k.kode_mk} · ${k.sks} SKS</span><p class="font-medium text-slate-800">${k.nama}</p>
                 <p class="text-xs text-slate-500">${x.periode}${x.nilai_akhir != null ? " · Nilai akhir " + u.formatNumber(x.nilai_akhir, 1) : ""}</p></div>
               <div class="flex items-center gap-2">${ui.badge(x.status)}
-                ${x.status === "diajukan" ? html`<button type="button" data-approve="${x.id}" class="rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-700">Setujui</button>
+                ${x.status === "diajukan" ? html`<button type="button" data-approve="${x.id}" class="rounded-lg bg-emerald-700 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-800">Setujui</button>
                   <button type="button" data-reject="${x.id}" class="rounded-lg border border-red-200 px-2.5 py-1 text-xs font-semibold text-red-600 hover:bg-red-50">Tolak</button>` : ""}
               </div></li>`;
           })}

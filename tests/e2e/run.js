@@ -3,8 +3,11 @@
  *
  *   npm run test:e2e              → uji file lokal
  *   npm run test:e2e -- --online  → uji website di GitHub Pages
+ *   npm run test:e2e -- --http    → uji lewat server HTTP lokal (wajib untuk Firefox,
+ *                                   yang memperlakukan tiap file:// sebagai origin terpisah)
  *
- * Browser dicari otomatis; bisa diatur manual lewat variabel BROWSER_PATH.
+ * Browser dicari otomatis; bisa diatur manual lewat variabel BROWSER_PATH
+ * (Chrome/Edge via CDP, Firefox via WebDriver BiDi).
  */
 const fs = require("node:fs");
 const path = require("node:path");
@@ -12,7 +15,11 @@ const { pathToFileURL } = require("node:url");
 const puppeteer = require("puppeteer-core");
 
 const ONLINE_URL = "https://fahrizal-tech.github.io/PEMPROGRAMAN-WEB2/";
-const ROOT = process.argv.includes("--online") ? ONLINE_URL : pathToFileURL(path.resolve(__dirname, "../..")).href + "/";
+const HTTP_PORT = 4174;
+const USE_HTTP = process.argv.includes("--http");
+const ROOT = process.argv.includes("--online") ? ONLINE_URL
+  : USE_HTTP ? `http://localhost:${HTTP_PORT}/`
+  : pathToFileURL(path.resolve(__dirname, "../..")).href + "/";
 const MENU = ["dashboard", "laporan", "data-master", "tugas-kuis", "kelas-virtual", "mahasiswa", "instruktur", "sertifikasi", "pengaturan"];
 const DEMO = { email: "admin@nexus.ac.id", password: "nexus2026" };
 const NAV = { waitUntil: "domcontentloaded", timeout: 60000 };
@@ -36,13 +43,26 @@ function findBrowser() {
 
 (async () => {
   console.log(`Target: ${ROOT}\n`);
-  const browser = await puppeteer.launch({ executablePath: findBrowser(), headless: true, args: ["--allow-file-access-from-files"] });
+  const server = USE_HTTP ? await require("../helpers/server").serve(HTTP_PORT) : null;
+  const exe = findBrowser();
+  const firefox = /firefox/i.test(exe); // Firefox dijalankan lewat WebDriver BiDi
+  const browser = await puppeteer.launch(firefox
+    ? { browser: "firefox", executablePath: exe, headless: true }
+    : { executablePath: exe, headless: true, args: ["--allow-file-access-from-files"] });
+  console.log(`Browser: ${await browser.version()}`);
   const page = await browser.newPage();
   const errors = [];
   const where = () => page.url().split("/").pop();
-  page.on("pageerror", (e) => errors.push(`${where()}: ${e.message}`));
+  // URL dari dalam halaman: di Firefox (BiDi) page.url() tidak ikut berubah saat skrip memanggil location.replace().
+  const here = () => page.evaluate(() => location.pathname.split("/").pop() + location.search);
+  // Firefox melaporkan unduhan font yang dibatalkan (pindah halaman) sebagai error halaman.
+  page.on("pageerror", (e) => { if (!/downloadable font/.test(e.message)) errors.push(`${where()}: ${e.message}`); });
   page.on("console", (m) => {
-    if (m.type() === "error" && !/fonts\.g|Tracking|favicon/.test(m.text())) errors.push(`${where()}: ${m.text()}`);
+    if (m.type() === "error" && (/^CSP dilanggar/.test(m.text()) || !/fonts\.g|Tracking|favicon/.test(m.text()))) errors.push(`${where()}: ${m.text()}`);
+  });
+  // Setiap pelanggaran Content-Security-Policy dihitung sebagai error.
+  await page.evaluateOnNewDocument(() => {
+    document.addEventListener("securitypolicyviolation", (e) => console.error(`CSP dilanggar: ${e.violatedDirective} ← ${e.blockedURI || "inline"}`));
   });
 
   let beforeUnloadDialogs = 0;
@@ -61,7 +81,9 @@ function findBrowser() {
     /* ---------- Login & proteksi ---------- */
     await page.goto(ROOT + "pages/mahasiswa.html", NAV);
     await page.waitForSelector("#login-form");
-    check(where().startsWith("index.html?next=mahasiswa.html"), `tanpa sesi dialihkan → ${where()}`);
+    await page.waitForFunction(() => document.readyState === "complete");
+    const dialihkan = await here();
+    check(dialihkan.startsWith("index.html?next=mahasiswa.html"), `tanpa sesi dialihkan → ${dialihkan}`);
 
     await page.click('.role-tab[data-role="lecturer"]');
     check(await page.$eval("#identifier", (i) => i.disabled), "tab Dosen menonaktifkan form");
@@ -179,7 +201,8 @@ function findBrowser() {
     await page.waitForFunction((v) => [...document.querySelectorAll("#tabel-log time")].every((t) => Nexus.utils.localDate(t.getAttribute("datetime")) >= v), {}, duaHariLalu);
     check(true, "laporan: filter log dari tanggal");
     await page.$eval("#log-dari", (e) => { e.value = ""; e.dispatchEvent(new Event("change")); });
-    await page.emulateMediaType("print");
+    // Emulasi media print hanya ada di Chromium (CDP); di Firefox yang diuji logika beforeprint saja.
+    if (!firefox) await page.emulateMediaType("print");
     await page.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
     const pr = await page.evaluate(() => ({
       sidebar: getComputedStyle(document.getElementById("sidebar")).display,
@@ -188,9 +211,9 @@ function findBrowser() {
       rows: document.querySelectorAll("#tabel-log tr").length,
     }));
     const totalLog = await page.evaluate(async () => (await Nexus.services.logAktivitas.list()).length);
-    check(pr.sidebar === "none" && pr.kop !== "none" && /Dicetak/.test(pr.kopText) && pr.rows === totalLog, `cetak: sidebar disembunyikan, kop tampil, semua ${pr.rows} log tercetak`);
+    check((firefox || (pr.sidebar === "none" && pr.kop !== "none")) && /Dicetak/.test(pr.kopText) && pr.rows === totalLog, `cetak: sidebar disembunyikan, kop tampil, semua ${pr.rows} log tercetak`);
     await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
-    await page.emulateMediaType(null);
+    if (!firefox) await page.emulateMediaType(null);
 
     /* ---------- Mahasiswa & validasi KRS ---------- */
     await page.goto(ROOT + "pages/mahasiswa.html", NAV);
@@ -616,7 +639,7 @@ function findBrowser() {
     check(where() === "index.html", "keluar → halaman login");
     await page.goto(ROOT + "pages/laporan.html", NAV);
     await page.waitForSelector("#login-form");
-    check(where().startsWith("index.html?next=laporan.html"), "setelah keluar, halaman admin terkunci lagi");
+    check((await here()).startsWith("index.html?next=laporan.html"), "setelah keluar, halaman admin terkunci lagi");
 
     check(errors.length === 0, `error JavaScript: ${errors.length ? errors.join(" | ") : "tidak ada"}`);
   } catch (e) {
@@ -631,6 +654,7 @@ function findBrowser() {
     console.log("      " + String(e.stack).split("\n").find((l) => /run\.js:\d+/.test(l)));
   } finally {
     await browser.close();
+    if (server) server.close();
   }
 
   console.log(`\nHasil E2E: ${pass} lulus, ${fail} gagal`);

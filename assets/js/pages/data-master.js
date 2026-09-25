@@ -108,7 +108,7 @@
   }
 
   /* ---------- Kartu katalog ---------- */
-  var TINGKAT_STYLE = { dasar: "bg-emerald-600", menengah: "bg-amber-600", lanjut: "bg-rose-600" };
+  var TINGKAT_STYLE = { dasar: "bg-emerald-700", menengah: "bg-amber-700", lanjut: "bg-rose-700" };
 
   function renderCard(k) {
     var pct = k.kuota ? Math.min(100, Math.round((k.terisi / k.kuota) * 100)) : 0;

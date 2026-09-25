@@ -56,14 +56,14 @@
     counter: $("tabel-counter"),
     pager: $("tabel-pager"),
     render: function (s) {
-      return html`<tr class="align-top hover:bg-slate-50 ${s.status === "dicabut" ? "text-slate-400" : ""}">
+      return html`<tr class="align-top hover:bg-slate-50 ${s.status === "dicabut" ? "text-slate-500" : ""}">
         <td class="whitespace-nowrap px-4 py-3 font-mono text-xs font-medium ${s.status === "dicabut" ? "line-through" : "text-slate-800"}">${s.nomor_registrasi}</td>
         <td class="px-4 py-3"><p class="font-medium ${s.status === "dicabut" ? "" : "text-slate-900"}">${s.nama}</p><p class="font-mono text-xs text-slate-500">${s.nim}</p></td>
         <td class="px-4 py-3"><p class="min-w-[12rem]"><span class="font-mono text-xs text-slate-500">${s.kode}</span> ${s.kursus}</p><p class="text-xs text-slate-500">${s.jenis}</p></td>
         <td class="whitespace-nowrap px-4 py-3"><p>${u.formatDate(s.tanggal_terbit)}</p><p class="text-xs text-slate-500">${s.penandatangan}</p></td>
         <td class="px-4 py-3">${ui.badge(s.status)}</td>
         <td class="whitespace-nowrap px-4 py-3 text-right">
-          ${s.status === "menunggu_tte" ? html`<button type="button" data-tte="${s.id}" class="rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-700">TTE</button>` : ""}
+          ${s.status === "menunggu_tte" ? html`<button type="button" data-tte="${s.id}" class="rounded-lg bg-emerald-700 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-800">TTE</button>` : ""}
           ${s.status === "terbit" ? html`<button type="button" data-cabut="${s.id}" class="rounded-lg border border-red-200 px-2.5 py-1 text-xs font-semibold text-red-600 hover:bg-red-50">Cabut</button>` : ""}
           <button type="button" data-lihat="${s.id}" class="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Pratinjau ${s.nomor_registrasi}" title="Pratinjau & cetak"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">visibility</span></button>
           ${s.status === "menunggu_tte" ? html`<button type="button" data-hapus="${s.id}" class="rounded p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500" aria-label="Hapus draf ${s.nomor_registrasi}" title="Hapus draf"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span></button>` : ""}

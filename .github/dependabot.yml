@@ -1,0 +1,17 @@
+# Pembaruan dependensi otomatis (PR mingguan). Semua dependensi npm di proyek ini
+# hanya alat pengembangan (build CSS & pengujian), tidak ikut dikirim ke browser.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-tools:
+        patterns: ["*"]
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

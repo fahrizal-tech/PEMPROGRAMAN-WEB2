@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Pengaturan Sistem · Nexus LMS</title>
   <meta name="description" content="Konfigurasi institusi, semester, dan keamanan.">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
   <link rel="stylesheet" href="../assets/css/app.css">
   <!-- Proteksi sesi: tanpa defer agar berjalan sebelum konten tampil -->
@@ -106,7 +107,7 @@
               <span class="material-symbols-outlined text-[22px] text-blue-600" aria-hidden="true">download</span>
               <span><span class="block text-sm font-semibold text-slate-900">Unduh Cadangan</span><span class="text-xs text-slate-500">Simpan seluruh data sebagai file JSON.</span></span>
             </button>
-            <label for="file-pulihkan" class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4 hover:border-blue-300 hover:bg-blue-50/50 focus-within:ring-2 focus-within:ring-blue-500">
+            <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-4 hover:border-blue-300 hover:bg-blue-50/50 focus-within:ring-2 focus-within:ring-blue-500">
               <span class="material-symbols-outlined text-[22px] text-blue-600" aria-hidden="true">upload</span>
               <span><span class="block text-sm font-semibold text-slate-900">Pulihkan dari Cadangan</span><span class="text-xs text-slate-500">Pilih file cadangan (.json) Nexus LMS.</span></span>
               <input id="file-pulihkan" type="file" accept=".json,application/json" class="sr-only">

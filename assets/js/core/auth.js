@@ -12,6 +12,15 @@
 
   var Nexus = (global.Nexus = global.Nexus || {});
 
+  // Sembunyikan <main> sampai semua skrip defer selesai menyusun halaman, agar kerangka
+  // kosong tidak tergambar lalu bergeser (CLS). DOMContentLoaded tetap terpicu walau ada
+  // skrip yang gagal, jadi konten tidak pernah tertahan; tanpa JS kelas ini tidak dipasang.
+  var root = global.document && global.document.documentElement;
+  if (root) {
+    root.classList.add("js-pending");
+    global.document.addEventListener("DOMContentLoaded", function () { root.classList.remove("js-pending"); });
+  }
+
   var SESSION_KEY = "nexus-lms:session";
   var LOCK_KEY = "nexus-lms:login-lock";
   var DEMO_PASSWORD = "nexus2026"; // tercantum di README (akun demo)

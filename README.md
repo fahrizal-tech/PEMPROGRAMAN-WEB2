@@ -4,7 +4,7 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** v1.1.0 — seluruh halaman berfungsi dengan data lokal; tampilan kartu bergambar (katalog kursus, kelas virtual, dashboard); teruji otomatis (56 uji unit, 99 uji E2E).
+> **Status:** v1.2.0 — seluruh halaman berfungsi dengan data lokal; tampilan kartu bergambar; lolos QA: HTML valid, Lighthouse 98–100, axe-core 0 pelanggaran, CSP aktif, teruji di Edge/Chrome/Firefox (56 uji unit, 99 uji E2E).
 
 ## Fitur Utama
 
@@ -72,6 +72,12 @@ npm run serve        # lalu buka http://localhost:3000
 npm test             # uji unit: data, storage, service, auth, utilitas
 npm run test:e2e     # uji alur di browser (memakai Edge/Chrome yang terpasang)
 npm run test:e2e -- --online   # uji yang sama ke website di GitHub Pages
+npm run test:e2e -- --http     # lewat server HTTP lokal (wajib untuk Firefox: BROWSER_PATH=.../firefox.exe)
+
+# Kualitas (Tahap 5)
+npm run test:html        # validasi HTML: file mentah + DOM hasil render
+npm run test:a11y        # aksesibilitas: axe-core WCAG 2.1 AA + uji keyboard
+npm run test:lighthouse  # Lighthouse semua halaman (tambah -- --desktop / -- --detail)
 ```
 
 ### Build ulang CSS (hanya jika mengubah class Tailwind)

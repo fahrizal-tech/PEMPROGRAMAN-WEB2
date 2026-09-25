@@ -1,6 +1,6 @@
 {
   "name": "nexus-lms-admin-panel",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "Admin Panel LMS — Tugas Pemrograman Web 2 (Client-Side Programming)",
   "scripts": {
@@ -9,12 +9,18 @@
     "serve": "npx --yes serve . -l 3000",
     "test": "node --test \"tests/**/*.test.js\"",
     "test:e2e": "node tests/e2e/run.js",
-    "test:all": "npm test && npm run test:e2e"
+    "test:all": "npm test && npm run test:e2e",
+    "test:html": "node tests/quality/html.js",
+    "test:lighthouse": "node tests/quality/lighthouse.js",
+    "test:a11y": "node tests/quality/a11y.js"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
-    "puppeteer-core": "^24.43.1",
+    "axe-core": "^4.13.0",
+    "html-validate": "^9.7.1",
+    "lighthouse": "^13.5.0",
+    "puppeteer-core": "^25.12.0",
     "tailwindcss": "^3.4.19"
   }
 }

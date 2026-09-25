@@ -37,3 +37,6 @@ EVALUASI_DAN_PANDUAN.md
 *.zip
 *.bundle
 *.bak
+
+# Skrip bantu sementara (screenshot/debug)
+tests/**/_*.js

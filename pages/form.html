@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <title>Form Kursus · Nexus LMS</title>
   <meta name="description" content="Formulir tambah dan edit data kursus beserta modul.">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
   <link rel="stylesheet" href="../assets/css/app.css">
   <!-- Proteksi sesi: tanpa defer agar berjalan sebelum konten tampil -->
@@ -33,7 +34,7 @@
       <div class="mx-auto w-full max-w-5xl space-y-6 p-4 lg:p-6">
         <!-- Judul -->
         <section>
-          <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+          <nav aria-label="Posisi formulir" class="flex items-center gap-1.5 text-xs font-medium text-slate-500">
             <a href="data-master.html" class="hover:text-blue-600 hover:underline">Data Master Kursus</a>
             <span class="material-symbols-outlined text-[14px] text-slate-400" aria-hidden="true">chevron_right</span>
             <span id="crumb-mode" class="text-slate-800">Tambah</span>
@@ -86,7 +87,7 @@
               <div class="md:col-span-3">
                 <div class="mb-1 flex items-end justify-between gap-2">
                   <label for="deskripsi" class="block text-sm font-medium text-slate-700">Deskripsi &amp; Capaian Pembelajaran <span class="text-red-500" aria-hidden="true">*</span></label>
-                  <span id="deskripsi-counter" class="font-mono text-xs text-slate-400">0 / 2000</span>
+                  <span id="deskripsi-counter" class="font-mono text-xs text-slate-500">0 / 2000</span>
                 </div>
                 <textarea id="deskripsi" name="deskripsi" rows="4" maxlength="2000" placeholder="Jelaskan materi dan kemampuan yang diperoleh mahasiswa (minimal 30 karakter)." class="block w-full rounded-lg border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
               </div>
@@ -118,15 +119,15 @@
                 <div class="grid grid-cols-1 gap-2 sm:grid-cols-3" data-field>
                   <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
                     <input type="radio" name="status" value="draft" class="mt-0.5 text-blue-600 focus:ring-blue-500">
-                    <span><span class="block text-sm font-semibold text-slate-800">Draft</span><span class="text-xs text-slate-500">Belum dibuka untuk KRS</span></span>
+                    <span><span class="block text-sm font-semibold text-slate-800">Draft</span><span class="text-xs text-slate-600">Belum dibuka untuk KRS</span></span>
                   </label>
                   <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
                     <input type="radio" name="status" value="publikasi" class="mt-0.5 text-blue-600 focus:ring-blue-500">
-                    <span><span class="block text-sm font-semibold text-slate-800">Publikasi</span><span class="text-xs text-slate-500">Terbuka untuk KRS (butuh ≥ 1 modul)</span></span>
+                    <span><span class="block text-sm font-semibold text-slate-800">Publikasi</span><span class="text-xs text-slate-600">Terbuka untuk KRS (butuh ≥ 1 modul)</span></span>
                   </label>
                   <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 p-3 hover:bg-slate-50 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
                     <input type="radio" name="status" value="arsip" class="mt-0.5 text-blue-600 focus:ring-blue-500">
-                    <span><span class="block text-sm font-semibold text-slate-800">Arsip</span><span class="text-xs text-slate-500">Kurikulum lama, tidak aktif</span></span>
+                    <span><span class="block text-sm font-semibold text-slate-800">Arsip</span><span class="text-xs text-slate-600">Kurikulum lama, tidak aktif</span></span>
                   </label>
                 </div>
               </div>
@@ -148,7 +149,7 @@
                 <p class="text-sm text-slate-600">Tanpa unggahan, sampul dibuat otomatis dari <strong>kode MK</strong> dan warna <strong>program studi</strong>.</p>
                 <input type="hidden" id="cover" name="cover">
                 <div class="mt-3 flex flex-wrap gap-2">
-                  <label for="file-sampul" class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-blue-500">
+                  <label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-blue-500">
                     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">upload</span>Unggah Gambar
                     <input id="file-sampul" type="file" accept="image/png,image/jpeg,image/webp" class="sr-only">
                   </label>

@@ -160,13 +160,13 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] 4c.4 Uji HP 390px & tablet 768px dalam mode kartu (12 halaman, setelah login), tampilan kosong berilustrasi, perbaikan tabel pembaca layar yang melebarkan Dashboard di HP, rilis tag `v1.1.0`
 
 ### Tahap 5 — QA & Polesan
-- [ ] Validasi HTML W3C tanpa error
-- [ ] Lighthouse: Performance, Accessibility, Best Practices ≥ 90
-- [ ] Uji lintas browser (Chrome, Firefox, Edge) & perangkat
-- [ ] Cek aksesibilitas: kontras, `aria-*`, urutan fokus, `alt` gambar
-- [ ] Hapus kode mati & data dummy yang tidak terpakai
-- [ ] *Content-Security-Policy* via `<meta>`, `integrity` (SRI) pada CDN, `rel="noopener"` pada link eksternal
-- [ ] Aktifkan Dependabot untuk dependency npm
+- [x] Validasi HTML tanpa error — `npm run test:html` (html-validate: 12 file mentah + 11 DOM hasil render setelah login), masuk CI
+- [x] Lighthouse ≥ 90 — `npm run test:lighthouse` (HP & `-- --desktop`, 11 halaman setelah login): HP 98–100, desktop 99–100 di Performance/Accessibility/Best Practices/SEO; perbaikan CLS (tinggi topbar, penahan `<main>` sampai skrip siap, font `display=optional`) & kontras warna
+- [x] Uji lintas browser — E2E 99/99 di Edge 153, Chrome 153, dan Firefox 156 (`npm run test:e2e -- --http`; Firefox memperlakukan tiap `file://` sebagai origin terpisah sehingga wajib lewat HTTP), perangkat HP 390px & tablet 768px
+- [x] Aksesibilitas — `npm run test:a11y` (axe-core WCAG 2.1 AA, 23 kondisi: halaman, modal, error form, drawer HP → 0 pelanggaran) + uji keyboard (skip link, cincin fokus, fokus terkunci di modal & drawer HP dengan `inert`, Escape mengembalikan fokus), masuk CI
+- [x] Kode mati — tidak ada fungsi/variabel/aset/class CSS yatim maupun sisa `console.log`/TODO; skrip screenshot sementara dihapus & dicegah lewat `.gitignore`; server uji dipakai bersama (`tests/helpers/server.js`)
+- [x] *Content-Security-Policy* via `<meta>` di 12 halaman (E2E gagal bila ada pelanggaran), `rel="noopener noreferrer"` pada link eksternal; SRI tidak diperlukan (tidak ada skrip CDN, Chart.js lokal)
+- [x] Dependabot (npm & GitHub Actions, mingguan) + `npm audit` di CI; puppeteer-core 25 → 0 kerentanan
 
 ### Tahap 6 — Deploy & Presentasi
 - [ ] GitHub Pages aktif dari branch `main`

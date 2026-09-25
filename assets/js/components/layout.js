@@ -12,7 +12,7 @@
 (function () {
   "use strict";
 
-  var APP = { name: "Nexus LMS", version: "1.1.0" };
+  var APP = { name: "Nexus LMS", version: "1.2.0" };
 
   // Sumber tunggal navigasi. `match` = halaman lain yang ikut menandai menu ini aktif.
   var MENU = [
@@ -113,7 +113,7 @@
       });
       return (
         '<div class="space-y-1">' +
-        '<p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">' +
+        '<p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">' +
         escapeHTML(group.group) + "</p>" +
         '<ul class="space-y-0.5">' + links.join("") + "</ul></div>"
       );
@@ -126,7 +126,7 @@
       '<span class="text-base font-bold tracking-tight text-slate-900">' + APP.name + "</span></a>" +
       '<span class="ml-auto rounded border border-blue-100 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700">v' +
       APP.version + "</span></div>" +
-      '<nav class="flex-1 space-y-5 overflow-y-auto px-3 py-4">' + groups.join("") + "</nav>" +
+      '<nav aria-label="Menu utama" class="flex-1 space-y-5 overflow-y-auto px-3 py-4">' + groups.join("") + "</nav>" +
       '<div class="border-t border-slate-200 p-3">' +
       '<a href="../index.html" data-action="logout" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-red-50 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500">' +
       '<span class="material-symbols-outlined text-[20px]" aria-hidden="true">logout</span><span>Keluar</span></a></div>';
@@ -187,7 +187,17 @@
       return toggle.getAttribute("aria-expanded") === "true";
     }
 
+    // Konten di belakang drawer dibuat inert agar fokus Tab tidak keluar dari menu.
+    function setBackgroundInert(on) {
+      var main = document.querySelector("main");
+      var wrap = main && main.closest("body > *");
+      if (wrap && wrap !== sidebar) wrap.inert = on;
+      var skip = document.getElementById("skip-link");
+      if (skip) skip.inert = on;
+    }
+
     function open() {
+      setBackgroundInert(true);
       sidebar.classList.remove("-translate-x-full");
       overlay.classList.remove("hidden");
       document.body.classList.add("overflow-hidden");
@@ -198,6 +208,7 @@
 
     function close(returnFocus) {
       if (!isOpen()) return;
+      setBackgroundInert(false);
       sidebar.classList.add("-translate-x-full");
       overlay.classList.add("hidden");
       document.body.classList.remove("overflow-hidden");
@@ -224,6 +235,7 @@
     if (!main) return;
     if (!main.id) main.id = "konten-utama";
     var link = document.createElement("a");
+    link.id = "skip-link";
     link.href = "#" + main.id;
     link.textContent = "Lewati ke konten utama";
     link.className =
