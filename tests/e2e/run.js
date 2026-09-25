@@ -566,14 +566,45 @@ function findBrowser() {
     await mobile.setViewport({ width: 390, height: 844 });
     await mobile.setRequestInterception(true);
     mobile.on("request", (r) => (/fonts\.(googleapis|gstatic)/.test(r.url()) ? r.abort() : r.continue()));
-    const wide = [];
-    for (const m of ["index", ...MENU.map((x) => `pages/${x}`), "pages/form", "pages/layout"]) {
-      await mobile.goto(`${ROOT}${m}.html`, NAV);
+    // Halaman login diukur saat belum masuk (bila sudah masuk, login langsung dialihkan).
+    const lebarLogin = {};
+    for (const width of [390, 768]) {
+      await mobile.setViewport({ width, height: 900 });
+      await mobile.goto(`${ROOT}index.html`, NAV);
       await sleep(300);
-      const w = await mobile.evaluate(() => document.documentElement.scrollWidth);
-      if (w > 390) wide.push(`${m} (${w}px)`);
+      lebarLogin[width] = await mobile.evaluate(() => document.documentElement.scrollWidth);
     }
-    check(wide.length === 0, `12 halaman pas di 390px tanpa font: ${wide.join(", ") || "semua pas"}`);
+    // Tab baru tidak berbagi sessionStorage → login dulu agar halaman admin benar-benar terbuka.
+    await mobile.type("#identifier", DEMO.email);
+    await mobile.type("#password", DEMO.password);
+    await Promise.all([mobile.waitForNavigation(NAV), mobile.click('#login-form button[type="submit"]')]);
+    // Kembalikan pilihan tampilan ke default (kartu) agar tampilan kartu ikut diuji.
+    await mobile.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("nexus-lms:view:")).forEach((k) => localStorage.removeItem(k)));
+    for (const width of [390, 768]) {
+      await mobile.setViewport({ width, height: 900 });
+      const wide = lebarLogin[width] > width ? [`index (${lebarLogin[width]}px)`] : [];
+      const dialihkan = [];
+      for (const m of [...MENU, "form", "layout"]) {
+        await mobile.goto(`${ROOT}pages/${m}.html`, NAV);
+        await sleep(300);
+        const info = await mobile.evaluate(() => ({ w: document.documentElement.scrollWidth, page: location.pathname.split("/").pop() }));
+        if (info.page !== `${m}.html`) dialihkan.push(m);
+        if (info.w > width) wide.push(`${m} (${info.w}px)`);
+      }
+      check(dialihkan.length === 0 && wide.length === 0,
+        `12 halaman (termasuk login) pas di ${width}px tanpa font, mode kartu: ${wide.join(", ") || "semua pas"}${dialihkan.length ? " | DIALIHKAN: " + dialihkan.join(", ") : ""}`);
+    }
+
+    // Tampilan kosong berilustrasi pada katalog (mode kartu).
+    await mobile.goto(`${ROOT}pages/data-master.html`, NAV);
+    await mobile.waitForSelector('[data-view="kartu"]');
+    const modeAwal = await mobile.$eval('[data-view="kartu"]', (b) => b.getAttribute("aria-pressed"));
+    if (modeAwal !== "true") await mobile.click('[data-view="kartu"]');
+    await mobile.waitForFunction(() => document.querySelectorAll("#kartu-kursus article").length > 0);
+    await mobile.type("#f-cari", "tidak-ada-kursus-ini");
+    await sleep(800);
+    const kosong = await mobile.evaluate(() => ({ teks: document.getElementById("kartu-kursus").textContent.replace(/\s+/g, " ").trim().slice(0, 80), svg: !!document.querySelector("#kartu-kursus svg") }));
+    check(/Tidak ada data yang cocok/.test(kosong.teks) && kosong.svg, `katalog: pencarian tanpa hasil → tampilan kosong berilustrasi (${kosong.teks})`);
     await mobile.close();
 
     /* ---------- Keluar ---------- */
