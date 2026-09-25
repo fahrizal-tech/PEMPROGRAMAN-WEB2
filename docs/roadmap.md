@@ -143,7 +143,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 - [x] Rilis tag `v0.4.0` (4 halaman wajib selesai)
 
 **Halaman pendukung:**
-- [ ] `mahasiswa.html` — CRUD + modal edit + validasi KRS (setujui/tolak)
+- [x] `mahasiswa.html` — KPI (termasuk "perlu perhatian"), antrean validasi KRS (setujui/tolak beralasan/setujui semua dengan laporan), tabel + filter + ekspor CSV, tambah/edit di modal, detail KRS per mahasiswa, hapus berpenjelasan
 - [ ] `instruktur.html` — CRUD dosen + beban mengajar
 - [ ] `kelas-virtual.html` — jadwal sesi, status live/selesai (kartu "Live Sekarang" tidak terpotong di HP)
 - [ ] `tugas-kuis.html` — CRUD tugas + penilaian rubrik

@@ -52,6 +52,8 @@ function findBrowser() {
   const check = (ok, msg) => { ok ? pass++ : fail++; console.log(`${ok ? "OK   " : "GAGAL"} ${msg}`); };
   const nav = (fn) => Promise.all([page.waitForNavigation(NAV), fn()]);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const toastHas = (re) => page.waitForFunction((src) => new RegExp(src).test((document.getElementById("toast-region") || {}).textContent || ""), {}, re.source);
+  const clickDialog = (label) => page.evaluate((l) => [...document.querySelectorAll('[role="dialog"] button')].find((b) => b.textContent.trim() === l || new RegExp(l).test(b.textContent)).click(), label);
 
   try {
     await page.setViewport({ width: 1280, height: 800 });
@@ -185,9 +187,72 @@ function findBrowser() {
     await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
     await page.emulateMediaType(null);
 
+    /* ---------- Mahasiswa & validasi KRS ---------- */
+    await page.goto(ROOT + "pages/mahasiswa.html", NAV);
+    await page.waitForFunction(() => /dari \d+ data/.test(document.getElementById("tabel-counter").textContent));
+    const antre = await page.evaluate(async () => (await Nexus.services.krs.query((x) => x.status === "diajukan")).length);
+    check((await page.$eval("#krs-count", (e) => e.textContent)) === String(antre), `mahasiswa: antrean KRS ${antre} sesuai data`);
+    const target = await page.evaluate(async () => {
+      const S = Nexus.services; const mhs = await S.mahasiswa.list(); const krs = await S.krs.list(); const kursus = await S.kursus.list();
+      return krs.find((x) => x.status === "diajukan" && mhs.find((m) => m.id === x.mahasiswa_id).status === "aktif" &&
+        krs.filter((y) => y.kursus_id === x.kursus_id && y.status === "disetujui").length < kursus.find((k) => k.id === x.kursus_id).kuota).id;
+    });
+    await page.click(`[data-approve="${target}"]`);
+    await toastHas(/KRS disetujui/);
+    await page.waitForFunction((n) => document.getElementById("krs-count").textContent === String(n), {}, antre - 1);
+    check((await page.evaluate(async (id) => (await Nexus.services.krs.get(id)).status, target)) === "disetujui", "setujui KRS → status disetujui, antrean berkurang");
+    const rej = await page.$eval("[data-reject]", (b) => b.getAttribute("data-reject"));
+    await page.click(`[data-reject="${rej}"]`);
+    await page.waitForSelector("#alasan-tolak");
+    await page.type("#alasan-tolak", "prasyarat belum terpenuhi");
+    await clickDialog("Tolak KRS");
+    await toastHas(/KRS ditolak/);
+    const logTolak = await page.evaluate(async () => (await Nexus.services.logAktivitas.recent(1))[0].deskripsi);
+    check(/prasyarat belum terpenuhi/.test(logTolak), "tolak KRS dengan alasan → tercatat di log");
+
+    await page.click("#btn-tambah");
+    await page.waitForSelector("#fld-nim");
+    await page.type("#fld-nim", "12");
+    await page.type("#fld-nama", "Mahasiswa Uji E2E");
+    await page.type("#fld-email", "uji.e2e@student.nexus.ac.id");
+    await page.select("#fld-prodi_id", "prd_tif");
+    await clickDialog("Simpan");
+    await page.waitForSelector("#fld-nim-error");
+    check(/8–12 digit/.test(await page.$eval("#fld-nim-error", (e) => e.textContent)), "tambah mahasiswa: NIM tidak valid ditolak");
+    await page.$eval("#fld-nim", (e) => { e.value = ""; });
+    await page.type("#fld-nim", "2610599001");
+    await clickDialog("Simpan");
+    await toastHas(/Mahasiswa Uji E2E berhasil ditambahkan/);
+    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'));
+    await page.type("#f-cari", "2610599001");
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-mhs [data-edit]").length === 1);
+    check(true, "tambah mahasiswa via modal → muncul di tabel");
+    await page.click("#tabel-mhs [data-edit]");
+    await page.waitForSelector("#fld-status");
+    await page.select("#fld-status", "cuti");
+    await clickDialog("Simpan");
+    await toastHas(/berhasil diperbarui/);
+    await page.waitForFunction(() => /Cuti/.test(document.getElementById("tabel-mhs").textContent));
+    check(true, "edit mahasiswa → status Cuti tampil");
+    await page.click("#tabel-mhs [data-hapus]");
+    await page.waitForSelector('[role="dialog"]');
+    await clickDialog("Ya, hapus");
+    await toastHas(/berhasil dihapus/);
+    check(true, "hapus mahasiswa tanpa relasi → berhasil");
+    await page.click("#btn-reset");
+    await page.select("#f-status", "atensi");
+    await page.waitForFunction(() => document.querySelectorAll("#tabel-mhs tr").length > 0);
+    const atensiOk = await page.$$eval("#tabel-mhs tr", (trs) => trs.every((t) => t.querySelector("td[colspan]") || /warning/.test(t.textContent)));
+    check(atensiOk, "filter Perlu perhatian hanya menampilkan mahasiswa bertanda");
+    await page.click("#btn-reset");
+    await page.waitForSelector('[data-detail="mhs_0001"]');
+    await page.click('[data-detail="mhs_0001"]');
+    await page.waitForSelector('[role="dialog"]');
+    check(/KRS — Ahmad Danial Pratama/.test(await page.$eval('[role="dialog"]', (d) => d.textContent)), "detail KRS mahasiswa tampil di modal");
+    await page.keyboard.press("Escape");
+
     /* ---------- Data Master & Form Kursus (CRUD) ---------- */
     const rowsIn = (sel) => page.$$eval(`${sel} tr`, (trs) => trs.filter((t) => !t.querySelector("td[colspan]")).length);
-    const toastHas = (re) => page.waitForFunction((src) => new RegExp(src).test((document.getElementById("toast-region") || {}).textContent || ""), {}, re.source);
 
     await page.goto(ROOT + "pages/data-master.html", NAV);
     await page.waitForFunction(() => /dari 12/.test(document.getElementById("tabel-counter").textContent));
