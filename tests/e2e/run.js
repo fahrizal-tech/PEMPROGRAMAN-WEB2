@@ -46,9 +46,14 @@ function findBrowser() {
   const server = USE_HTTP ? await require("../helpers/server").serve(HTTP_PORT) : null;
   const exe = findBrowser();
   const firefox = /firefox/i.test(exe); // Firefox dijalankan lewat WebDriver BiDi
+  // Unduhan uji (cadangan JSON, CSV) masuk folder sementara — bukan folder Download pengguna.
+  const downloadDir = fs.mkdtempSync(path.join(require("node:os").tmpdir(), "nexus-e2e-unduhan-"));
+  const downloadBehavior = { policy: "allow", downloadPath: downloadDir };
   const browser = await puppeteer.launch(firefox
-    ? { browser: "firefox", executablePath: exe, headless: true }
-    : { executablePath: exe, headless: true, args: ["--allow-file-access-from-files"] });
+    ? { browser: "firefox", executablePath: exe, headless: true, downloadBehavior,
+        // Firefox mengabaikan downloadBehavior; folder unduhan diatur lewat preferensi.
+        extraPrefsFirefox: { "browser.download.folderList": 2, "browser.download.dir": downloadDir, "browser.download.useDownloadDir": true } }
+    : { executablePath: exe, headless: true, downloadBehavior, args: ["--allow-file-access-from-files"] });
   console.log(`Browser: ${await browser.version()}`);
   const page = await browser.newPage();
   const errors = [];
@@ -455,7 +460,18 @@ function findBrowser() {
     fs.writeFileSync(backupFile, JSON.stringify(await page.evaluate(() => Nexus.storage.exportAll())));
     await page.click("#btn-cadangan");
     await toastHas(/Cadangan data diunduh/);
-    check(true, "unduh cadangan JSON");
+    // File harus tersimpan di folder unduhan uji dan berisi semua tabel aplikasi.
+    const unduhan = await (async () => {
+      for (let i = 0; i < 50; i++) {
+        const f = fs.readdirSync(downloadDir).find((n) => /^nexus-lms-cadangan-.*\.json$/.test(n));
+        if (f) { try { return JSON.parse(fs.readFileSync(path.join(downloadDir, f), "utf8")); } catch (e) { /* masih ditulis */ } }
+        await sleep(100);
+      }
+      return null;
+    })();
+    const isiCadangan = unduhan && JSON.stringify(unduhan);
+    check(!!unduhan && ["kursus", "mahasiswa", "krs", "sertifikat"].every((t) => isiCadangan.includes(`"${t}"`)),
+      "unduh cadangan JSON → file tersimpan di folder uji & berisi semua tabel");
 
     await page.click("#btn-reset-data");
     await page.waitForSelector("#konfirmasi-reset");
@@ -655,6 +671,7 @@ function findBrowser() {
   } finally {
     await browser.close();
     if (server) server.close();
+    fs.rmSync(downloadDir, { recursive: true, force: true });
   }
 
   console.log(`\nHasil E2E: ${pass} lulus, ${fail} gagal`);
