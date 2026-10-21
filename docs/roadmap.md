@@ -178,7 +178,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 ### Tahap 7 — Portal Pelajar (login mahasiswa)
 - [x] 7.1 Fondasi peran: login mahasiswa (NIM/email), area `pages/` (admin) dan `pelajar/` (mahasiswa) saling terpisah, menu per peran, log aktivitas mencatat pelaku mahasiswa, service `pelajar` (data milik sendiri), halaman Beranda
 - [x] 7.2 Kursus Saya: tabel KRS milik sendiri (batalkan bila masih diajukan), katalog kursus dibuka dengan kuota & status berwarna, ajukan KRS → antrean validasi admin; log KRS kini menyebut mahasiswa & kode MK
-- [ ] 7.3 Jadwal kelas (presensi saat masuk) & Tugas (pengumpulan)
+- [x] 7.3 Jadwal Kelas (Sedang Live / Akan Datang / Selesai, presensi tercatat saat Masuk) & Tugas (filter status, kumpulkan/perbarui jawaban berupa tautan https + catatan); panel admin menampilkan tautan & catatan jawaban, skor plagiarisme kosong tidak ikut dirata-rata
 - [ ] 7.4 Nilai & Sertifikat, QA, dokumentasi, rilis `v1.3.0`
 
 ### Tahap 8 — Pasca-Tugas: Menuju Produksi

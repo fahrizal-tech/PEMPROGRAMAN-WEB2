@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Jadwal Kelas · Portal Pelajar Nexus LMS</title>
+  <meta name="description" content="Jadwal sesi kelas virtual dan presensi mahasiswa.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <!-- Proteksi sesi: tanpa defer agar berjalan sebelum konten tampil -->
+  <script src="../assets/js/core/auth.js"></script>
+  <script src="../assets/data/seed.js" defer></script>
+  <script src="../assets/js/core/storage.js" defer></script>
+  <script src="../assets/js/core/utils.js" defer></script>
+  <script src="../assets/js/core/validators.js" defer></script>
+  <script src="../assets/js/core/services.js" defer></script>
+  <script src="../assets/js/components/ui.js" defer></script>
+  <script src="../assets/js/components/cover.js" defer></script>
+  <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/pelajar/jadwal.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Jadwal Kelas"></header>
+
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <section>
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Kelas Virtual</p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Jadwal Kelas</h2>
+        <p class="mt-1 text-sm text-slate-500" id="info-jadwal">Sesi daring dari kursus yang Anda ambil. Presensi tercatat otomatis saat Anda masuk ke sesi yang sedang live.</p>
+      </section>
+      <div id="grup-jadwal" class="space-y-8"></div>
+    </main>
+
+    <footer data-component="footer"></footer>
+  </div>
+</body>
+</html>
