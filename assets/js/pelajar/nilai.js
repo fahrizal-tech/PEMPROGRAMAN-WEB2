@@ -66,7 +66,7 @@
         <td class="px-5 py-3 text-slate-700">${k.sks}</td>
         <td class="px-5 py-3 text-slate-700">${r.s.dinilai} / ${r.s.total}</td>
         <td class="px-5 py-3 text-slate-700">${r.s.nilai != null ? u.formatNumber(r.s.nilai, 1) : "-"}</td>
-        <td class="px-5 py-3">${r.akhir != null ? html`<span class="font-semibold text-slate-900">${u.formatNumber(r.akhir)}</span> <span class="ml-1 rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-700">${huruf(r.akhir)}</span>` : html`<span class="text-xs text-slate-400">Belum ditetapkan</span>`}</td>
+        <td class="px-5 py-3">${r.akhir != null ? html`<span class="font-semibold text-slate-900">${u.formatNumber(r.akhir)}</span> <span class="ml-1 rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-700">${huruf(r.akhir)}</span>` : html`<span class="text-xs text-slate-500">Belum ditetapkan</span>`}</td>
         <td class="px-5 py-3">${status}</td>
       </tr>`.value;
     }).join("") : html`<tr><td colspan="6">${me.status === "lulus"

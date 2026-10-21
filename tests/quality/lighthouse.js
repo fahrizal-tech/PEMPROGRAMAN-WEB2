@@ -18,7 +18,8 @@ const DEBUG_PORT = 9333;
 const MIN = 90;
 const DESKTOP = process.argv.includes("--desktop");
 const DETAIL = process.argv.includes("--detail");
-const PAGES = ["index.html", ...fs.readdirSync(path.join(ROOT, "pages")).filter((f) => f.endsWith(".html") && f !== "layout.html").map((f) => "pages/" + f)];
+const PAGES = ["index.html", ...fs.readdirSync(path.join(ROOT, "pages")).filter((f) => f.endsWith(".html") && f !== "layout.html").map((f) => "pages/" + f),
+  ...fs.readdirSync(path.join(ROOT, "pelajar")).filter((f) => f.endsWith(".html")).map((f) => "pelajar/" + f)];
 
 function findBrowser() {
   return [process.env.BROWSER_PATH, "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
@@ -34,9 +35,13 @@ function findBrowser() {
 
   const page = await browser.newPage();
   // Login dengan "ingat saya" → sesi di localStorage, terbaca di tab audit.
-  async function login() {
+  async function login(role) {
     await page.goto(base + "index.html");
-    await page.type("#identifier", "admin@nexus.ac.id");
+    // Ganti akun: hapus sesi lama dulu (sesi "ingat saya" ada di localStorage).
+    await page.evaluate(() => localStorage.removeItem("nexus-lms:session"));
+    await page.goto(base + "index.html");
+    if (role === "mahasiswa") await page.click('.role-tab[data-role="student"]');
+    await page.type("#identifier", role === "mahasiswa" ? "2410511050" : "admin@nexus.ac.id");
     await page.type("#password", "nexus2026");
     await page.click("#remember_me");
     await Promise.all([page.waitForNavigation(), page.click('#login-form button[type="submit"]')]);
@@ -45,13 +50,14 @@ function findBrowser() {
   const CATS = ["performance", "accessibility", "best-practices", "seo"];
   const LABEL = { performance: "Perf", accessibility: "A11y", "best-practices": "BP", seo: "SEO" };
   let gagal = 0;
-  let loggedIn = false;
+  let loggedIn = null;
   console.log(`Profil: ${DESKTOP ? "desktop" : "HP (throttling)"} · ambang ${MIN}\n`);
   console.log("Halaman".padEnd(26) + CATS.map((c) => LABEL[c].padStart(6)).join(""));
 
   for (const p of PAGES) {
     // index.html (halaman login) diaudit lebih dulu tanpa sesi; halaman lain setelah login.
-    if (p !== "index.html" && !loggedIn) { await login(); loggedIn = true; }
+    const role = p.startsWith("pelajar/") ? "mahasiswa" : "admin";
+    if (p !== "index.html" && loggedIn !== role) { await login(role); loggedIn = role; }
     const { lhr } = await lighthouse(base + p, { port: DEBUG_PORT, output: "json", logLevel: "error", onlyCategories: CATS, disableStorageReset: true }, desktopConfig);
     if (lhr.finalDisplayedUrl.includes("index.html") && p !== "index.html") {
       console.log(`${p.padEnd(26)}  DIALIHKAN KE LOGIN (sesi tidak terbawa)`);

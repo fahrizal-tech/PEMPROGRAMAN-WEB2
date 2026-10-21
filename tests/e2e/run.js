@@ -657,6 +657,117 @@ function findBrowser() {
     await page.waitForSelector("#login-form");
     check((await here()).startsWith("index.html?next=laporan.html"), "setelah keluar, halaman admin terkunci lagi");
 
+    /* ---------- Portal Pelajar (login mahasiswa) ---------- */
+    const masukMahasiswa = async (nim) => {
+      await page.goto(ROOT + "index.html", NAV);
+      await page.waitForFunction(() => document.readyState === "complete");
+      await page.click('.role-tab[data-role="student"]');
+      await page.$eval("#identifier", (e) => { e.value = ""; });
+      await page.$eval("#password", (e) => { e.value = ""; });
+      await page.type("#identifier", nim);
+      await page.type("#password", DEMO.password);
+      await nav(() => page.click('#login-form button[type="submit"]'));
+    };
+    await page.goto(ROOT + "index.html", NAV);
+    await page.waitForFunction(() => document.readyState === "complete");
+    await page.click('.role-tab[data-role="student"]');
+    await page.type("#identifier", "12ab");
+    await page.type("#password", DEMO.password);
+    await page.click('#login-form button[type="submit"]');
+    await page.waitForFunction(() => /NIM/.test((document.getElementById("identifier-error") || document.querySelector("[id$=-error]") || {}).textContent || document.body.textContent));
+    check(/NIM \(8–12 digit\)/.test(await page.evaluate(() => document.body.textContent)), "pelajar: NIM tidak valid → pesan per kolom");
+    const nimNonaktif = await page.evaluate(async () => (await Nexus.storage.query("mahasiswa", (m) => m.status === "nonaktif"))[0].nim);
+    await page.$eval("#identifier", (e) => { e.value = ""; });
+    await page.type("#identifier", nimNonaktif);
+    await page.click('#login-form button[type="submit"]');
+    await page.waitForFunction(() => /nonaktif/.test(document.body.textContent));
+    check((await here()).startsWith("index.html"), "pelajar: akun nonaktif ditolak");
+
+    await masukMahasiswa("2410511050");
+    check((await here()) === "beranda.html", `pelajar: login NIM → ${await here()}`);
+    await page.waitForFunction(() => document.getElementById("kpi-kursus").textContent.trim() !== "-");
+    const beranda = await page.evaluate(() => ({
+      kursus: document.getElementById("kpi-kursus").textContent.trim(),
+      menu: [...document.querySelectorAll("#sidebar nav a")].length,
+      sapaan: document.getElementById("sapaan").textContent,
+    }));
+    check(beranda.kursus === "4" && beranda.menu === 5 && /Bima/.test(beranda.sapaan), `pelajar: beranda (4 kursus, 5 menu, sapaan "${beranda.sapaan.trim()}")`);
+    await page.goto(ROOT + "pages/dashboard.html", NAV);
+    await page.waitForFunction(() => /beranda\.html$/.test(location.pathname));
+    check(true, "pelajar: membuka halaman admin → dikembalikan ke beranda");
+
+    await page.goto(ROOT + "pelajar/kursus.html", NAV);
+    await page.waitForSelector("[data-ajukan]");
+    const krsAwal = await page.$$eval("#tabel-krs tr", (r) => r.length);
+    await page.click("[data-ajukan]");
+    await page.waitForSelector('[role="dialog"]');
+    await clickDialog("Ajukan");
+    await toastHas(/diajukan/);
+    await page.waitForFunction((n) => document.querySelectorAll("#tabel-krs tr").length === n + 1, {}, krsAwal);
+    check(/Diajukan/.test(await page.$eval("#tabel-krs", (t) => t.textContent)), "pelajar: ajukan KRS → status Diajukan");
+    await page.click("[data-batal]");
+    await page.waitForSelector('[role="dialog"]');
+    await clickDialog("Batalkan pengajuan");
+    await toastHas(/dibatalkan/);
+    await page.waitForFunction((n) => document.querySelectorAll("#tabel-krs tr").length === n, {}, krsAwal);
+    check(true, "pelajar: batalkan pengajuan KRS");
+
+    await page.goto(ROOT + "pelajar/jadwal.html", NAV);
+    await page.waitForSelector("#grup-jadwal section");
+    if (await page.$("[data-masuk]")) {
+      await page.click("[data-masuk]");
+      await toastHas(/Presensi tercatat/);
+      for (const extra of await browser.pages()) if (extra !== page) await extra.close();
+      check(true, "pelajar: masuk sesi live → presensi tercatat hadir");
+    } else {
+      check(await page.$$eval("#grup-jadwal section", (s) => s.length) > 0, "pelajar: jadwal kelas tampil (tidak ada sesi live saat ini)");
+    }
+
+    await page.goto(ROOT + "pelajar/tugas.html", NAV);
+    await page.waitForSelector("#daftar-tugas article");
+    if (await page.$("[data-kumpul]")) {
+      await page.click("[data-kumpul]");
+      await page.waitForSelector('[role="dialog"] input[name="tautan"]');
+      await page.$eval('[role="dialog"] input[name="tautan"]', (e) => { e.value = "bukan-tautan"; });
+      await page.$eval('[role="dialog"] form', (f) => f.requestSubmit());
+      await page.waitForFunction(() => /https:\/\//.test(document.querySelector('[role="dialog"]').textContent));
+      await page.$eval('[role="dialog"] input[name="tautan"]', (e) => { e.value = "https://drive.example.com/jawaban-e2e.pdf"; });
+      await page.$eval('[role="dialog"] form', (f) => f.requestSubmit());
+      await toastHas(/berhasil (dikumpulkan|diperbarui)/);
+      check(true, "pelajar: kumpulkan tugas → tautan non-https ditolak, tautan valid tersimpan");
+    } else {
+      check(await page.$$eval("#daftar-tugas article", (a) => a.length) > 0, "pelajar: daftar tugas tampil (tidak ada tugas yang bisa dikumpulkan)");
+    }
+
+    // Lebar HP portal pelajar
+    await page.setViewport({ width: 390, height: 844 });
+    const lebarPelajar = [];
+    for (const n of ["beranda", "kursus", "jadwal", "tugas", "nilai"]) {
+      await page.goto(`${ROOT}pelajar/${n}.html`, NAV);
+      await sleep(400);
+      const w = await page.evaluate(() => document.documentElement.scrollWidth);
+      if (w > 390) lebarPelajar.push(`${n} (${w}px)`);
+    }
+    check(!lebarPelajar.length, `pelajar: 5 halaman pas di 390px: ${lebarPelajar.join(", ") || "semua pas"}`);
+    await page.setViewport({ width: 1280, height: 800 });
+
+    // Mahasiswa lulus: sertifikat dapat dipratinjau
+    await page.goto(ROOT + "pelajar/beranda.html", NAV);
+    await page.waitForFunction(() => document.getElementById("sidebar").getBoundingClientRect().left === 0);
+    await nav(() => page.click('[data-action="logout"]'));
+    await masukMahasiswa("2110511124");
+    await page.goto(ROOT + "pelajar/nilai.html", NAV);
+    await page.waitForSelector("[data-lihat]");
+    await page.click("[data-lihat]");
+    await page.waitForSelector("#sertifikat-cetak");
+    check(/Arya Dananjaya/.test(await page.$eval("#sertifikat-cetak", (e) => e.textContent)), "pelajar: sertifikat milik sendiri dapat dipratinjau & dicetak");
+    await page.keyboard.press("Escape");
+    await sleep(300);
+    await nav(() => page.click('[data-action="logout"]'));
+    await page.goto(ROOT + "pelajar/tugas.html", NAV);
+    await page.waitForSelector("#login-form");
+    check((await here()).startsWith("index.html?next=tugas.html"), "pelajar: setelah keluar, portal pelajar terkunci lagi");
+
     check(errors.length === 0, `error JavaScript: ${errors.length ? errors.join(" | ") : "tidak ada"}`);
   } catch (e) {
     fail++;

@@ -1,7 +1,7 @@
 /**
  * Validasi HTML (html-validate):
  *  1. file HTML mentah (index.html + pages/*.html)
- *  2. DOM hasil render di browser setelah login (isi dinamis: tabel, kartu, grafik)
+ *  2. DOM hasil render di browser setelah login (admin untuk pages/, mahasiswa untuk pelajar/)
  *
  *   npm run test:html            → ringkasan + detail kesalahan
  *   npm run test:html -- --static → hanya file mentah (tanpa browser)
@@ -12,7 +12,8 @@ const { pathToFileURL } = require("node:url");
 const { HtmlValidate } = require("html-validate");
 
 const ROOT = path.resolve(__dirname, "../..");
-const PAGES = ["index.html", ...fs.readdirSync(path.join(ROOT, "pages")).filter((f) => f.endsWith(".html")).map((f) => "pages/" + f)];
+const inFolder = (dir) => fs.readdirSync(path.join(ROOT, dir)).filter((f) => f.endsWith(".html")).map((f) => dir + "/" + f);
+const PAGES = ["index.html", ...inFolder("pages"), ...inFolder("pelajar")];
 const config = JSON.parse(fs.readFileSync(path.join(ROOT, ".htmlvalidate.json"), "utf8"));
 const validator = new HtmlValidate(config);
 // Aturan gaya penulisan yang tidak relevan untuk DOM hasil render:
@@ -47,11 +48,19 @@ function report(label, res) {
     const browser = await puppeteer.launch({ executablePath: exe, headless: true, args: ["--allow-file-access-from-files"] });
     const page = await browser.newPage();
     const base = pathToFileURL(ROOT).href + "/";
-    await page.goto(base + "index.html", { waitUntil: "domcontentloaded" });
-    await page.type("#identifier", "admin@nexus.ac.id");
-    await page.type("#password", "nexus2026");
-    await Promise.all([page.waitForNavigation({ waitUntil: "domcontentloaded" }), page.click('#login-form button[type="submit"]')]);
+    const login = async (role, id) => {
+      await page.goto(base + "index.html", { waitUntil: "domcontentloaded" });
+      await page.evaluate(() => { sessionStorage.clear(); localStorage.removeItem("nexus-lms:session"); });
+      await page.goto(base + "index.html", { waitUntil: "domcontentloaded" });
+      if (role === "mahasiswa") await page.click('.role-tab[data-role="student"]');
+      await page.type("#identifier", id);
+      await page.type("#password", "nexus2026");
+      await Promise.all([page.waitForNavigation({ waitUntil: "domcontentloaded" }), page.click('#login-form button[type="submit"]')]);
+    };
+    let area = null;
     for (const p of PAGES.filter((x) => x !== "index.html")) {
+      const want = p.startsWith("pelajar/") ? "mahasiswa" : "admin";
+      if (area !== want) { await login(want, want === "admin" ? "admin@nexus.ac.id" : "2410511050"); area = want; }
       await page.goto(base + p, { waitUntil: "domcontentloaded" });
       await new Promise((r) => setTimeout(r, 1500));
       const html = "<!DOCTYPE html>\n" + (await page.evaluate(() => document.documentElement.outerHTML));

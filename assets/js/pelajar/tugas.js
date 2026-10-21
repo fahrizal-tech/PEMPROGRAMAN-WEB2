@@ -58,7 +58,7 @@
         ${p.catatan ? html`<p class="mt-1">Catatan: ${p.catatan}</p>` : ""}
       </div>` : ""}
       <div class="mt-auto flex items-center justify-between gap-3">
-        <p class="text-sm">${p && p.nilai != null ? html`Nilai <span class="text-xl font-bold text-slate-900">${u.formatNumber(p.nilai)}</span>` : html`<span class="text-xs text-slate-400">Belum ada nilai</span>`}</p>
+        <p class="text-sm">${p && p.nilai != null ? html`Nilai <span class="text-xl font-bold text-slate-900">${u.formatNumber(p.nilai)}</span>` : html`<span class="text-xs text-slate-500">Belum ada nilai</span>`}</p>
         ${c.bisa ? html`<button type="button" data-kumpul="${t.id}" class="rounded-lg ${p ? "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50" : "bg-blue-600 text-white hover:bg-blue-700"} px-4 py-2 text-sm font-semibold">${p ? "Perbarui jawaban" : "Kumpulkan"}</button>` : ""}
       </div>
     </article>`;
