@@ -1,7 +1,7 @@
 /**
  * Komponen layout bersama: sidebar, topbar, dan footer.
  *
- * Pemakaian di setiap halaman (folder pages/):
+ * Pemakaian di setiap halaman (folder pages/ untuk admin, pelajar/ untuk mahasiswa):
  *   <aside data-component="sidebar"></aside>
  *   <header data-component="topbar" data-title="Judul Halaman"></header>
  *   <footer data-component="footer"></footer>
@@ -12,10 +12,10 @@
 (function () {
   "use strict";
 
-  var APP = { name: "Nexus LMS", version: "1.2.1" };
+  var APP = { name: "Nexus LMS", version: "1.3.0" };
 
-  // Sumber tunggal navigasi. `match` = halaman lain yang ikut menandai menu ini aktif.
-  var MENU = [
+  // Sumber tunggal navigasi per peran. `match` = halaman lain yang ikut menandai menu ini aktif.
+  var MENU_ADMIN = [
     {
       group: "Main",
       items: [
@@ -47,12 +47,28 @@
     },
   ];
 
+  var MENU_PELAJAR = [
+    {
+      group: "Portal Pelajar",
+      items: [
+        { label: "Beranda", href: "beranda.html", icon: "home" },
+        { label: "Kursus Saya", href: "kursus.html", icon: "menu_book" },
+        { label: "Jadwal Kelas", href: "jadwal.html", icon: "video_camera_front" },
+        { label: "Tugas", href: "tugas.html", icon: "assignment" },
+        { label: "Nilai & Sertifikat", href: "nilai.html", icon: "workspace_premium" },
+      ],
+    },
+  ];
+
   // Pengguna dari sesi login (Nexus.auth); cadangan bila auth belum dimuat.
   var auth = window.Nexus && window.Nexus.auth;
   var sessionUser = auth ? auth.currentUser() : null;
   var USER = sessionUser
-    ? { name: sessionUser.nama, role: auth.roleLabel(sessionUser.peran) }
+    ? { name: sessionUser.nama, role: auth.roleLabel(sessionUser.peran) + (sessionUser.nim ? " · " + sessionUser.nim : "") }
     : { name: "Administrator", role: "Admin" };
+  var IS_PELAJAR = /\/pelajar\/[^/]*$/.test(location.pathname);
+  var MENU = IS_PELAJAR ? MENU_PELAJAR : MENU_ADMIN;
+  var HOME = IS_PELAJAR ? "beranda.html" : "dashboard.html";
 
   var LG_BREAKPOINT = 1024;
 
@@ -72,7 +88,7 @@
       .join("");
   }
 
-  var currentPage = location.pathname.split("/").pop() || "dashboard.html";
+  var currentPage = location.pathname.split("/").pop() || HOME;
 
   function findActive() {
     for (var g = 0; g < MENU.length; g++) {
@@ -121,7 +137,7 @@
 
     el.innerHTML =
       '<div class="flex h-16 flex-shrink-0 items-center gap-3 border-b border-slate-200 px-5">' +
-      '<a href="dashboard.html" class="flex items-center gap-3 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">' +
+      '<a href="' + HOME + '" class="flex items-center gap-3 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">' +
       '<img src="../assets/img/logo-nexus-lms.svg" alt="" class="h-8 w-8 object-cover object-left" width="32" height="32">' +
       '<span class="text-base font-bold tracking-tight text-slate-900">' + APP.name + "</span></a>" +
       '<span class="ml-auto rounded border border-blue-100 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700">v' +
@@ -172,7 +188,7 @@
       "border-t border-slate-200 bg-white px-4 py-4 text-xs text-slate-500 lg:px-6 " +
       "flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between";
     el.innerHTML =
-      "<p>&copy; " + new Date().getFullYear() + " " + APP.name + " — Admin Panel</p>" +
+      "<p>&copy; " + new Date().getFullYear() + " " + APP.name + (IS_PELAJAR ? " — Portal Pelajar" : " — Admin Panel") + "</p>" +
       "<p>Versi " + APP.version + " · Data demo (tersimpan lokal di browser)</p>";
   }
 

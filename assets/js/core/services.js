@@ -29,14 +29,17 @@
   var CURRENT_YEAR = new Date().getFullYear();
 
   /* ---------- Log aktivitas ---------- */
-  function currentAdminId() {
-    var user = Nexus.auth && typeof Nexus.auth.currentUser === "function" ? Nexus.auth.currentUser() : null;
-    return user ? user.id : null;
+  function currentUser() {
+    return Nexus.auth && typeof Nexus.auth.currentUser === "function" ? Nexus.auth.currentUser() : null;
   }
 
+  // Pelaku aksi: admin dicatat di admin_id, mahasiswa (portal pelajar) di mahasiswa_id.
   function log(aksi, entitas, entitasId, deskripsi) {
+    var user = currentUser();
+    var student = !!(user && user.peran === "mahasiswa");
     return db.insert("log_aktivitas", {
-      admin_id: currentAdminId(),
+      admin_id: user && !student ? user.id : null,
+      mahasiswa_id: student ? user.mahasiswa_id : null,
       aksi: aksi,
       entitas: entitas,
       entitas_id: entitasId,
@@ -94,7 +97,8 @@
       create: async function (input) {
         var data = await prepare(input, null);
         var row = await db.insert(table, pick(data, Object.keys(schema)));
-        await log("create", table, row.id, "Menambahkan " + cfg.label + " " + cfg.describe(row));
+        var desc = cfg.describeAsync ? await cfg.describeAsync(row) : cfg.describe(row);
+        await log("create", table, row.id, "Menambahkan " + cfg.label + " " + desc);
         return row;
       },
 
@@ -327,6 +331,7 @@
     table: "krs",
     label: "KRS",
     describe: function (x) { return x.id; },
+    describeAsync: function (x) { return describeKrs(x); },
     schema: {
       mahasiswa_id: { label: "Mahasiswa", required: true, ref: "mahasiswa" },
       kursus_id: { label: "Kursus", required: true, ref: "kursus" },
@@ -621,8 +626,177 @@
     },
   });
 
+  /* ==================== PORTAL PELAJAR ==================== */
+  // Semua fungsi memakai mahasiswa dari SESI (bukan parameter), sehingga mahasiswa
+  // hanya dapat membaca dan mengubah datanya sendiri.
+  var SUBMIT_SCHEMA = {
+    tautan: { label: "Tautan berkas", required: true, url: true, maxLength: 300 },
+    catatan: { label: "Catatan", maxLength: 500 },
+  };
+
+  async function me() {
+    var user = currentUser();
+    if (!user || user.peran !== "mahasiswa") throw new BusinessError("BUKAN_MAHASISWA", "Fitur ini hanya untuk mahasiswa yang sedang masuk.");
+    var m = await db.get("mahasiswa", user.mahasiswa_id);
+    if (!m) throw new BusinessError("NOT_FOUND", "Data mahasiswa tidak ditemukan.");
+    return m;
+  }
+
+  /** KRS milik mahasiswa yang disetujui → daftar id kursus. */
+  async function kursusDisetujui(mhsId) {
+    var rows = await db.query("krs", function (x) { return x.mahasiswa_id === mhsId && x.status === "disetujui"; });
+    return rows.map(function (x) { return x.kursus_id; });
+  }
+
+  var pelajar = {
+    schemaPengumpulan: SUBMIT_SCHEMA,
+    me: me,
+
+    /** Semua KRS milik saya (semua status) beserta kursus & dosennya. */
+    kursusSaya: async function () {
+      var m = await me();
+      var rows = await db.query("krs", function (x) { return x.mahasiswa_id === m.id; });
+      var out = [];
+      for (var i = 0; i < rows.length; i++) {
+        var k = await db.get("kursus", rows[i].kursus_id);
+        out.push({ krs: rows[i], kursus: k, dosen: k ? await db.get("instruktur", k.instruktur_id) : null });
+      }
+      return out;
+    },
+
+    /** Kursus yang dibuka (publikasi) + jumlah terisi + status KRS saya untuk kursus itu. */
+    katalog: async function () {
+      var m = await me();
+      var kursusList = await db.query("kursus", function (k) { return k.status === "publikasi"; });
+      var krs = await db.list("krs");
+      return kursusList.map(function (k) {
+        var mine = krs.filter(function (x) { return x.kursus_id === k.id && x.mahasiswa_id === m.id; })[0] || null;
+        var terisi = krs.filter(function (x) { return x.kursus_id === k.id && x.status === "disetujui"; }).length;
+        return { kursus: k, terisi: terisi, krs: mine };
+      });
+    },
+
+    /** Ajukan KRS: mahasiswa aktif, sebelum batas KRS, kursus dibuka, belum diambil, kuota tersedia. */
+    ajukanKrs: async function (kursusId) {
+      var m = await me();
+      if (m.status !== "aktif") throw new BusinessError("MAHASISWA_TIDAK_AKTIF", "Pengajuan KRS hanya untuk mahasiswa aktif (status Anda: " + m.status + ").");
+      var batas = await pengaturan.get("batas_krs");
+      if (batas && Nexus.utils && Nexus.utils.localDate(new Date()) > batas) {
+        throw new BusinessError("BATAS_KRS", "Masa pengisian KRS sudah berakhir (" + batas + ").");
+      }
+      var k = await db.get("kursus", kursusId);
+      if (!k || k.status !== "publikasi") throw new BusinessError("KURSUS_TUTUP", "Kursus ini tidak dibuka untuk KRS.");
+      var terisi = await count("krs", function (x) { return x.kursus_id === k.id && x.status === "disetujui"; });
+      if (terisi >= k.kuota) throw new BusinessError("KUOTA_PENUH", "Kuota " + k.kode_mk + " sudah penuh (" + terisi + "/" + k.kuota + ").");
+      var periode = (await pengaturan.get("periode_aktif")) || k.periode;
+      var row = await krs.create({ mahasiswa_id: m.id, kursus_id: k.id, periode: periode });
+      return row;
+    },
+
+    /** Batalkan pengajuan KRS milik sendiri yang belum diproses. */
+    batalKrs: async function (krsId) {
+      var m = await me();
+      var x = await db.get("krs", krsId);
+      if (!x || x.mahasiswa_id !== m.id) throw new BusinessError("NOT_FOUND", "Pengajuan KRS tidak ditemukan.");
+      if (x.status !== "diajukan") throw new BusinessError("SUDAH_DIPROSES", "KRS yang sudah diproses BAAK tidak dapat dibatalkan.");
+      await db.remove("krs", krsId);
+      var k = await db.get("kursus", x.kursus_id);
+      await log("delete", "krs", krsId, "Membatalkan pengajuan KRS " + (k ? k.kode_mk : x.kursus_id));
+      return true;
+    },
+
+    /** Sesi kelas virtual dari kursus yang disetujui + status presensi saya. */
+    jadwal: async function () {
+      var m = await me();
+      var ids = await kursusDisetujui(m.id);
+      var sesi = await db.query("kelas_virtual", function (v) { return ids.indexOf(v.kursus_id) !== -1; });
+      var pres = await db.query("presensi", function (p) { return p.mahasiswa_id === m.id; });
+      var out = [];
+      for (var i = 0; i < sesi.length; i++) {
+        var v = sesi[i];
+        out.push({
+          sesi: v,
+          kursus: await db.get("kursus", v.kursus_id),
+          presensi: pres.filter(function (p) { return p.kelas_virtual_id === v.id; })[0] || null,
+        });
+      }
+      out.sort(function (a, b) { return a.sesi.waktu_mulai < b.sesi.waktu_mulai ? -1 : 1; });
+      return out;
+    },
+
+    /** Masuk sesi yang sedang live: presensi tercatat "hadir", lalu tautan dikembalikan. */
+    masukKelas: async function (sesiId) {
+      var m = await me();
+      var v = await db.get("kelas_virtual", sesiId);
+      var ids = await kursusDisetujui(m.id);
+      if (!v || ids.indexOf(v.kursus_id) === -1) throw new BusinessError("NOT_FOUND", "Sesi tidak ditemukan pada kursus Anda.");
+      if (v.status !== "live") throw new BusinessError("BELUM_LIVE", v.status === "selesai" ? "Sesi ini sudah selesai." : "Sesi belum dimulai.");
+      var p = (await db.query("presensi", function (x) { return x.kelas_virtual_id === v.id && x.mahasiswa_id === m.id; }))[0];
+      if (!p) {
+        await db.insert("presensi", { kelas_virtual_id: v.id, mahasiswa_id: m.id, status: "hadir" });
+        await log("create", "presensi", v.id, "Hadir di kelas virtual \"" + v.judul + "\"");
+      } else if (p.status !== "hadir") {
+        await db.update("presensi", p.id, { status: "hadir" });
+      }
+      return v.tautan;
+    },
+
+    /** Tugas/kuis (bukan draft) dari kursus yang disetujui + pengumpulan saya. */
+    tugas: async function () {
+      var m = await me();
+      var ids = await kursusDisetujui(m.id);
+      var list = await db.query("tugas_kuis", function (t) { return ids.indexOf(t.kursus_id) !== -1 && t.status !== "draft"; });
+      var kumpul = await db.query("pengumpulan", function (p) { return p.mahasiswa_id === m.id; });
+      var out = [];
+      for (var i = 0; i < list.length; i++) {
+        var t = list[i];
+        out.push({
+          tugas: t,
+          kursus: await db.get("kursus", t.kursus_id),
+          pengumpulan: kumpul.filter(function (p) { return p.tugas_id === t.id; })[0] || null,
+        });
+      }
+      out.sort(function (a, b) { return a.tugas.deadline < b.tugas.deadline ? -1 : 1; });
+      return out;
+    },
+
+    /** Kumpulkan / perbarui jawaban: tugas aktif, sebelum tenggat, belum dinilai. */
+    kumpulkan: async function (tugasId, input) {
+      var m = await me();
+      var t = await db.get("tugas_kuis", tugasId);
+      var ids = await kursusDisetujui(m.id);
+      if (!t || t.status === "draft" || ids.indexOf(t.kursus_id) === -1) throw new BusinessError("NOT_FOUND", "Tugas tidak ditemukan pada kursus Anda.");
+      if (t.status !== "aktif") throw new BusinessError("TUGAS_DITUTUP", "Tugas ini sudah ditutup.");
+      if (new Date(t.deadline).getTime() < Date.now()) throw new BusinessError("LEWAT_TENGGAT", "Batas waktu pengumpulan sudah lewat.");
+      var res = validate(SUBMIT_SCHEMA, input || {});
+      if (!res.valid) throw new ValidationError(res.errors);
+      var data = { tautan: res.data.tautan, catatan: res.data.catatan || "", dikumpulkan_pada: new Date().toISOString(), status: "menunggu" };
+      var p = (await db.query("pengumpulan", function (x) { return x.tugas_id === t.id && x.mahasiswa_id === m.id; }))[0];
+      var row;
+      if (p) {
+        if (p.status === "dinilai") throw new BusinessError("SUDAH_DINILAI", "Jawaban sudah dinilai dan tidak dapat diubah.");
+        row = await db.update("pengumpulan", p.id, data);
+        await log("update", "pengumpulan", p.id, "Memperbarui jawaban \"" + t.judul + "\"");
+      } else {
+        row = await db.insert("pengumpulan", Object.assign({ tugas_id: t.id, mahasiswa_id: m.id, nilai: null, skor_plagiarisme: null }, data));
+        await log("create", "pengumpulan", row.id, "Mengumpulkan \"" + t.judul + "\"");
+      }
+      return row;
+    },
+
+    /** Sertifikat milik saya (yang dicabut tetap ditampilkan dengan statusnya). */
+    sertifikat: async function () {
+      var m = await me();
+      var rows = await db.query("sertifikat", function (s) { return s.mahasiswa_id === m.id; });
+      var out = [];
+      for (var i = 0; i < rows.length; i++) out.push({ sertifikat: rows[i], kursus: await db.get("kursus", rows[i].kursus_id) });
+      return out;
+    },
+  };
+
   Nexus.BusinessError = BusinessError;
   Nexus.services = {
+    pelajar: pelajar,
     kursus: kursus,
     modul: modul,
     mahasiswa: mahasiswa,

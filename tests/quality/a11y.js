@@ -34,6 +34,16 @@ const CASES = [
     await p.$eval('[role="dialog"] form', (f) => f.requestSubmit()); await wait(300);
   }],
   ["dashboard: drawer HP", "pages/dashboard.html", async (p) => { await p.click("#sidebar-toggle"); await wait(400); }, 390],
+  ["login: tab mahasiswa", "index.html", async (p) => { await p.click('.role-tab[data-role="student"]'); await wait(200); }],
+  // Portal pelajar (login sebagai mahasiswa)
+  ...["beranda", "kursus", "jadwal", "tugas", "nilai"].map((n) => [`pelajar: ${n}`, `pelajar/${n}.html`]),
+  ["pelajar: kursus — konfirmasi ajukan", "pelajar/kursus.html", async (p) => { await p.click("[data-ajukan]"); await p.waitForSelector('[role="dialog"]'); await wait(300); }],
+  ["pelajar: tugas — form + error", "pelajar/tugas.html", async (p) => {
+    await p.click("[data-kumpul]"); await p.waitForSelector('[role="dialog"] form');
+    await p.$eval('[role="dialog"] input[name="tautan"]', (e) => { e.value = ""; });
+    await p.$eval('[role="dialog"] form', (f) => f.requestSubmit()); await wait(300);
+  }],
+  ["pelajar: beranda HP", "pelajar/beranda.html", null, 390],
 ];
 
 (async () => {
@@ -42,17 +52,23 @@ const CASES = [
   await page.setBypassCSP(true); // axe disuntikkan sebagai skrip; CSP situs sendiri tetap diuji di E2E.
   let total = 0;
 
-  async function login() {
+  let area = null;
+  async function login(role) {
     await page.goto(base + "index.html");
-    await page.type("#identifier", "admin@nexus.ac.id");
+    await page.evaluate(() => { sessionStorage.clear(); localStorage.removeItem("nexus-lms:session"); });
+    await page.goto(base + "index.html");
+    area = role || "admin";
+    if (area === "mahasiswa") await page.click('.role-tab[data-role="student"]');
+    await page.type("#identifier", area === "mahasiswa" ? "2410511050" : "admin@nexus.ac.id");
     await page.type("#password", "nexus2026");
     await Promise.all([page.waitForNavigation(), page.click('#login-form button[type="submit"]')]);
   }
 
   for (const [label, url, action, width] of CASES) {
     await page.setViewport({ width: width || 1280, height: 900 });
-    if (url === "index.html") await page.evaluate(() => { try { sessionStorage.clear(); localStorage.removeItem("nexus-lms:session"); } catch (e) {} }).catch(() => {});
-    else if (!page.url().includes("/pages/")) await login();
+    const want = url.startsWith("pelajar/") ? "mahasiswa" : "admin";
+    if (url === "index.html") { await page.evaluate(() => { try { sessionStorage.clear(); localStorage.removeItem("nexus-lms:session"); } catch (e) {} }).catch(() => {}); area = null; }
+    else if (area !== want) await login(want);
     await page.goto(base + url, { waitUntil: "load" });
     await wait(1200);
     if (action) await action(page);
@@ -71,6 +87,7 @@ const CASES = [
   }
   /* ---------- Navigasi keyboard ---------- */
   console.log("\n== Keyboard");
+  if (area !== "admin") await login("admin"); // uji keyboard memakai halaman admin
   const focused = () => page.evaluate(() => {
     const a = document.activeElement;
     return a ? { body: a === document.body, id: a.id, text: (a.getAttribute("aria-label") || a.textContent || "").trim().slice(0, 30), inMain: !!a.closest("main"),

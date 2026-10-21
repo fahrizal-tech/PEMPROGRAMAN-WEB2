@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Nilai &amp; Sertifikat · Portal Pelajar Nexus LMS</title>
+  <meta name="description" content="Rekap nilai per kursus dan sertifikat digital mahasiswa.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <!-- Proteksi sesi: tanpa defer agar berjalan sebelum konten tampil -->
+  <script src="../assets/js/core/auth.js"></script>
+  <script src="../assets/data/seed.js" defer></script>
+  <script src="../assets/js/core/storage.js" defer></script>
+  <script src="../assets/js/core/utils.js" defer></script>
+  <script src="../assets/js/core/validators.js" defer></script>
+  <script src="../assets/js/core/services.js" defer></script>
+  <script src="../assets/js/components/ui.js" defer></script>
+  <script src="../assets/js/components/cover.js" defer></script>
+  <script src="../assets/js/components/layout.js" defer></script>
+  <script src="../assets/js/components/sertifikat.js" defer></script>
+  <script src="../assets/js/pelajar/nilai.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <aside data-component="sidebar"></aside>
+
+  <div class="flex min-h-screen flex-col lg:pl-64">
+    <header data-component="topbar" data-title="Nilai &amp; Sertifikat"></header>
+
+    <main class="flex-1 min-w-0 space-y-6 p-4 lg:p-6">
+      <section>
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Hasil Studi</p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Nilai &amp; Sertifikat</h2>
+        <p class="mt-1 text-sm text-slate-500">Nilai sementara dihitung dari tugas yang sudah dinilai sesuai bobotnya; nilai akhir ditetapkan dosen.</p>
+      </section>
+
+      <section aria-label="Ringkasan hasil studi" class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">IPK</p>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-ipk">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-ipk-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Kursus Lulus</p>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-lulus">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-lulus-sub">&nbsp;</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Sertifikat Terbit</p>
+          <p class="mt-3 text-3xl font-bold text-slate-900" id="kpi-sertifikat">-</p>
+          <p class="mt-1 text-xs text-slate-500" id="kpi-sertifikat-sub">&nbsp;</p>
+        </article>
+      </section>
+
+      <section class="rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="judul-nilai">
+        <div class="border-b border-slate-100 px-5 py-4"><h3 id="judul-nilai" class="text-base font-semibold text-slate-900">Rekap Nilai per Kursus</h3></div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <caption class="sr-only">Rekap nilai per kursus</caption>
+            <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <tr>
+                <th scope="col" class="px-5 py-3">Kursus</th>
+                <th scope="col" class="px-5 py-3">SKS</th>
+                <th scope="col" class="px-5 py-3">Tugas dinilai</th>
+                <th scope="col" class="px-5 py-3">Nilai sementara</th>
+                <th scope="col" class="px-5 py-3">Nilai akhir</th>
+                <th scope="col" class="px-5 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-nilai" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="judul-sertifikat" class="space-y-3">
+        <h3 id="judul-sertifikat" class="text-base font-semibold text-slate-900">Sertifikat Digital</h3>
+        <div id="daftar-sertifikat" class="grid grid-cols-1 gap-4 md:grid-cols-2"></div>
+      </section>
+    </main>
+
+    <footer data-component="footer"></footer>
+  </div>
+</body>
+</html>

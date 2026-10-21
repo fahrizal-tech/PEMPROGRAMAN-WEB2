@@ -4,9 +4,9 @@ Admin Panel (back-office) untuk **Learning Management System**. Dikembangkan seb
 
 Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). Data disimpan lokal di browser melalui lapisan service yang nantinya bisa diganti ke database online tanpa mengubah halaman.
 
-> **Status:** v1.2.1 — seluruh halaman berfungsi dengan data lokal; tampilan kartu bergambar; lolos QA: HTML valid, Lighthouse 98–100, axe-core 0 pelanggaran, CSP aktif, teruji di Edge/Chrome/Firefox (57 uji unit, 99 uji E2E).
+> **Status:** v1.3.0 — admin panel + **Portal Pelajar** (login mahasiswa) berfungsi dengan data lokal; lolos QA: HTML valid, Lighthouse 98–100, axe-core 0 pelanggaran, CSP aktif, teruji di Chrome/Firefox (66 uji unit, 111 uji E2E).
 
-**🔗 Demo langsung:** https://fahrizal-tech.github.io/PEMPROGRAMAN-WEB2/ — masuk dengan `admin@nexus.ac.id` / `nexus2026` (lihat [Akun demo](#menjalankan-secara-lokal)).
+**🔗 Demo langsung:** https://fahrizal-tech.github.io/PEMPROGRAMAN-WEB2/ — admin: `admin@nexus.ac.id`, mahasiswa: NIM `2410511050`, sandi `nexus2026` (lihat [Akun demo](#menjalankan-secara-lokal)).
 
 ![Dashboard Nexus LMS](docs/img/screenshots/02-dashboard.webp)
 
@@ -26,6 +26,16 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 | Sertifikasi | `pages/sertifikasi.html` | Terbit/TTE/cabut sertifikat, verifikasi nomor, cetak sertifikat |
 | Pengaturan | `pages/pengaturan.html` | Profil institusi, akademik, sesi, akun admin, cadangan/pulihkan/reset data |
 
+**Portal Pelajar** (login sebagai mahasiswa; hanya data milik sendiri):
+
+| Modul | Halaman | Ringkasan |
+| --- | --- | --- |
+| Beranda | `pelajar/beranda.html` | Sapaan, 4 KPI (kursus/SKS, tugas, kehadiran, IPK), sesi live, tenggat terdekat |
+| Kursus Saya | `pelajar/kursus.html` | KRS milik sendiri, katalog kursus dibuka, ajukan/batalkan KRS → divalidasi admin |
+| Jadwal Kelas | `pelajar/jadwal.html` | Sesi live/akan datang/selesai, presensi tercatat otomatis saat masuk |
+| Tugas | `pelajar/tugas.html` | Tenggat, kumpulkan/perbarui jawaban (tautan + catatan), nilai |
+| Nilai & Sertifikat | `pelajar/nilai.html` | Nilai sementara berbobot, nilai akhir + huruf mutu, sertifikat (pratinjau & cetak) |
+
 ## Tangkapan Layar
 
 | | |
@@ -35,6 +45,9 @@ Aplikasi berjalan sepenuhnya di sisi klien (HTML5, CSS3/Tailwind, JavaScript). D
 | ![Mahasiswa dan KRS](docs/img/screenshots/06-mahasiswa-krs.webp) **Mahasiswa** + antrean validasi KRS | ![Dosen](docs/img/screenshots/07-dosen.webp) **Instruktur / Dosen** (BKD, EDOM) |
 | ![Tugas dan kuis](docs/img/screenshots/08-tugas-kuis.webp) **Tugas & Kuis** | ![Sertifikasi](docs/img/screenshots/09-sertifikasi.webp) **Sertifikasi Digital** |
 | ![Laporan](docs/img/screenshots/10-laporan.webp) **Laporan & Analitik** (CSV, cetak A4) | ![Pengaturan](docs/img/screenshots/11-pengaturan.webp) **Pengaturan Sistem** |
+
+| ![Login mahasiswa](docs/img/screenshots/12-login-mahasiswa.webp) **Login Mahasiswa** | ![Beranda pelajar](docs/img/screenshots/13-pelajar-beranda.webp) **Portal Pelajar: Beranda** |
+| ![Kursus saya](docs/img/screenshots/14-pelajar-kursus.webp) **Portal Pelajar: Kursus Saya & KRS** | ![Tugas pelajar](docs/img/screenshots/16-pelajar-tugas.webp) **Portal Pelajar: Tugas** |
 
 **Responsif (HP 390px):**
 
@@ -82,6 +95,8 @@ Tidak perlu instalasi. Cukup buka `index.html` di browser (klik dua kali), lalu 
 | --- | --- | --- |
 | `admin@nexus.ac.id` | `nexus2026` | Super Administrator |
 | `baak@nexus.ac.id` | `nexus2026` | Admin Akademik (BAAK) |
+| NIM `2410511050` | `nexus2026` | Mahasiswa aktif (tab **Mahasiswa**) |
+| NIM `2110511124` | `nexus2026` | Mahasiswa lulus, punya sertifikat |
 
 > Login pada versi ini adalah **simulasi** (aplikasi berjalan sepenuhnya di browser), lihat [SECURITY.md](SECURITY.md). Data tersimpan di localStorage browser dan dapat dikembalikan ke kondisi awal dari halaman Pengaturan.
 Semua halaman memakai CSS yang sudah di-build (`assets/css/app.css`) dan JavaScript biasa, sehingga bisa berjalan tanpa server.

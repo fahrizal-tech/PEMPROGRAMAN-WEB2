@@ -62,7 +62,8 @@
     var kumpul = dibuka.reduce(function (n, t) { return n + t.terkumpul; }, 0), target = dibuka.reduce(function (n, t) { return n + t.peserta; }, 0);
     $("kpi-kumpul").textContent = target ? u.formatPercent(kumpul, target) : "-";
     $("kpi-kumpul-sub").textContent = kumpul + " dari " + target + " pengumpulan yang diharapkan";
-    var skor = db.kumpul.map(function (p) { return p.skor_plagiarisme; });
+    // Jawaban dari portal pelajar belum dicek plagiarismenya (null) → tidak ikut dirata-rata.
+    var skor = db.kumpul.map(function (p) { return p.skor_plagiarisme; }).filter(function (v) { return v != null; });
     $("kpi-plagiat").textContent = skor.length ? u.formatNumber(skor.reduce(function (a, b) { return a + b; }, 0) / skor.length, 1) + "%" : "-";
     $("kpi-plagiat-sub").textContent = skor.filter(function (s) { return s > PLAGIAT_BATAS; }).length + " pengumpulan di atas " + PLAGIAT_BATAS + "%";
   }
@@ -162,7 +163,8 @@
                 <p class="font-medium text-slate-800">${p.mhs.nama}</p>
                 <p class="text-xs text-slate-500"><span class="font-mono">${p.mhs.nim}</span> · dikumpulkan ${u.formatDate(p.dikumpulkan_pada, true)}
                   ${late ? html` · <span class="font-semibold text-amber-700">terlambat</span>` : ""}</p>
-                <p class="text-xs ${plag ? "font-semibold text-red-600" : "text-slate-500"}">Plagiarisme ${p.skor_plagiarisme}%${plag ? " — perlu ditinjau" : ""}</p>
+                <p class="text-xs ${plag ? "font-semibold text-red-600" : "text-slate-500"}">${p.skor_plagiarisme == null ? "Plagiarisme belum dicek" : "Plagiarisme " + p.skor_plagiarisme + "%" + (plag ? " — perlu ditinjau" : "")}</p>
+                ${p.tautan ? html`<p class="mt-1 text-xs"><a href="${p.tautan}" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:underline">Buka jawaban ↗</a>${p.catatan ? html` · <span class="text-slate-600">“${p.catatan}”</span>` : ""}</p>` : ""}
               </div>
               <div class="flex items-center gap-2">
                 <label for="nilai-${p.id}" class="sr-only">Nilai ${p.mhs.nama}</label>
@@ -208,7 +210,7 @@
     var tugasIds = table.visible().map(function (t) { return t.id; });
     var rows = db.kumpul.filter(function (p) { return tugasIds.indexOf(p.tugas_id) !== -1; }).map(function (p) {
       var t = db.rows.filter(function (x) { return x.id === p.tugas_id; })[0], m = db.mhsMap[p.mahasiswa_id] || {};
-      return { kode: t.kode, judul: t.judul, jenis: JENIS[t.jenis], nim: m.nim, nama: m.nama, waktu: u.formatDate(p.dikumpulkan_pada, true), terlambat: terlambat(p, t) ? "Ya" : "Tidak", plagiat: p.skor_plagiarisme, nilai: p.nilai == null ? "" : p.nilai };
+      return { kode: t.kode, judul: t.judul, jenis: JENIS[t.jenis], nim: m.nim, nama: m.nama, waktu: u.formatDate(p.dikumpulkan_pada, true), terlambat: terlambat(p, t) ? "Ya" : "Tidak", plagiat: p.skor_plagiarisme == null ? "" : p.skor_plagiarisme, nilai: p.nilai == null ? "" : p.nilai };
     });
     if (!rows.length) return ui.toast("Tidak ada pengumpulan untuk diekspor.", "warning");
     u.download("nilai-asesmen-" + u.localDate() + ".csv", u.toCSV(rows, [

@@ -5,6 +5,23 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/), da
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-10-22 · Portal Pelajar
+
+### Tahap 7 — Login mahasiswa
+
+#### Ditambahkan
+- **Login mahasiswa** dengan NIM atau email kampus (tab *Mahasiswa* di halaman login); akun berstatus nonaktif ditolak. Akun demo: NIM `2410511050` (aktif) dan `2110511124` (lulus).
+- **Portal Pelajar** (`pelajar/`): Beranda, Kursus Saya (ajukan/batalkan KRS), Jadwal Kelas (presensi tercatat saat masuk sesi live), Tugas (kumpulkan/perbarui jawaban berupa tautan https + catatan), Nilai & Sertifikat (nilai sementara berbobot, huruf mutu, pratinjau & cetak sertifikat).
+- Layanan `services.pelajar` yang selalu memakai mahasiswa dari sesi, sehingga hanya data milik sendiri yang dapat dibaca/diubah.
+- Komponen sertifikat bersama (`components/sertifikat.js`) untuk admin dan pelajar.
+- 9 uji unit portal pelajar, 12 uji E2E portal pelajar; validasi HTML, audit aksesibilitas, dan Lighthouse mencakup 5 halaman baru.
+
+#### Diubah
+- Area admin (`pages/`) dan portal pelajar (`pelajar/`) dijaga per peran; pengguna di area yang salah dialihkan ke berandanya sendiri.
+- Log aktivitas mencatat pelaku mahasiswa; Dashboard & Laporan menampilkan namanya. Log pembuatan KRS menyebut nama mahasiswa & kode MK.
+- Tugas & Kuis (admin): tautan & catatan jawaban tampil di modal penilaian; jawaban yang belum dicek plagiarismenya tidak ikut dirata-rata.
+- Rencana Supabase bergeser menjadi Tahap 8.
+
 ## [1.2.1] — 2026-09-25 · Dokumentasi & Presentasi
 
 ### Tahap 6

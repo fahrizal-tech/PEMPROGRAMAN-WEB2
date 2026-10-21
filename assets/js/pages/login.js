@@ -7,11 +7,11 @@
 
   var auth = Nexus.auth;
   var params = new URLSearchParams(location.search);
-  var next = auth.safeNext(params.get("next"));
+  var next = params.get("next");
 
-  // Sudah login → langsung ke halaman tujuan.
+  // Sudah login → langsung ke beranda/halaman tujuan sesuai peran.
   if (auth.isLoggedIn()) {
-    location.replace("pages/" + next);
+    location.replace(auth.homePath(auth.currentUser(), next));
     return;
   }
 
@@ -48,10 +48,17 @@
   /* ---------- Info akun demo ---------- */
   var demo = document.createElement("p");
   demo.className = "mt-4 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-600";
-  demo.innerHTML =
-    '<span class="font-semibold text-slate-800">Akun demo:</span> ' +
-    '<code class="font-mono">admin@nexus.ac.id</code> atau <code class="font-mono">baak@nexus.ac.id</code>, ' +
-    'kata sandi <code class="font-mono">' + Nexus.utils.escapeHTML(auth.DEMO_PASSWORD) + "</code>";
+  var DEMO_HINT = {
+    admin: '<code class="font-mono">admin@nexus.ac.id</code> atau <code class="font-mono">baak@nexus.ac.id</code>',
+    student: 'NIM <code class="font-mono">2410511050</code> (aktif) atau <code class="font-mono">2110511124</code> (lulus)',
+  };
+  function renderDemo(role) {
+    demo.hidden = !DEMO_HINT[role];
+    if (!DEMO_HINT[role]) return;
+    demo.innerHTML =
+      '<span class="font-semibold text-slate-800">Akun demo:</span> ' + DEMO_HINT[role] +
+      ', kata sandi <code class="font-mono">' + Nexus.utils.escapeHTML(auth.DEMO_PASSWORD) + "</code>";
+  }
   form.insertAdjacentElement("afterend", demo);
 
   if (params.get("alasan") === "sesi-berakhir") {
@@ -96,7 +103,9 @@
   };
   var ACTIVE = ["bg-white", "text-brand-700", "shadow-sm"];
 
+  var currentRole = "admin";
   function setRole(role) {
+    currentRole = role;
     tabs.forEach(function (t) {
       var on = t.getAttribute("data-role") === role;
       ACTIVE.forEach(function (c) { t.classList.toggle(c, on); });
@@ -106,12 +115,15 @@
     identifierLabel.textContent = ROLE[role].label;
     identifier.placeholder = ROLE[role].placeholder;
     identifier.type = role === "admin" ? "email" : "text";
-    var disabled = role !== "admin";
+    identifier.autocomplete = "username";
+    renderDemo(role);
+    // Portal dosen belum tersedia; admin dan mahasiswa dapat masuk.
+    var disabled = role === "lecturer";
     [identifier, password, remember, submit].forEach(function (el) { el.disabled = disabled; });
     submit.classList.toggle("opacity-50", disabled);
     submit.classList.toggle("cursor-not-allowed", disabled);
     if (disabled) {
-      showAlert("info", "Portal " + (role === "lecturer" ? "Dosen" : "Mahasiswa") + " belum tersedia pada versi ini. Panel ini khusus Admin / BAAK.");
+      showAlert("info", "Portal Dosen belum tersedia pada versi ini. Silakan masuk sebagai Admin / BAAK atau Mahasiswa.");
     } else {
       hideAlert();
     }
@@ -179,9 +191,12 @@
     submit.disabled = true;
     submit.textContent = "Memproses…";
     try {
-      await auth.login(identifier.value, password.value, { remember: remember.checked });
+      var user = await auth.login(identifier.value, password.value, {
+        remember: remember.checked,
+        role: currentRole === "student" ? "mahasiswa" : "admin",
+      });
       submit.textContent = "Berhasil, mengalihkan…";
-      location.replace("pages/" + next);
+      location.replace(auth.homePath(user, next));
     } catch (err) {
       submit.disabled = false;
       submit.innerHTML = submitHTML;
@@ -191,6 +206,8 @@
         (err.errors.identifier ? identifier : password).focus();
       } else if (err.code === "LOCKED") {
         lockCountdown();
+      } else if (err.code === "ACCOUNT_INACTIVE") {
+        showAlert("error", err.message);
       } else if (err.code === "INVALID_CREDENTIALS") {
         showAlert("error", err.message);
         password.value = "";

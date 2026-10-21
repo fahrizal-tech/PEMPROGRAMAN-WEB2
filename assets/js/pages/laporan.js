@@ -27,6 +27,7 @@
     db = { kursus: r[0], mahasiswa: r[1], krs: r[2], presensi: r[3], kelas: r[4], dosen: r[5], prodi: r[6], log: r[7], admin: r[8], set: r[9] };
     db.dosenMap = {}; db.dosen.forEach(function (d) { db.dosenMap[d.id] = d; });
     db.adminMap = {}; db.admin.forEach(function (a) { db.adminMap[a.id] = a; });
+    db.mhsMap = {}; db.mahasiswa.forEach(function (m) { db.mhsMap[m.id] = m; });
     $("periode-aktif").textContent = db.set.periode_aktif || "-";
     $("kop-institusi").textContent = db.set.nama_institusi || "Nexus LMS";
     var sel = $("f-prodi");
@@ -114,8 +115,8 @@
   /* ---------- Log aktivitas ---------- */
   function logRows() {
     return db.log.map(function (l) {
-      var a = db.adminMap[l.admin_id];
-      return Object.assign({}, l, { admin: a ? a.nama : "Sistem", tanggal: u.localDate(l.waktu) });
+      var a = db.adminMap[l.admin_id], m = db.mhsMap[l.mahasiswa_id];
+      return Object.assign({}, l, { admin: a ? a.nama : m ? m.nama + " (mahasiswa)" : "Sistem", tanggal: u.localDate(l.waktu) });
     });
   }
 
