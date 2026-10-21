@@ -182,6 +182,7 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [x] 7.4 Nilai & Sertifikat (komponen sertifikat bersama admin–pelajar), QA portal pelajar: HTML 0 masalah, axe 0 pelanggaran, Lighthouse 100, E2E 111/111 (Chrome & Firefox), dokumentasi, rilis `v1.3.0`
 
 ### Tahap 8 — Pasca-Tugas: Menuju Produksi
+- [ ] Migrasi Tailwind CSS 3 → 4 (menutup laporan audit `braces` / `postcss-selector-parser`; lihat SECURITY.md)
 - [ ] Skema SQL dari ER-D di Supabase (PostgreSQL) + Row Level Security
 - [ ] `SupabaseAdapter` → ganti adapter lewat satu konfigurasi (hanya *anon key* di front-end; *service role key* tidak pernah di repo)
 - [ ] Autentikasi sungguhan (Supabase Auth) menggantikan login demo
