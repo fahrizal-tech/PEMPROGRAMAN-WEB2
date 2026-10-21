@@ -97,7 +97,8 @@
       create: async function (input) {
         var data = await prepare(input, null);
         var row = await db.insert(table, pick(data, Object.keys(schema)));
-        await log("create", table, row.id, "Menambahkan " + cfg.label + " " + cfg.describe(row));
+        var desc = cfg.describeAsync ? await cfg.describeAsync(row) : cfg.describe(row);
+        await log("create", table, row.id, "Menambahkan " + cfg.label + " " + desc);
         return row;
       },
 
@@ -330,6 +331,7 @@
     table: "krs",
     label: "KRS",
     describe: function (x) { return x.id; },
+    describeAsync: function (x) { return describeKrs(x); },
     schema: {
       mahasiswa_id: { label: "Mahasiswa", required: true, ref: "mahasiswa" },
       kursus_id: { label: "Kursus", required: true, ref: "kursus" },
