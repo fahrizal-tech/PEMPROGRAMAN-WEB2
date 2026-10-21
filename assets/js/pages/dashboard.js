@@ -48,7 +48,7 @@
     ]);
     var mhs = r[0], kursus = r[1], krs = r[2], kumpul = r[3], presensi = r[4], kelas = r[5], prodi = r[6], dosen = r[7], logs = r[8], admins = r[9];
     var byId = function (list) { var m = {}; list.forEach(function (x) { m[x.id] = x; }); return m; };
-    var prodiMap = byId(prodi), dosenMap = byId(dosen), adminMap = byId(admins);
+    var prodiMap = byId(prodi), dosenMap = byId(dosen), adminMap = byId(admins), mhsMap = byId(mhs);
 
     /* ---------- Sambutan ---------- */
     var user = Nexus.auth.currentUser();
@@ -144,12 +144,12 @@
     /* ---------- Aktivitas terbaru ---------- */
     $("log-list").innerHTML = logs.length ? logs.map(function (l) {
       var ic = AKSI_ICON[l.aksi] || AKSI_ICON.update;
-      var a = adminMap[l.admin_id];
+      var a = adminMap[l.admin_id], m = mhsMap[l.mahasiswa_id];
       return html`<li class="flex gap-3">
         <span class="material-symbols-outlined flex-shrink-0 rounded-lg p-1.5 text-[18px] ${ic[1]}" aria-hidden="true">${ic[0]}</span>
         <div class="min-w-0">
           <p class="text-sm text-slate-800">${l.deskripsi}</p>
-          <p class="mt-0.5 text-xs text-slate-500">${a ? a.nama.split(",")[0] : "Sistem"} · <time datetime="${l.waktu}">${u.timeAgo(l.waktu)}</time></p>
+          <p class="mt-0.5 text-xs text-slate-500">${a ? a.nama.split(",")[0] : m ? m.nama + " (mahasiswa)" : "Sistem"} · <time datetime="${l.waktu}">${u.timeAgo(l.waktu)}</time></p>
         </div>
       </li>`.value;
     }).join("") : html`<li class="text-sm text-slate-500">Belum ada aktivitas.</li>`.value;

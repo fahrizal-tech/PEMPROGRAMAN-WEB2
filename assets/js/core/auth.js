@@ -30,9 +30,20 @@
   var LOCK_MS = 30 * 1000;
   var TOUCH_INTERVAL_MS = 30 * 1000;
 
-  // Halaman tujuan yang diizinkan setelah login (mencegah open redirect).
+  // Halaman tujuan yang diizinkan setelah login, per area (mencegah open redirect).
   var PAGES = ["dashboard.html", "laporan.html", "data-master.html", "form.html", "tugas-kuis.html", "kelas-virtual.html",
     "mahasiswa.html", "instruktur.html", "sertifikasi.html", "pengaturan.html", "layout.html"];
+  var PAGES_PELAJAR = ["beranda.html", "kursus.html", "jadwal.html", "tugas.html", "nilai.html"];
+  var AREA = {
+    admin: { folder: "pages", home: "dashboard.html", pages: PAGES },
+    pelajar: { folder: "pelajar", home: "beranda.html", pages: PAGES_PELAJAR },
+  };
+  var NIM_PATTERN = /^\d{8,12}$/;
+
+  /** Area milik pengguna: mahasiswa → "pelajar", selain itu (admin) → "admin". */
+  function areaOf(user) {
+    return user && user.peran === "mahasiswa" ? "pelajar" : "admin";
+  }
 
   function AuthError(code, message, extra) {
     this.name = "AuthError";
@@ -125,21 +136,30 @@
   }
 
   /* ---------- Navigasi ---------- */
-  function inPagesFolder() {
-    return !!global.location && /\/pages\/[^/]*$/.test(global.location.pathname);
+  /** Area halaman saat ini dari foldernya: "admin" (pages/), "pelajar" (pelajar/), atau null (login). */
+  function currentArea() {
+    var m = global.location && /\/(pages|pelajar)\/[^/]*$/.exec(global.location.pathname);
+    return m ? (m[1] === "pages" ? "admin" : "pelajar") : null;
   }
 
   function currentPage() {
     return global.location ? global.location.pathname.split("/").pop() : "";
   }
 
-  /** Nama halaman aman untuk ?next= (hanya daftar internal). */
-  function safeNext(next) {
-    return PAGES.indexOf(next) !== -1 ? next : "dashboard.html";
+  /** Nama halaman aman untuk ?next= (hanya daftar internal area tersebut). */
+  function safeNext(next, area) {
+    var a = AREA[area || "admin"];
+    return a.pages.indexOf(next) !== -1 ? next : a.home;
+  }
+
+  /** Jalur (relatif dari root situs) halaman tujuan setelah login sesuai peran. */
+  function homePath(user, next) {
+    var area = areaOf(user);
+    return AREA[area].folder + "/" + safeNext(next, area);
   }
 
   function loginUrl(reason) {
-    var q = "?next=" + encodeURIComponent(safeNext(currentPage())) + (reason ? "&alasan=" + reason : "");
+    var q = "?next=" + encodeURIComponent(currentPage()) + (reason ? "&alasan=" + reason : "");
     return "../index.html" + q;
   }
 
@@ -149,6 +169,8 @@
     MAX_ATTEMPTS: MAX_ATTEMPTS,
     AuthError: AuthError,
     safeNext: safeNext,
+    homePath: homePath,
+    areaOf: areaOf,
     lockRemaining: lockRemaining,
 
     currentUser: function () {
@@ -161,38 +183,51 @@
     },
 
     /**
-     * Masuk dengan email admin + kata sandi demo.
-     * @throws AuthError LOCKED | INVALID_INPUT | INVALID_CREDENTIALS
+     * Masuk dengan kata sandi demo sebagai admin (email) atau mahasiswa (NIM / email mahasiswa).
+     * options.role: "admin" (bawaan) | "mahasiswa"; options.remember: ingat 30 hari.
+     * @throws AuthError LOCKED | INVALID_INPUT | INVALID_CREDENTIALS | ACCOUNT_INACTIVE
      */
-    login: async function (email, password, options) {
+    login: async function (identifier, password, options) {
       var wait = lockRemaining();
       if (wait > 0) throw new AuthError("LOCKED", "Terlalu banyak percobaan gagal. Coba lagi dalam " + wait + " detik.", { seconds: wait });
 
+      var asStudent = !!(options && options.role === "mahasiswa");
       var errors = {};
-      var mail = String(email || "").trim().toLowerCase();
-      if (!mail) errors.identifier = "Email wajib diisi.";
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) errors.identifier = "Format email tidak valid.";
+      var id = String(identifier || "").trim().toLowerCase();
+      var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(id);
+      if (!id) errors.identifier = asStudent ? "NIM atau email wajib diisi." : "Email wajib diisi.";
+      else if (asStudent && !isEmail && !NIM_PATTERN.test(id)) errors.identifier = "Masukkan NIM (8–12 digit) atau email mahasiswa yang valid.";
+      else if (!asStudent && !isEmail) errors.identifier = "Format email tidak valid.";
       if (!password) errors.password = "Kata sandi wajib diisi.";
       if (Object.keys(errors).length) throw new AuthError("INVALID_INPUT", errors.identifier || errors.password, { errors: errors });
 
       var db = Nexus.storage;
-      var admin = (await db.query("admin", function (a) { return a.email.toLowerCase() === mail; }))[0];
-      if (!admin || password !== DEMO_PASSWORD) {
+      var account = asStudent
+        ? (await db.query("mahasiswa", function (m) { return isEmail ? m.email.toLowerCase() === id : m.nim === id; }))[0]
+        : (await db.query("admin", function (a) { return a.email.toLowerCase() === id; }))[0];
+      if (!account || password !== DEMO_PASSWORD) {
         var left = registerFailure();
         var locked = lockRemaining() > 0;
         throw new AuthError(
           locked ? "LOCKED" : "INVALID_CREDENTIALS",
           locked
             ? "Terlalu banyak percobaan gagal. Login dikunci selama " + LOCK_MS / 1000 + " detik."
-            : "Email atau kata sandi salah. Sisa percobaan: " + left + ".",
+            : (asStudent ? "NIM/email" : "Email") + " atau kata sandi salah. Sisa percobaan: " + left + ".",
           { seconds: locked ? LOCK_MS / 1000 : 0, attemptsLeft: left }
         );
+      }
+
+      // Mahasiswa nonaktif (DO/mengundurkan diri) tidak dapat masuk; cuti dan lulus tetap bisa melihat datanya.
+      if (asStudent && account.status === "nonaktif") {
+        throw new AuthError("ACCOUNT_INACTIVE", "Akun mahasiswa berstatus nonaktif. Hubungi BAAK melalui helpdesk@nexus.ac.id.");
       }
 
       writeLock({ count: 0, until: 0 });
       var idle = Number((await db.get("pengaturan", "sesi_timeout_menit") || {}).nilai) || DEFAULT_IDLE_MIN;
       var t = now();
-      var user = { id: admin.id, nama: admin.nama, email: admin.email, peran: admin.peran };
+      var user = asStudent
+        ? { id: account.id, nama: account.nama, email: account.email, peran: "mahasiswa", mahasiswa_id: account.id, nim: account.nim, prodi_id: account.prodi_id }
+        : { id: account.id, nama: account.nama, email: account.email, peran: account.peran };
       writeRaw({
         user: user,
         created_at: t,
@@ -202,11 +237,18 @@
       });
       lastTouch = t;
 
-      await db.update("admin", admin.id, { login_terakhir: new Date(t).toISOString() });
-      await db.insert("log_aktivitas", {
-        admin_id: admin.id, aksi: "login", entitas: "admin", entitas_id: admin.id,
-        deskripsi: "Masuk ke panel admin", waktu: new Date(t).toISOString(),
-      });
+      if (asStudent) {
+        await db.insert("log_aktivitas", {
+          admin_id: null, mahasiswa_id: account.id, aksi: "login", entitas: "mahasiswa", entitas_id: account.id,
+          deskripsi: "Masuk ke portal pelajar", waktu: new Date(t).toISOString(),
+        });
+      } else {
+        await db.update("admin", account.id, { login_terakhir: new Date(t).toISOString() });
+        await db.insert("log_aktivitas", {
+          admin_id: account.id, aksi: "login", entitas: "admin", entitas_id: account.id,
+          deskripsi: "Masuk ke panel admin", waktu: new Date(t).toISOString(),
+        });
+      }
       return user;
     },
 
@@ -216,16 +258,23 @@
 
     /** Label peran untuk tampilan. */
     roleLabel: function (peran) {
-      return { super_admin: "Super Administrator", admin_akademik: "Admin Akademik (BAAK)" }[peran] || peran;
+      return { super_admin: "Super Administrator", admin_akademik: "Admin Akademik (BAAK)", mahasiswa: "Mahasiswa" }[peran] || peran;
     },
   };
 
   Nexus.auth = auth;
 
-  /* ---------- Proteksi halaman admin (berjalan segera) ---------- */
-  if (inPagesFolder()) {
-    if (!readSession()) {
+  /* ---------- Proteksi halaman admin & portal pelajar (berjalan segera) ---------- */
+  var area = currentArea();
+  if (area) {
+    var active = readSession();
+    if (!active) {
       global.location.replace(loginUrl());
+      return;
+    }
+    // Peran lain tidak boleh membuka area ini → kembali ke beranda perannya sendiri.
+    if (areaOf(active.user) !== area) {
+      global.location.replace("../" + homePath(active.user));
       return;
     }
     touch();

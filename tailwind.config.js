@@ -6,7 +6,7 @@
  */
 /** @type {import("tailwindcss").Config} */
 module.exports = {
-  content: ["./index.html", "./pages/**/*.html", "./assets/js/**/*.js"],
+  content: ["./index.html", "./pages/**/*.html", "./pelajar/**/*.html", "./assets/js/**/*.js"],
   theme: {
     extend: {
       // Utilitas Tailwind v4 yang dipakai desain Stitch, dipasang manual di v3.

@@ -79,7 +79,7 @@ Repo ini publik, jadi **semua isi file dan seluruh riwayat commit bisa dibaca si
 | Hanya data fiktif | Seed data memakai nama & domain fiktif (`@nexus.ac.id`), bukan data mahasiswa sungguhan |
 | Aman dari XSS | Input pengguna dirender via `textContent`/escape, bukan `innerHTML` mentah |
 | Minim pihak ketiga | Aset (avatar, CSS) di-host sendiri; CDN yang tersisa memakai versi terkunci |
-| Login demo bukan pengaman | Dinyatakan jelas di [`SECURITY.md`](../SECURITY.md); autentikasi sungguhan di Tahap 7 |
+| Login demo bukan pengaman | Dinyatakan jelas di [`SECURITY.md`](../SECURITY.md); autentikasi sungguhan di Tahap 8 |
 
 ---
 
@@ -175,7 +175,13 @@ Tujuan: tampilan lebih menarik (kartu bergambar ala katalog kursus) **tanpa meng
 - [ ] Kirim link repository ke LMS Mentari
 - [x] Naskah demo 5–7 menit — [`docs/naskah-demo.md`](naskah-demo.md) (alur: login → dashboard → CRUD → form → laporan → responsif → proses QA)
 
-### Tahap 7 — Pasca-Tugas: Menuju Produksi
+### Tahap 7 — Portal Pelajar (login mahasiswa)
+- [x] 7.1 Fondasi peran: login mahasiswa (NIM/email), area `pages/` (admin) dan `pelajar/` (mahasiswa) saling terpisah, menu per peran, log aktivitas mencatat pelaku mahasiswa, service `pelajar` (data milik sendiri), halaman Beranda
+- [ ] 7.2 Kursus Saya & pengajuan/pembatalan KRS
+- [ ] 7.3 Jadwal kelas (presensi saat masuk) & Tugas (pengumpulan)
+- [ ] 7.4 Nilai & Sertifikat, QA, dokumentasi, rilis `v1.3.0`
+
+### Tahap 8 — Pasca-Tugas: Menuju Produksi
 - [ ] Skema SQL dari ER-D di Supabase (PostgreSQL) + Row Level Security
 - [ ] `SupabaseAdapter` → ganti adapter lewat satu konfigurasi (hanya *anon key* di front-end; *service role key* tidak pernah di repo)
 - [ ] Autentikasi sungguhan (Supabase Auth) menggantikan login demo
